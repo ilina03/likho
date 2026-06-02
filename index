@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Likho · लिखो · Indian Script Writing Practice</title>
+<meta name="description" content="Free Indian script writing practice for heritage speakers. Draw characters, self-grade, and build spelling through spaced repetition. Hindi, Telugu, Tamil, Malayalam.">
+<meta name="keywords" content="Hindi writing practice, Telugu script, Tamil script, Malayalam script, Indian language app, Devanagari, heritage language, spaced repetition, SRS flashcards, diaspora">
+<meta property="og:title" content="Likho · Write Your Mother Tongue">
+<meta property="og:description" content="You already speak it. Likho helps you write it — drawing characters by hand, one at a time, until it sticks.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://yourusername.github.io/likho">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --paper:    #F7F3EC;
+    --paperdark:#EDE8DF;
+    --ink:      #1A1209;
+    --inkfade:  #6B5E4A;
+    --inkfader: #A8997F;
+    --rule:     rgba(26,18,9,0.1);
+    --saffron:  #C8690A;
+  }
+  body { background:var(--paper); color:var(--ink); font-family:'Crimson Pro',Georgia,serif; min-height:100vh; display:flex; flex-direction:column; }
+  ::-webkit-scrollbar{width:6px} ::-webkit-scrollbar-track{background:var(--paperdark)} ::-webkit-scrollbar-thumb{background:var(--inkfader);border-radius:3px}
+
+  header { border-bottom:1px solid var(--rule); padding:0 64px; display:flex; align-items:center; height:64px; }
+  .logo { display:flex; align-items:baseline; gap:12px; }
+  .logo-hi { font-size:24px; font-weight:600; letter-spacing:-0.02em; }
+  .logo-en { font-size:13px; color:var(--inkfader); letter-spacing:0.12em; }
+
+  .hero { padding:80px 64px 64px; border-bottom:1px solid var(--rule); display:flex; align-items:flex-end; justify-content:space-between; flex-wrap:wrap; gap:32px; }
+  .hero-left { max-width:560px; }
+  .hero-title { font-size:68px; font-weight:300; letter-spacing:-0.03em; line-height:1.02; margin-bottom:20px; }
+  .hero-sub { font-size:18px; color:var(--inkfade); line-height:1.65; max-width:480px; }
+  .hero-chars { font-size:120px; line-height:1; font-family:serif; user-select:none; display:flex; gap:8px; align-items:flex-end; margin-bottom:-12px; opacity:0.11; }
+  .c-hi { color:#C8690A; } .c-ml { color:#1A6B5A; } .c-te { color:#6B3A8A; } .c-ta { color:#8A3A2A; }
+
+  .how { padding:56px 64px; border-bottom:1px solid var(--rule); display:flex; gap:0; }
+  .how-step { flex:1; padding-right:32px; border-right:1px solid var(--rule); margin-right:32px; }
+  .how-step:last-child { border-right:none; margin-right:0; padding-right:0; }
+  .how-num { font-size:11px; color:var(--saffron); letter-spacing:0.18em; margin-bottom:10px; }
+  .how-title { font-size:20px; font-weight:600; margin-bottom:8px; }
+  .how-desc { font-size:14px; color:var(--inkfade); line-height:1.6; }
+
+  .languages { padding:56px 64px; flex:1; }
+  .lang-label { font-size:11px; color:var(--inkfader); letter-spacing:0.18em; margin-bottom:28px; }
+  .lang-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:20px; max-width:900px; }
+
+  .lang-card { border:1.5px solid var(--rule); border-radius:4px; padding:32px 28px; text-decoration:none; color:var(--ink); background:var(--paper); display:flex; flex-direction:column; gap:14px; transition:all 0.2s; position:relative; overflow:hidden; }
+  .lang-card:not(.soon):hover { box-shadow:0 4px 24px rgba(26,18,9,0.09); transform:translateY(-2px); }
+  .lang-bg { position:absolute; right:-6px; bottom:-18px; font-size:110px; font-family:serif; line-height:1; user-select:none; opacity:0.07; pointer-events:none; }
+
+  .lang-badge { font-size:10px; letter-spacing:0.14em; padding:3px 9px; border-radius:2px; display:inline-block; width:fit-content; }
+  .lang-name-script { font-size:34px; font-family:serif; line-height:1.1; }
+  .lang-name-en { font-size:21px; font-weight:600; letter-spacing:-0.01em; margin-top:1px; }
+  .lang-desc { font-size:13px; color:var(--inkfade); line-height:1.55; }
+  .lang-meta { font-size:11px; color:var(--inkfader); margin-top:2px; }
+  .lang-arrow { font-size:16px; transition:transform 0.2s; margin-top:2px; }
+  .lang-card:hover .lang-arrow { transform:translateX(4px); }
+
+  .hi .lang-badge { background:rgba(200,105,10,0.1); color:#C8690A; }
+  .hi:hover { border-color:#C8690A; }
+  .hi .lang-arrow { color:#C8690A; }
+
+  .ml .lang-badge { background:rgba(26,107,90,0.1); color:#1A6B5A; }
+  .ml:hover { border-color:#1A6B5A; }
+  .ml .lang-arrow { color:#1A6B5A; }
+
+  .te .lang-badge { background:rgba(107,58,138,0.1); color:#6B3A8A; }
+  .te:hover { border-color:#6B3A8A; }
+  .te .lang-arrow { color:#6B3A8A; }
+
+  .ta .lang-badge { background:rgba(138,58,42,0.1); color:#8A3A2A; }
+  .ta:hover { border-color:#8A3A2A; }
+  .ta .lang-arrow { color:#8A3A2A; }
+
+  footer { padding:36px 64px; border-top:1px solid var(--rule); display:flex; justify-content:space-between; font-size:12px; color:var(--inkfader); letter-spacing:0.06em; flex-wrap:wrap; gap:8px; margin-top:auto; }
+
+  @media(max-width:800px){
+    header,.hero,.how,.languages,footer{padding-left:28px;padding-right:28px}
+    .hero-title{font-size:44px} .hero-chars{display:none}
+    .how{flex-direction:column;gap:28px}
+    .how-step{border-right:none;border-bottom:1px solid var(--rule);padding:0 0 28px;margin:0}
+    .how-step:last-child{border-bottom:none;padding-bottom:0}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <span class="logo-hi">लिखो</span>
+    <span class="logo-en">LIKHO</span>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-title">Write your<br>mother tongue.</div>
+    <div class="hero-sub">You already speak it. Likho helps you write it — drawing characters by hand, one at a time, until it sticks. No app to download. No account needed.</div>
+  </div>
+  <div class="hero-chars">
+    <span class="c-hi">क</span>
+    <span class="c-ml">ക</span>
+    <span class="c-te">క</span>
+    <span class="c-ta">க</span>
+  </div>
+</div>
+
+<div class="how">
+  <div class="how-step">
+    <div class="how-num">01</div>
+    <div class="how-title">See the prompt</div>
+    <div class="how-desc">Romanization and meaning appear. Write the character or word in script from memory.</div>
+  </div>
+  <div class="how-step">
+    <div class="how-num">02</div>
+    <div class="how-title">Draw on the canvas</div>
+    <div class="how-desc">Use your mouse or finger. A faint guide appears when you reveal — no pressure, just practice.</div>
+  </div>
+  <div class="how-step">
+    <div class="how-num">03</div>
+    <div class="how-title">Reveal &amp; grade</div>
+    <div class="how-desc">See the correct answer. Grade yourself honestly: Again, Hard, Good, or Easy.</div>
+  </div>
+  <div class="how-step">
+    <div class="how-num">04</div>
+    <div class="how-title">Come back tomorrow</div>
+    <div class="how-desc">Spaced repetition schedules your next review automatically. Progress saves in your browser.</div>
+  </div>
+</div>
+
+<div class="languages">
+  <div class="lang-label">CHOOSE A LANGUAGE</div>
+  <div class="lang-grid">
+
+    <a class="lang-card hi" href="hindi/index.html">
+      <div class="lang-badge">DEVANAGARI SCRIPT</div>
+      <div>
+        <div class="lang-name-script">हिन्दी</div>
+        <div class="lang-name-en">Hindi</div>
+      </div>
+      <div class="lang-desc">For heritage speakers who can speak Hindi but want to reconnect with writing the script.</div>
+      <div class="lang-meta">8 decks · vowels, consonants &amp; everyday words</div>
+      <div class="lang-arrow">→</div>
+      <div class="lang-bg c-hi">क</div>
+    </a>
+
+    <a class="lang-card ml" href="malayalam/index.html">
+      <div class="lang-badge">MALAYALAM SCRIPT</div>
+      <div>
+        <div class="lang-name-script">മലയാളം</div>
+        <div class="lang-name-en">Malayalam</div>
+      </div>
+      <div class="lang-desc">The beautiful rounded script of Kerala. Practice the distinctive curves of one of India's most elegant writing systems.</div>
+      <div class="lang-meta">8 decks · vowels, consonants &amp; everyday words</div>
+      <div class="lang-arrow">→</div>
+      <div class="lang-bg c-ml">ക</div>
+    </a>
+
+    <a class="lang-card te" href="telugu/index.html">
+      <div class="lang-badge">TELUGU SCRIPT</div>
+      <div>
+        <div class="lang-name-script">తెలుగు</div>
+        <div class="lang-name-en">Telugu</div>
+      </div>
+      <div class="lang-desc">Known as the "Italian of the East" for its vowel-ending words. Practice the flowing curves of Telugu script.</div>
+      <div class="lang-meta">8 decks · vowels, consonants &amp; everyday words</div>
+      <div class="lang-arrow">→</div>
+      <div class="lang-bg c-te">క</div>
+    </a>
+
+    <a class="lang-card ta" href="tamil/index.html">
+      <div class="lang-badge">TAMIL SCRIPT</div>
+      <div>
+        <div class="lang-name-script">தமிழ்</div>
+        <div class="lang-name-en">Tamil</div>
+      </div>
+      <div class="lang-desc">One of the world's oldest classical languages. Learn the soul letters (uyir) and body letters (mei) of Tamil script.</div>
+      <div class="lang-meta">7 decks · vowels, consonants &amp; everyday words</div>
+      <div class="lang-arrow">→</div>
+      <div class="lang-bg c-ta">க</div>
+    </a>
+
+  </div>
+</div>
+
+<footer>
+  <span>लिखो · likho · write your mother tongue</span>
+  <span>free · no account · works in any browser</span>
+</footer>
+
+</body>
+</html>
