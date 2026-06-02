@@ -79,6 +79,7 @@
   .btn-clear{background:transparent;border:none;color:var(--inkfader);font-size:12px;cursor:pointer;letter-spacing:0.1em;font-family:inherit;padding:2px 0}.btn-clear:hover{color:var(--ink)}
   .btn-reveal{background:var(--ink);color:var(--paper);border:none;border-radius:3px;padding:12px 52px;font-family:inherit;font-size:15px;letter-spacing:0.1em;cursor:pointer}.btn-reveal:hover{opacity:.85}
   .answer-char{font-size:86px;color:var(--ink);font-family:serif;line-height:1;text-align:center}
+  .answer-char.word{font-size:52px}
   .answer-rom{font-size:21px;color:var(--accent);margin-top:4px;text-align:center}
   .answer-eng{font-size:14px;color:var(--inkfade);margin-top:3px;text-align:center}
   .grade-label{font-size:11px;color:var(--inkfader);letter-spacing:0.1em;text-align:center;margin-bottom:8px}
@@ -210,7 +211,7 @@
   </div>
   <div class="study-right">
     <div class="canvas-wrap">
-      <canvas id="draw-canvas" width="320" height="320" style="width:320px;height:320px"></canvas>
+      <canvas id="draw-canvas" width="320" height="320" style="width:320px;height:320px;transition:all 0.2s"></canvas>
       <button class="btn-clear" onclick="clearCanvas()">↺ clear</button>
     </div>
     <div id="reveal-area"></div>
@@ -368,7 +369,8 @@ function drawGrid(){
 
   // Ghost character
   if(ghostChar){
-    ctx.font=`${W*0.58}px serif`;
+    const isWord=!currentDeck.isScript;
+    ctx.font=`${isWord ? Math.round(H*0.42) : Math.round(W*0.58)}px serif`;
     ctx.fillStyle="rgba(200,105,10,0.08)";
     ctx.textAlign="center";ctx.textBaseline="middle";
     ctx.fillText(ghostChar,W/2,H/2+W*0.04);
@@ -442,9 +444,17 @@ function startStudy(id){
   qIdx=0;sessionGrades=[];isRevealed=false;ghostChar=null;
   showScreen("study");loadCard();
 }
+function resizeCanvas(){
+  const isWord=!currentDeck.isScript;
+  const W=isWord?580:320, H=320;
+  cv.width=W; cv.height=H;
+  cv.style.width=W+"px"; cv.style.height=H+"px";
+}
+
 function loadCard(){
   if(qIdx>=queue.length){showDone();return}
-  currentCard=queue[qIdx];isRevealed=false;ghostChar=null;drawGrid();
+  currentCard=queue[qIdx];isRevealed=false;ghostChar=null;
+  resizeCanvas(); drawGrid();
   document.getElementById("progress-bar").style.width=(qIdx/queue.length*50)+"vw";
   document.getElementById("study-count").textContent=`${qIdx+1} / ${queue.length}`;
   document.getElementById("prompt-label").textContent=currentDeck.isScript?"WRITE THIS CHARACTER":"WRITE IN DEVANAGARI";
@@ -457,7 +467,7 @@ function reveal(){
   isRevealed=true;ghostChar=currentCard.h;drawGrid();
   document.getElementById("reveal-area").innerHTML=`
     <div style="text-align:center">
-      <div class="answer-char">${currentCard.h}</div>
+      <div class="answer-char${!currentDeck.isScript?' word':''}">${currentCard.h}</div>
       <div class="answer-rom">${currentCard.r}</div>
       ${!currentDeck.isScript?`<div class="answer-eng">${currentCard.e}</div>`:""}
     </div>
