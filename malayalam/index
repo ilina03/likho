@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Likho · Malayalam · മലയാളം Writing Practice</title>
+<meta name="description" content="Free Malayalam script writing practice for heritage speakers.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --paper:#F4F7F5;--paperdark:#E8EDE9;--ink:#0D1A12;
+    --inkfade:#4A6455;--inkfader:#8AA898;--rule:rgba(13,26,18,0.1);
+    --accent:#1A6B5A;--again:#B53A2A;--hard:#B07020;--good:#3A7A4A;--easy:#2A5A8A;
+  }
+  body{background:var(--paper);color:var(--ink);font-family:'Crimson Pro',Georgia,serif;min-height:100vh}
+  ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--paperdark)}::-webkit-scrollbar-thumb{background:var(--inkfader);border-radius:3px}
+  .screen{display:none;min-height:100vh}.screen.active{display:block}
+  #study-screen{display:none;flex-direction:row}#study-screen.active{display:flex}
+  #done-screen{display:none;align-items:center;justify-content:center;flex-direction:column;gap:36px;min-height:100vh}#done-screen.active{display:flex}
+  header{border-bottom:1px solid var(--rule);padding:0 64px;display:flex;align-items:center;justify-content:space-between;height:64px}
+  .logo{display:flex;align-items:baseline;gap:12px;text-decoration:none;color:var(--ink)}
+  .logo-script{font-size:24px;font-weight:600;letter-spacing:-0.02em}
+  .logo-en{font-size:13px;color:var(--inkfader);letter-spacing:0.12em}
+  .header-right{display:flex;align-items:center;gap:28px}
+  .btn-ghost{background:transparent;border:none;color:var(--inkfader);cursor:pointer;font-size:13px;letter-spacing:0.1em;font-family:inherit;padding:0}.btn-ghost:hover{color:var(--ink)}
+  .btn-back-home{background:transparent;border:none;color:var(--inkfader);cursor:pointer;font-size:13px;letter-spacing:0.08em;font-family:inherit;padding:0;text-decoration:none}.btn-back-home:hover{color:var(--ink)}
+  .hero{padding:56px 64px 40px;border-bottom:1px solid var(--rule);display:flex;align-items:flex-end;justify-content:space-between}
+  .hero-title{font-size:60px;font-weight:300;letter-spacing:-0.03em;line-height:1.05;margin-bottom:12px}
+  .hero-sub{font-size:15px;color:var(--inkfade);max-width:440px;line-height:1.6}
+  .hero-char{font-size:140px;color:var(--accent);opacity:0.1;font-family:serif;line-height:1;user-select:none;margin-bottom:-12px}
+  .overall-progress{padding:24px 64px;border-bottom:1px solid var(--rule);display:flex;align-items:center;gap:32px;flex-wrap:wrap}
+  .overall-stat{text-align:center}
+  .overall-num{font-size:28px;font-weight:300;color:var(--ink);letter-spacing:-0.02em}
+  .overall-lbl{font-size:10px;color:var(--inkfader);letter-spacing:0.14em;margin-top:2px}
+  .overall-bar-wrap{flex:1;max-width:320px}
+  .overall-bar-label{font-size:11px;color:var(--inkfader);letter-spacing:0.1em;margin-bottom:6px;display:flex;justify-content:space-between}
+  .overall-bar-track{height:4px;background:var(--paperdark);border-radius:99px;overflow:hidden}
+  .overall-bar-fill{height:100%;background:var(--accent);border-radius:99px;transition:width .6s}
+  .btn-reset{background:transparent;border:none;color:var(--inkfader);font-size:11px;cursor:pointer;font-family:inherit;letter-spacing:0.1em;padding:0;margin-left:auto}.btn-reset:hover{color:var(--again)}
+  .decks{padding:0 64px;max-width:860px}
+  .section-label{padding:28px 0 8px;font-size:11px;color:var(--inkfader);letter-spacing:0.18em}
+  .deck-row{display:flex;align-items:center;padding:16px 0;border-bottom:1px solid var(--rule)}
+  .deck-info{flex:1}.deck-name{font-size:17px;font-weight:600;letter-spacing:-0.01em}
+  .deck-meta{display:flex;align-items:center;gap:14px;margin-top:3px}
+  .deck-sub,.deck-seen{font-size:12px;color:var(--inkfader)}
+  .deck-due{font-size:11px;font-weight:600;letter-spacing:0.06em}.due-on{color:var(--accent)}.due-off{color:var(--good)}
+  .prog-track{width:72px;height:3px;background:var(--paperdark);border-radius:99px;margin:0 20px;overflow:hidden}
+  .prog-fill{height:100%;background:var(--accent);border-radius:99px;transition:width .6s}
+  .btn-study{border:1.5px solid var(--ink);border-radius:3px;padding:7px 22px;min-width:84px;text-align:center;font-family:inherit;font-size:13px;letter-spacing:0.1em;cursor:pointer;transition:all .15s}
+  .btn-filled{background:var(--ink);color:var(--paper)}.btn-outline{background:transparent;color:var(--ink)}
+  .btn-filled:hover{background:var(--paper);color:var(--ink)}.btn-outline:hover{background:var(--ink);color:var(--paper)}
+  footer{padding:36px 64px;margin-top:24px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;font-size:12px;color:var(--inkfader);letter-spacing:0.06em}
+  #progress-bar{position:fixed;top:0;left:0;height:2px;background:var(--accent);transition:width .4s;z-index:10}
+  .study-nav{position:fixed;top:20px;left:24px;display:flex;align-items:center;gap:16px;z-index:10}
+  .btn-back{background:transparent;border:none;color:var(--inkfader);cursor:pointer;font-size:13px;letter-spacing:0.08em;font-family:inherit;padding:0}.btn-back:hover{color:var(--ink)}
+  .study-count{font-size:12px;color:var(--inkfader);letter-spacing:0.1em}
+  .study-left,.study-right{width:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 48px;gap:28px;min-height:100vh}
+  .study-left{border-right:1px solid var(--rule)}
+  .prompt-label{font-size:11px;color:var(--accent);letter-spacing:0.18em;text-align:center}
+  .prompt-word{font-size:44px;color:var(--ink);line-height:1.1;margin-bottom:8px;text-align:center}
+  .prompt-rom{font-size:21px;color:var(--inkfade);font-style:italic;text-align:center}
+  .prompt-rom-script{font-size:62px;color:var(--accent);font-style:italic;margin-bottom:6px;text-align:center}
+  .prompt-eng-script{font-size:15px;color:var(--inkfade);text-align:center}
+  .hint{font-size:11px;color:var(--inkfader);letter-spacing:0.1em}
+  .canvas-wrap{display:flex;flex-direction:column;align-items:center;gap:8px}
+  #draw-canvas{display:block;touch-action:none;cursor:crosshair;border-radius:4px;border:1.5px solid var(--rule);box-shadow:inset 0 1px 4px rgba(13,26,18,0.05),0 2px 14px rgba(13,26,18,0.07)}
+  .btn-clear{background:transparent;border:none;color:var(--inkfader);font-size:12px;cursor:pointer;letter-spacing:0.1em;font-family:inherit;padding:2px 0}.btn-clear:hover{color:var(--ink)}
+  .btn-reveal{background:var(--ink);color:var(--paper);border:none;border-radius:3px;padding:12px 52px;font-family:inherit;font-size:15px;letter-spacing:0.1em;cursor:pointer}.btn-reveal:hover{opacity:.85}
+  .answer-char{font-size:86px;color:var(--ink);font-family:serif;line-height:1;text-align:center}
+  .answer-rom{font-size:21px;color:var(--accent);margin-top:4px;text-align:center}
+  .answer-eng{font-size:14px;color:var(--inkfade);margin-top:3px;text-align:center}
+  .grade-label{font-size:11px;color:var(--inkfader);letter-spacing:0.1em;text-align:center;margin-bottom:8px}
+  .grade-bar{display:flex;gap:8px;justify-content:center}
+  .btn-grade{width:84px;padding:9px 0;border-radius:3px;font-family:inherit;font-size:13px;font-weight:600;letter-spacing:0.04em;cursor:pointer;background:var(--paper);transition:background .15s}
+  .btn-grade span{display:block;font-size:10px;opacity:.5;font-weight:400;margin-top:2px}
+  .g-again{border:1.5px solid var(--again);color:var(--again)}.g-again:hover{background:rgba(181,58,42,0.08)}
+  .g-hard{border:1.5px solid var(--hard);color:var(--hard)}.g-hard:hover{background:rgba(176,112,32,0.08)}
+  .g-good{border:1.5px solid var(--good);color:var(--good)}.g-good:hover{background:rgba(58,122,74,0.08)}
+  .g-easy{border:1.5px solid var(--easy);color:var(--easy)}.g-easy:hover{background:rgba(42,90,138,0.08)}
+  .done-word{font-size:52px;font-weight:300;letter-spacing:-0.02em}
+  .done-sub{font-size:14px;color:var(--inkfade);letter-spacing:0.1em}
+  .done-grades{display:flex;gap:20px}
+  .done-box{text-align:center;width:68px}
+  .done-num{font-size:30px;font-weight:600}
+  .done-lbl{font-size:11px;letter-spacing:0.08em;margin-top:2px}
+  .btn-home{background:transparent;border:1.5px solid var(--ink);border-radius:3px;padding:10px 32px;font-family:inherit;font-size:14px;color:var(--ink);letter-spacing:0.08em;cursor:pointer}.btn-home:hover{background:var(--ink);color:var(--paper)}
+  #ref-overlay{display:none;position:fixed;inset:0;background:rgba(13,26,18,0.5);z-index:200;align-items:center;justify-content:center;backdrop-filter:blur(2px)}
+  #ref-overlay.open{display:flex}
+  .ref-modal{background:var(--paper);border-radius:4px;padding:40px 48px;width:860px;max-width:92vw;max-height:86vh;overflow-y:auto;box-shadow:0 24px 80px rgba(13,26,18,0.25)}
+  .ref-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:28px}
+  .ref-title{font-size:20px;font-weight:600;letter-spacing:-0.01em}
+  .btn-close{background:transparent;border:none;color:var(--inkfader);cursor:pointer;font-size:20px;line-height:1}
+  .ref-sec{margin-bottom:28px}.ref-sec-label{font-size:11px;color:var(--accent);letter-spacing:0.16em;margin-bottom:12px}
+  .ref-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+  .ref-card{background:var(--paperdark);border:1px solid var(--rule);border-radius:3px;padding:10px 6px;text-align:center}
+  .ref-char{font-size:24px;color:var(--ink);font-family:serif;line-height:1.2}
+  .ref-rom{font-size:11px;color:var(--accent);margin-top:3px}
+  .ref-eng{font-size:9px;color:var(--inkfader);margin-top:2px;line-height:1.3}
+  #confirm-overlay{display:none;position:fixed;inset:0;background:rgba(13,26,18,0.4);z-index:300;align-items:center;justify-content:center;backdrop-filter:blur(2px)}
+  #confirm-overlay.open{display:flex}
+  .confirm-box{background:var(--paper);border-radius:4px;padding:36px 40px;width:360px;max-width:90vw;box-shadow:0 12px 48px rgba(13,26,18,0.2);text-align:center}
+  .confirm-title{font-size:18px;font-weight:600;margin-bottom:8px}
+  .confirm-sub{font-size:14px;color:var(--inkfade);margin-bottom:24px;line-height:1.5}
+  .confirm-btns{display:flex;gap:10px;justify-content:center}
+  .btn-cancel{background:transparent;border:1.5px solid var(--rule);border-radius:3px;padding:8px 24px;font-family:inherit;font-size:13px;color:var(--inkfade);cursor:pointer;letter-spacing:0.06em}.btn-cancel:hover{border-color:var(--ink);color:var(--ink)}
+  .btn-confirm-reset{background:var(--again);color:#fff;border:none;border-radius:3px;padding:8px 24px;font-family:inherit;font-size:13px;cursor:pointer;letter-spacing:0.06em;font-weight:600}.btn-confirm-reset:hover{opacity:.85}
+  @media(max-width:900px){
+    header,.hero,.overall-progress,.decks,footer{padding-left:28px;padding-right:28px}
+    .hero-title{font-size:40px}.hero-char{display:none}
+    #study-screen.active{flex-direction:column}
+    .study-left,.study-right{width:100%;min-height:auto;padding:48px 28px;border-right:none;border-bottom:1px solid var(--rule)}
+    .study-right{border-bottom:none}
+    .ref-grid{grid-template-columns:repeat(4,1fr)}.ref-modal{padding:28px 24px}
+  }
+</style>
+</head>
+<body>
+
+<div id="home-screen" class="screen active">
+  <header>
+    <a class="logo" href="../index.html">
+      <span class="logo-script">ലിഖോ</span>
+      <span class="logo-en">LIKHO</span>
+    </a>
+    <div class="header-right">
+      <button class="btn-ghost" onclick="openRef()">reference</button>
+      <a class="btn-back-home" href="../index.html">← all languages</a>
+    </div>
+  </header>
+  <div class="hero">
+    <div>
+      <div class="hero-title">Malayalam writing<br>practice.</div>
+      <div class="hero-sub">Draw on the canvas. Reveal the answer.<br>Grade yourself honestly. The algorithm handles the rest.</div>
+    </div>
+    <div class="hero-char">ക</div>
+  </div>
+  <div class="overall-progress">
+    <div class="overall-stat"><div class="overall-num" id="stat-seen">0</div><div class="overall-lbl">CARDS SEEN</div></div>
+    <div class="overall-stat"><div class="overall-num" id="stat-due">0</div><div class="overall-lbl">DUE TODAY</div></div>
+    <div class="overall-stat"><div class="overall-num" id="stat-total">0</div><div class="overall-lbl">TOTAL CARDS</div></div>
+    <div class="overall-bar-wrap">
+      <div class="overall-bar-label"><span>overall progress</span><span id="bar-pct">0%</span></div>
+      <div class="overall-bar-track"><div class="overall-bar-fill" id="overall-bar" style="width:0%"></div></div>
+    </div>
+    <button class="btn-reset" onclick="confirmReset()">reset progress</button>
+  </div>
+  <div class="decks">
+    <div class="section-label">ALPHABET</div>
+    <div id="deck-list-script"></div>
+    <div class="section-label">WORDS</div>
+    <div id="deck-list-words"></div>
+  </div>
+  <footer><span>ലിഖോ · malayalam · മലയാളം script</span><span>draw · reveal · grade · repeat</span></footer>
+</div>
+
+<div id="study-screen" class="screen">
+  <div id="progress-bar"></div>
+  <div class="study-nav">
+    <button class="btn-back" onclick="goHome()">← decks</button>
+    <span class="study-count" id="study-count"></span>
+  </div>
+  <div class="study-left">
+    <div class="prompt-label" id="prompt-label"></div>
+    <div id="prompt-main"></div>
+    <div class="hint">space to reveal</div>
+  </div>
+  <div class="study-right">
+    <div class="canvas-wrap">
+      <canvas id="draw-canvas" width="320" height="320" style="width:320px;height:320px"></canvas>
+      <button class="btn-clear" onclick="clearCanvas()">↺ clear</button>
+    </div>
+    <div id="reveal-area"></div>
+  </div>
+</div>
+
+<div id="done-screen" class="screen">
+  <div class="done-word" id="done-word"></div>
+  <div class="done-sub" id="done-sub"></div>
+  <div class="done-grades" id="done-grades"></div>
+  <button class="btn-home" onclick="goHome()">back to decks</button>
+</div>
+
+<div id="ref-overlay" onclick="closeRefOverlay(event)">
+  <div class="ref-modal">
+    <div class="ref-header">
+      <div class="ref-title">Malayalam Script Reference · അക്ഷരമാല</div>
+      <button class="btn-close" onclick="closeRef()">✕</button>
+    </div>
+    <div class="ref-sec"><div class="ref-sec-label">VOWELS · സ്വരങ്ങൾ</div><div class="ref-grid" id="ref-vowels"></div></div>
+    <div class="ref-sec"><div class="ref-sec-label">CONSONANTS · വ്യഞ്ജനങ്ങൾ</div><div class="ref-grid" id="ref-consonants"></div></div>
+  </div>
+</div>
+
+<div id="confirm-overlay" onclick="closeConfirmOverlay(event)">
+  <div class="confirm-box">
+    <div class="confirm-title">Reset all progress?</div>
+    <div class="confirm-sub">This will clear your SRS history for all decks. This cannot be undone.</div>
+    <div class="confirm-btns">
+      <button class="btn-cancel" onclick="closeConfirm()">Cancel</button>
+      <button class="btn-confirm-reset" onclick="doReset()">Reset</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const VOWELS=[{id:"v1",h:"അ",r:"a",e:"short a"},{id:"v2",h:"ആ",r:"aa",e:"long a"},{id:"v3",h:"ഇ",r:"i",e:"short i"},{id:"v4",h:"ഈ",r:"ee",e:"long i"},{id:"v5",h:"ഉ",r:"u",e:"short u"},{id:"v6",h:"ഊ",r:"oo",e:"long u"},{id:"v7",h:"എ",r:"e",e:"short e"},{id:"v8",h:"ഏ",r:"ee",e:"long e"},{id:"v9",h:"ഐ",r:"ai",e:"diphthong ai"},{id:"v10",h:"ഒ",r:"o",e:"short o"},{id:"v11",h:"ഓ",r:"oo",e:"long o"},{id:"v12",h:"ഔ",r:"au",e:"diphthong au"},{id:"v13",h:"അം",r:"am",e:"anusvara — nasal"},{id:"v14",h:"അഃ",r:"ah",e:"visarga — aspirate"}];
+const CONSONANTS=[{id:"c1",h:"ക",r:"ka",e:"k sound"},{id:"c2",h:"ഖ",r:"kha",e:"kh aspirated"},{id:"c3",h:"ഗ",r:"ga",e:"g sound"},{id:"c4",h:"ഘ",r:"gha",e:"gh aspirated"},{id:"c5",h:"ങ",r:"nga",e:"ng nasal"},{id:"c6",h:"ച",r:"cha",e:"ch sound"},{id:"c7",h:"ഛ",r:"chha",e:"chh aspirated"},{id:"c8",h:"ജ",r:"ja",e:"j sound"},{id:"c9",h:"ഝ",r:"jha",e:"jh aspirated"},{id:"c10",h:"ഞ",r:"nya",e:"ny palatal nasal"},{id:"c11",h:"ട",r:"ṭa",e:"hard t retroflex"},{id:"c12",h:"ഠ",r:"ṭha",e:"hard th retroflex"},{id:"c13",h:"ഡ",r:"ḍa",e:"hard d retroflex"},{id:"c14",h:"ഢ",r:"ḍha",e:"hard dh retroflex"},{id:"c15",h:"ണ",r:"ṇa",e:"retroflex n"},{id:"c16",h:"ത",r:"ta",e:"soft t dental"},{id:"c17",h:"ഥ",r:"tha",e:"soft th dental"},{id:"c18",h:"ദ",r:"da",e:"soft d dental"},{id:"c19",h:"ധ",r:"dha",e:"soft dh dental"},{id:"c20",h:"ന",r:"na",e:"n sound"},{id:"c21",h:"പ",r:"pa",e:"p sound"},{id:"c22",h:"ഫ",r:"pha",e:"ph/f aspirated"},{id:"c23",h:"ബ",r:"ba",e:"b sound"},{id:"c24",h:"ഭ",r:"bha",e:"bh aspirated"},{id:"c25",h:"മ",r:"ma",e:"m sound"},{id:"c26",h:"യ",r:"ya",e:"y sound"},{id:"c27",h:"ര",r:"ra",e:"r rolled"},{id:"c28",h:"ല",r:"la",e:"l sound"},{id:"c29",h:"വ",r:"va",e:"v / w sound"},{id:"c30",h:"ശ",r:"sha",e:"sh palatal"},{id:"c31",h:"ഷ",r:"ṣha",e:"sh retroflex"},{id:"c32",h:"സ",r:"sa",e:"s sound"},{id:"c33",h:"ഹ",r:"ha",e:"h sound"},{id:"c34",h:"ള",r:"ḷa",e:"retroflex l"},{id:"c35",h:"ഴ",r:"zha",e:"unique Malayalam zh"},{id:"c36",h:"റ",r:"ṟa",e:"hard r alveolar"}];
+const WORD_DECKS=[{id:"greetings",label:"Greetings",cards:[{id:"w1",h:"നമസ്കാരം",r:"namaskaram",e:"Hello / Greetings"},{id:"w2",h:"നന്ദി",r:"nandi",e:"Thank you"},{id:"w3",h:"അതെ",r:"athe",e:"Yes"},{id:"w4",h:"ഇല്ല",r:"illa",e:"No"},{id:"w5",h:"ക്ഷമിക്കൂ",r:"kshamikkoo",e:"Sorry / Excuse me"},{id:"w6",h:"സുഖമാണോ",r:"sukhamaano",e:"Are you well?"},{id:"w7",h:"സുഖമാണ്",r:"sukhaman",e:"I am well"},{id:"w8",h:"വിട",r:"vida",e:"Goodbye"}]},{id:"family",label:"Family",cards:[{id:"fa1",h:"അമ്മ",r:"amma",e:"Mother"},{id:"fa2",h:"അച്ഛൻ",r:"acchan",e:"Father"},{id:"fa3",h:"ചേട്ടൻ",r:"chettan",e:"Elder brother"},{id:"fa4",h:"ചേച്ചി",r:"chechi",e:"Elder sister"},{id:"fa5",h:"അനിയൻ",r:"aniyan",e:"Younger brother"},{id:"fa6",h:"അനിയത്തി",r:"aniyathi",e:"Younger sister"},{id:"fa7",h:"മുത്തച്ഛൻ",r:"muthacchan",e:"Grandfather"},{id:"fa8",h:"മുത്തശ്ശി",r:"muthashi",e:"Grandmother"}]},{id:"body",label:"Body",cards:[{id:"b1",h:"കൈ",r:"kai",e:"Hand"},{id:"b2",h:"കാൽ",r:"kaal",e:"Foot / Leg"},{id:"b3",h:"കണ്ണ്",r:"kann",e:"Eye"},{id:"b4",h:"ചെവി",r:"chevi",e:"Ear"},{id:"b5",h:"മൂക്ക്",r:"mookku",e:"Nose"},{id:"b6",h:"വായ",r:"vaaya",e:"Mouth"},{id:"b7",h:"തല",r:"thala",e:"Head"},{id:"b8",h:"ഹൃദയം",r:"hridayam",e:"Heart"}]},{id:"food",label:"Food",cards:[{id:"fo1",h:"വെള്ളം",r:"vellam",e:"Water"},{id:"fo2",h:"ഭക്ഷണം",r:"bhakshanam",e:"Food"},{id:"fo3",h:"പാൽ",r:"paal",e:"Milk"},{id:"fo4",h:"ചായ",r:"chaaya",e:"Tea"},{id:"fo5",h:"ചോറ്",r:"choru",e:"Rice (cooked)"},{id:"fo6",h:"റൊട്ടി",r:"rotti",e:"Bread / Roti"},{id:"fo7",h:"കറി",r:"kari",e:"Curry"},{id:"fo8",h:"മധുരം",r:"madhuram",e:"Sweet"}]},{id:"numbers",label:"Numbers",cards:[{id:"n1",h:"ഒന്ന്",r:"onnu",e:"One"},{id:"n2",h:"രണ്ട്",r:"randu",e:"Two"},{id:"n3",h:"മൂന്ന്",r:"moonnu",e:"Three"},{id:"n4",h:"നാല്",r:"naalu",e:"Four"},{id:"n5",h:"അഞ്ച്",r:"anchu",e:"Five"},{id:"n6",h:"ആറ്",r:"aaru",e:"Six"},{id:"n7",h:"ഏഴ്",r:"eezhu",e:"Seven"},{id:"n8",h:"എട്ട്",r:"ettu",e:"Eight"},{id:"n9",h:"ഒൻപത്",r:"onpathu",e:"Nine"},{id:"n10",h:"പത്ത്",r:"paththu",e:"Ten"}]},{id:"colors",label:"Colors",cards:[{id:"col1",h:"ചുവപ്പ്",r:"chuvappu",e:"Red"},{id:"col2",h:"നീല",r:"neela",e:"Blue"},{id:"col3",h:"പച്ച",r:"pacha",e:"Green"},{id:"col4",h:"മഞ്ഞ",r:"manja",e:"Yellow"},{id:"col5",h:"വെള്ള",r:"vella",e:"White"},{id:"col6",h:"കറുപ്പ്",r:"karuppu",e:"Black"},{id:"col7",h:"ഓറഞ്ച്",r:"oranchu",e:"Orange"},{id:"col8",h:"പിങ്ക്",r:"pinku",e:"Pink"}]}];
+const ALL_DECKS=[
+  {id:"vowels",label:"Vowels",sub:"14 characters",cards:VOWELS,isScript:true},
+  {id:"consonants",label:"Consonants",sub:"36 characters",cards:CONSONANTS,isScript:true},
+  ...WORD_DECKS.map(d=>{...d,sub:`${d.cards.length} words`,isScript:false}),
+];
+const ALL_CARDS=ALL_DECKS.flatMap(d=>d.cards);
+
+const SRS_KEY="likho_malayalam_srs";
+function loadSRS(){try{return JSON.parse(localStorage.getItem(SRS_KEY)||"{}")}catch{return{}}}
+function saveSRS(s){try{localStorage.setItem(SRS_KEY,JSON.stringify(s))}catch{}}
+function initCard(){return{interval:1,ease:2.5,due:0,reps:0}}
+function stepSRS(s,q){
+  const ease=Math.max(1.3,s.ease+[-0.3,-0.15,0,0.15][q]);
+  const interval=q===0?1:s.reps===0?1:s.reps===1?3:Math.round(s.interval*ease);
+  return{interval,ease,due:Date.now()+interval*86400000,reps:q===0?0:s.reps+1};
+}
+function dueCards(cards){return cards.filter(c=>(SRS[c.id]?.due??0)<=Date.now())}
+let SRS=loadSRS();
+
+// ── CANVAS — DRAVIDIAN CENTER-MASS GRID ───────────────────────────────────────
+// These scripts float around a center axis — no top bar reference
+const cv=document.getElementById("draw-canvas"),ctx=cv.getContext("2d");
+let drawing=false,lx=0,ly=0,ghostChar=null;
+function xy(e){const r=cv.getBoundingClientRect(),sx=cv.width/r.width,sy=cv.height/r.height,s=e.touches?e.touches[0]:e;return[(s.clientX-r.left)*sx,(s.clientY-r.top)*sy]}
+function drawGrid(){
+  const W=cv.width,H=cv.height;
+  ctx.clearRect(0,0,W,H);
+  ctx.fillStyle="#F4F7F5";ctx.fillRect(0,0,W,H);
+  // Faint horizontal lines
+  ctx.strokeStyle="rgba(13,26,18,0.05)";ctx.lineWidth=1;
+  for(let y=40;y<H;y+=40){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}
+  // ── DRAVIDIAN: prominent center crosshair ──
+  // Characters are center-mass — vertical and horizontal center guides
+  ctx.strokeStyle="rgba(26,107,90,0.18)";ctx.lineWidth=1.5;ctx.setLineDash([]);
+  ctx.beginPath();ctx.moveTo(0,H/2);ctx.lineTo(W,H/2);ctx.stroke();
+  ctx.strokeStyle="rgba(26,107,90,0.10)";ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(W/2,0);ctx.lineTo(W/2,H);ctx.stroke();
+  if(ghostChar){
+    ctx.font=`${W*0.58}px serif`;
+    ctx.fillStyle="rgba(26,107,90,0.08)";
+    ctx.textAlign="center";ctx.textBaseline="middle";
+    ctx.fillText(ghostChar,W/2,H/2+W*0.04);
+  }
+}
+function clearCanvas(){ghostChar=currentCard&&isRevealed?currentCard.h:null;drawGrid()}
+cv.addEventListener("mousedown",e=>{drawing=true;[lx,ly]=xy(e)});
+cv.addEventListener("mousemove",e=>{if(!drawing)return;const[x,y]=xy(e);ctx.beginPath();ctx.moveTo(lx,ly);ctx.lineTo(x,y);ctx.strokeStyle="#0D1A12";ctx.lineWidth=3.5;ctx.lineCap=ctx.lineJoin="round";ctx.stroke();[lx,ly]=[x,y]});
+cv.addEventListener("mouseup",()=>drawing=false);cv.addEventListener("mouseleave",()=>drawing=false);
+cv.addEventListener("touchstart",e=>{e.preventDefault();drawing=true;[lx,ly]=xy(e)},{passive:false});
+cv.addEventListener("touchmove",e=>{e.preventDefault();if(!drawing)return;const[x,y]=xy(e);ctx.beginPath();ctx.moveTo(lx,ly);ctx.lineTo(x,y);ctx.strokeStyle="#0D1A12";ctx.lineWidth=3.5;ctx.lineCap=ctx.lineJoin="round";ctx.stroke();[lx,ly]=[x,y]},{passive:false});
+cv.addEventListener("touchend",()=>drawing=false);
+
+let currentDeck=null,queue=[],qIdx=0,currentCard=null,isRevealed=false,sessionGrades=[];
+
+function renderHome(){
+  const totalCards=ALL_CARDS.length;
+  const seen=ALL_CARDS.filter(c=>(SRS[c.id]?.reps??0)>0).length;
+  const due=ALL_DECKS.reduce((n,d)=>n+dueCards(d.cards).length,0);
+  const pct=totalCards>0?Math.round((seen/totalCards)*100):0;
+  document.getElementById("stat-seen").textContent=seen;
+  document.getElementById("stat-due").textContent=due;
+  document.getElementById("stat-total").textContent=totalCards;
+  document.getElementById("overall-bar").style.width=pct+"%";
+  document.getElementById("bar-pct").textContent=pct+"%";
+  ["script","words"].forEach(type=>{
+    const el=document.getElementById(`deck-list-${type}`);
+    const decks=type==="script"?ALL_DECKS.filter(d=>d.isScript):ALL_DECKS.filter(d=>!d.isScript);
+    el.innerHTML=decks.map(deck=>{
+      const dueN=dueCards(deck.cards).length,done=dueN===0,total=deck.cards.length;
+      const seenN=deck.cards.filter(c=>(SRS[c.id]?.reps??0)>0).length;
+      return`<div class="deck-row"><div class="deck-info"><div class="deck-name">${deck.label}</div><div class="deck-meta"><span class="deck-sub">${deck.sub}</span>${seenN>0?`<span class="deck-seen">${seenN}/${total} seen</span>`:""}<span class="deck-due ${done?"due-off":"due-on"}">${done?"✓ caught up":`${dueN} due`}</span></div></div><div class="prog-track"><div class="prog-fill" style="width:${(seenN/total)*100}%"></div></div><button class="btn-study ${done?"btn-outline":"btn-filled"}" onclick="startStudy(\'${deck.id}\')">${done?"review":"study"}</button></div>`;
+    }).join("");
+  });
+  buildRef();
+}
+function startStudy(id){
+  currentDeck=ALL_DECKS.find(d=>d.id===id);
+  const due=dueCards(currentDeck.cards);
+  queue=(due.length>0?[...due]:[...currentDeck.cards]).sort(()=>Math.random()-.5);
+  qIdx=0;sessionGrades=[];isRevealed=false;ghostChar=null;showScreen("study");loadCard();
+}
+function loadCard(){
+  if(qIdx>=queue.length){showDone();return}
+  currentCard=queue[qIdx];isRevealed=false;ghostChar=null;drawGrid();
+  document.getElementById("progress-bar").style.width=(qIdx/queue.length*50)+"vw";
+  document.getElementById("study-count").textContent=`${qIdx+1} / ${queue.length}`;
+  document.getElementById("prompt-label").textContent=currentDeck.isScript?"WRITE THIS CHARACTER":"WRITE IN MALAYALAM";
+  document.getElementById("prompt-main").innerHTML=currentDeck.isScript?`<div class="prompt-rom-script">${currentCard.r}</div><div class="prompt-eng-script">${currentCard.e}</div>`:`<div class="prompt-word">${currentCard.e}</div><div class="prompt-rom">${currentCard.r}</div>`;
+  document.getElementById("reveal-area").innerHTML=`<button class="btn-reveal" onclick="reveal()">reveal</button>`;
+}
+function reveal(){
+  isRevealed=true;ghostChar=currentCard.h;drawGrid();
+  document.getElementById("reveal-area").innerHTML=`<div style="text-align:center"><div class="answer-char">${currentCard.h}</div><div class="answer-rom">${currentCard.r}</div>${!currentDeck.isScript?`<div class="answer-eng">${currentCard.e}</div>`:""}</div><div><div class="grade-label">HOW DID YOU DO?</div><div class="grade-bar"><button class="btn-grade g-again" onclick="grade(0)">Again<span>[1]</span></button><button class="btn-grade g-hard" onclick="grade(1)">Hard<span>[2]</span></button><button class="btn-grade g-good" onclick="grade(2)">Good<span>[3]</span></button><button class="btn-grade g-easy" onclick="grade(3)">Easy<span>[4]</span></button></div></div>`;
+}
+function grade(q){SRS[currentCard.id]=stepSRS(SRS[currentCard.id]??initCard(),q);saveSRS(SRS);sessionGrades.push(q);qIdx++;loadCard()}
+function showDone(){
+  const c=[0,1,2,3].map(q=>sessionGrades.filter(g=>g===q).length);
+  const pct=Math.round(((c[2]+c[3])/sessionGrades.length)*100);
+  const[w,s]=pct>=80?["നന്നായി","well done"]:pct>=50?["ശരി","good effort"]:[["വീണ്ടും"],"keep practicing"];
+  document.getElementById("done-word").textContent=Array.isArray(w)?w[0]:w;
+  document.getElementById("done-sub").textContent=s;
+  const cols=["var(--again)","var(--hard)","var(--good)","var(--easy)"],lbs=["again","hard","good","easy"];
+  document.getElementById("done-grades").innerHTML=c.map((n,i)=>`<div class="done-box"><div class="done-num" style="color:${cols[i]}">${n}</div><div class="done-lbl" style="color:${cols[i]}">${lbs[i]}</div></div>`).join("");
+  showScreen("done");
+}
+function buildRef(){
+  ["vowels","consonants"].forEach(t=>{
+    const arr=t==="vowels"?VOWELS:CONSONANTS;
+    document.getElementById(`ref-${t}`).innerHTML=arr.map(c=>`<div class="ref-card"><div class="ref-char">${c.h}</div><div class="ref-rom">${c.r}</div><div class="ref-eng">${c.e}</div></div>`).join("");
+  });
+}
+function openRef(){document.getElementById("ref-overlay").classList.add("open")}
+function closeRef(){document.getElementById("ref-overlay").classList.remove("open")}
+function closeRefOverlay(e){if(e.target===document.getElementById("ref-overlay"))closeRef()}
+function confirmReset(){document.getElementById("confirm-overlay").classList.add("open")}
+function closeConfirm(){document.getElementById("confirm-overlay").classList.remove("open")}
+function closeConfirmOverlay(e){if(e.target===document.getElementById("confirm-overlay"))closeConfirm()}
+function doReset(){localStorage.removeItem(SRS_KEY);SRS={};closeConfirm();renderHome()}
+function showScreen(n){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));document.getElementById(`${n}-screen`).classList.add("active")}
+function goHome(){showScreen("home");renderHome()}
+document.addEventListener("keydown",e=>{
+  if(!document.getElementById("study-screen").classList.contains("active"))return;
+  if(e.key===" "&&!isRevealed){e.preventDefault();reveal();return}
+  if(e.key==="1"&&isRevealed)grade(0);if(e.key==="2"&&isRevealed)grade(1);
+  if(e.key==="3"&&isRevealed)grade(2);if(e.key==="4"&&isRevealed)grade(3);
+});
+renderHome();drawGrid();
+</script>
+</body>
+</html>
