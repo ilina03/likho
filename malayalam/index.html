@@ -4,20 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Likho · Malayalam · മലയാളം Writing Practice</title>
-<meta name="description" content="Free Malayalam script writing practice for heritage speakers.">
+<meta name="description" content="Free Indian script writing practice for heritage speakers.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
 <style>
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-  :root{
-    --paper:#F4F7F5;--paperdark:#E8EDE9;--ink:#0D1A12;
-    --inkfade:#4A6455;--inkfader:#8AA898;--rule:rgba(13,26,18,0.1);
-    --accent:#1A6B5A;--again:#B53A2A;--hard:#B07020;--good:#3A7A4A;--easy:#2A5A8A;
-  }
+  :root{--paper:#F4F7F5;--paperdark:#E8EDE9;--ink:#0D1A12;--inkfade:#4A6455;--inkfader:#8AA898;--rule:rgba(13,26,18,0.1);--accent:#1A6B5A;--again:#B53A2A;--hard:#B07020;--good:#3A7A4A;--easy:#2A5A8A;}
   body{background:var(--paper);color:var(--ink);font-family:'Crimson Pro',Georgia,serif;min-height:100vh}
   ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--paperdark)}::-webkit-scrollbar-thumb{background:var(--inkfader);border-radius:3px}
   .screen{display:none;min-height:100vh}.screen.active{display:block}
   #study-screen{display:none;flex-direction:row}#study-screen.active{display:flex}
+  #review-screen{display:none;flex-direction:column;min-height:100vh}#review-screen.active{display:flex}
   #done-screen{display:none;align-items:center;justify-content:center;flex-direction:column;gap:36px;min-height:100vh}#done-screen.active{display:flex}
   header{border-bottom:1px solid var(--rule);padding:0 64px;display:flex;align-items:center;justify-content:space-between;height:64px}
   .logo{display:flex;align-items:baseline;gap:12px;text-decoration:none;color:var(--ink)}
@@ -48,10 +45,37 @@
   .deck-due{font-size:11px;font-weight:600;letter-spacing:0.06em}.due-on{color:var(--accent)}.due-off{color:var(--good)}
   .prog-track{width:72px;height:3px;background:var(--paperdark);border-radius:99px;margin:0 20px;overflow:hidden}
   .prog-fill{height:100%;background:var(--accent);border-radius:99px;transition:width .6s}
+  .deck-btns{display:flex;gap:8px}
+  .btn-review-deck{border:1.5px solid var(--accent);border-radius:3px;padding:7px 14px;text-align:center;font-family:inherit;font-size:12px;letter-spacing:0.08em;cursor:pointer;transition:all .15s;background:transparent;color:var(--accent)}.btn-review-deck:hover{background:var(--accent);color:var(--paper)}
   .btn-study{border:1.5px solid var(--ink);border-radius:3px;padding:7px 22px;min-width:84px;text-align:center;font-family:inherit;font-size:13px;letter-spacing:0.1em;cursor:pointer;transition:all .15s}
   .btn-filled{background:var(--ink);color:var(--paper)}.btn-outline{background:transparent;color:var(--ink)}
   .btn-filled:hover{background:var(--paper);color:var(--ink)}.btn-outline:hover{background:var(--ink);color:var(--paper)}
   footer{padding:36px 64px;margin-top:24px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;font-size:12px;color:var(--inkfader);letter-spacing:0.06em}
+  /* REVIEW */
+  .review-header{padding:20px 64px;border-bottom:1px solid var(--rule);display:flex;align-items:center;gap:16px}
+  .review-title{font-size:16px;font-weight:600;color:var(--ink)}
+  .review-sub{font-size:12px;color:var(--inkfader);margin-left:auto}
+  #review-grid-phase{padding:40px 64px}
+  .review-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:12px;max-width:900px}
+  .review-grid-card{background:var(--paperdark);border:1.5px solid var(--rule);border-radius:6px;padding:16px 8px;text-align:center;cursor:pointer;transition:all .15s}
+  .review-grid-card:hover,.review-grid-card.active{border-color:var(--accent);background:var(--paper)}
+  .review-grid-char{font-size:38px;font-family:serif;color:var(--ink);line-height:1.1}
+  .review-grid-rom{font-size:11px;color:var(--accent);margin-top:4px}
+  .review-grid-eng{font-size:9px;color:var(--inkfader);margin-top:2px;line-height:1.3}
+  .review-start-btn{margin-top:32px}
+  #review-flip-phase{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;padding:60px 48px}
+  .flip-card{width:420px;max-width:90vw;min-height:260px;background:var(--paperdark);border:1.5px solid var(--rule);border-radius:12px;padding:40px 36px;text-align:center;cursor:pointer;transition:all .2s;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px}
+  .flip-card.flipped{background:var(--paper);border-color:var(--accent)}
+  .flip-front-label{font-size:10px;color:var(--inkfader);letter-spacing:0.16em}
+  .flip-char{font-size:96px;font-family:serif;color:var(--ink);line-height:1}
+  .flip-rom{font-size:24px;color:var(--accent);font-style:italic}
+  .flip-eng{font-size:15px;color:var(--inkfade)}
+  .flip-example{font-size:13px;color:var(--inkfader);margin-top:4px;font-style:italic}
+  .flip-nav{display:flex;gap:12px;align-items:center}
+  .btn-flip-nav{background:transparent;border:1.5px solid var(--rule);border-radius:3px;padding:8px 20px;font-family:inherit;font-size:13px;color:var(--inkfade);cursor:pointer;letter-spacing:0.06em;transition:all .15s}.btn-flip-nav:hover{border-color:var(--ink);color:var(--ink)}
+  .flip-count{font-size:12px;color:var(--inkfader);min-width:60px;text-align:center}
+  .btn-start-study{background:var(--ink);color:var(--paper);border:none;border-radius:3px;padding:10px 28px;font-family:inherit;font-size:13px;letter-spacing:0.08em;cursor:pointer}.btn-start-study:hover{opacity:.85}
+  /* STUDY */
   #progress-bar{position:fixed;top:0;left:0;height:2px;background:var(--accent);transition:width .4s;z-index:10}
   .study-nav{position:fixed;top:20px;left:24px;display:flex;align-items:center;gap:16px;z-index:10}
   .btn-back{background:transparent;border:none;color:var(--inkfader);cursor:pointer;font-size:13px;letter-spacing:0.08em;font-family:inherit;padding:0}.btn-back:hover{color:var(--ink)}
@@ -67,11 +91,14 @@
   .canvas-wrap{display:flex;flex-direction:column;align-items:center;gap:8px}
   #draw-canvas{display:block;touch-action:none;cursor:crosshair;border-radius:4px;border:1.5px solid var(--rule);box-shadow:inset 0 1px 4px rgba(13,26,18,0.05),0 2px 14px rgba(13,26,18,0.07)}
   .btn-clear{background:transparent;border:none;color:var(--inkfader);font-size:12px;cursor:pointer;letter-spacing:0.1em;font-family:inherit;padding:2px 0}.btn-clear:hover{color:var(--ink)}
-  .btn-reveal{background:var(--ink);color:var(--paper);border:none;border-radius:3px;padding:12px 52px;font-family:inherit;font-size:15px;letter-spacing:0.1em;cursor:pointer}.btn-reveal:hover{opacity:.85}
+  .reveal-row{display:flex;gap:10px;align-items:center}
+  .btn-reveal{background:var(--ink);color:var(--paper);border:none;border-radius:3px;padding:12px 40px;font-family:inherit;font-size:15px;letter-spacing:0.1em;cursor:pointer}.btn-reveal:hover{opacity:.85}
+  .btn-dontknow{background:transparent;border:1.5px solid var(--again);color:var(--again);border-radius:3px;padding:12px 16px;font-family:inherit;font-size:13px;letter-spacing:0.06em;cursor:pointer}.btn-dontknow:hover{background:var(--again);color:#fff}
   .answer-char{font-size:86px;color:var(--ink);font-family:serif;line-height:1;text-align:center}
   .answer-char.word{font-size:52px}
   .answer-rom{font-size:21px;color:var(--accent);margin-top:4px;text-align:center}
   .answer-eng{font-size:14px;color:var(--inkfade);margin-top:3px;text-align:center}
+  .answer-example{font-size:13px;color:var(--inkfader);margin-top:6px;text-align:center;font-style:italic}
   .grade-label{font-size:11px;color:var(--inkfader);letter-spacing:0.1em;text-align:center;margin-bottom:8px}
   .grade-bar{display:flex;gap:8px;justify-content:center}
   .btn-grade{width:84px;padding:9px 0;border-radius:3px;font-family:inherit;font-size:13px;font-weight:600;letter-spacing:0.04em;cursor:pointer;background:var(--paper);transition:background .15s}
@@ -114,6 +141,8 @@
     .study-left,.study-right{width:100%;min-height:auto;padding:48px 28px;border-right:none;border-bottom:1px solid var(--rule)}
     .study-right{border-bottom:none}
     .ref-grid{grid-template-columns:repeat(4,1fr)}.ref-modal{padding:28px 24px}
+    .review-header,#review-grid-phase{padding-left:28px;padding-right:28px}
+    .flip-card{width:90vw}
   }
 </style>
 </head>
@@ -121,10 +150,7 @@
 
 <div id="home-screen" class="screen active">
   <header>
-    <a class="logo" href="../index.html">
-      <span class="logo-script">ലിഖോ</span>
-      <span class="logo-en">LIKHO</span>
-    </a>
+    <a class="logo" href="../index.html"><span class="logo-script">ലിഖോ</span><span class="logo-en">LIKHO</span></a>
     <div class="header-right">
       <button class="btn-ghost" onclick="openRef()">reference</button>
       <a class="btn-back-home" href="../index.html">← all languages</a>
@@ -156,6 +182,35 @@
   <footer><span>ലിഖോ · malayalam · മലയാളം script</span><span>draw · reveal · grade · repeat</span></footer>
 </div>
 
+<div id="review-screen" class="screen">
+  <div class="review-header">
+    <button class="btn-back" onclick="goHome()">← decks</button>
+    <div class="review-title" id="review-title"></div>
+    <div class="review-sub" id="review-sub"></div>
+  </div>
+  <div id="review-grid-phase">
+    <div class="review-grid" id="review-grid"></div>
+    <div class="review-start-btn">
+      <button class="btn-filled btn-study" onclick="startFlip()">Flip through →</button>
+    </div>
+  </div>
+  <div id="review-flip-phase" style="display:none">
+    <div class="flip-card" id="flip-card" onclick="flipCard()">
+      <div class="flip-front-label" id="flip-front-label">TAP TO REVEAL</div>
+      <div class="flip-char" id="flip-char"></div>
+      <div class="flip-rom" id="flip-rom" style="display:none"></div>
+      <div class="flip-eng" id="flip-eng" style="display:none"></div>
+      <div class="flip-example" id="flip-example" style="display:none"></div>
+    </div>
+    <div class="flip-nav">
+      <button class="btn-flip-nav" onclick="flipNav(-1)">← prev</button>
+      <div class="flip-count" id="flip-count"></div>
+      <button class="btn-flip-nav" onclick="flipNav(1)">next →</button>
+    </div>
+    <button class="btn-start-study" onclick="startStudyFromReview()">Start writing practice →</button>
+  </div>
+</div>
+
 <div id="study-screen" class="screen">
   <div id="progress-bar"></div>
   <div class="study-nav">
@@ -165,7 +220,7 @@
   <div class="study-left">
     <div class="prompt-label" id="prompt-label"></div>
     <div id="prompt-main"></div>
-    <div class="hint">space to reveal</div>
+    <div class="hint">space to reveal · ? to skip</div>
   </div>
   <div class="study-right">
     <div class="canvas-wrap">
@@ -185,10 +240,7 @@
 
 <div id="ref-overlay" onclick="closeRefOverlay(event)">
   <div class="ref-modal">
-    <div class="ref-header">
-      <div class="ref-title">Malayalam Script Reference · അക്ഷരമാല</div>
-      <button class="btn-close" onclick="closeRef()">✕</button>
-    </div>
+    <div class="ref-header"><div class="ref-title">Malayalam Script Reference · അക്ഷരമാല</div><button class="btn-close" onclick="closeRef()">✕</button></div>
     <div class="ref-sec"><div class="ref-sec-label">VOWELS · സ്വരങ്ങൾ</div><div class="ref-grid" id="ref-vowels"></div></div>
     <div class="ref-sec"><div class="ref-sec-label">CONSONANTS · വ്യഞ്ജനങ്ങൾ</div><div class="ref-grid" id="ref-consonants"></div></div>
   </div>
@@ -206,9 +258,9 @@
 </div>
 
 <script>
-const VOWELS=[{id:"v1",h:"അ",r:"a",e:"short a"},{id:"v2",h:"ആ",r:"aa",e:"long a"},{id:"v3",h:"ഇ",r:"i",e:"short i"},{id:"v4",h:"ഈ",r:"ee",e:"long i"},{id:"v5",h:"ഉ",r:"u",e:"short u"},{id:"v6",h:"ഊ",r:"oo",e:"long u"},{id:"v7",h:"എ",r:"e",e:"short e"},{id:"v8",h:"ഏ",r:"ee",e:"long e"},{id:"v9",h:"ഐ",r:"ai",e:"diphthong ai"},{id:"v10",h:"ഒ",r:"o",e:"short o"},{id:"v11",h:"ഓ",r:"oo",e:"long o"},{id:"v12",h:"ഔ",r:"au",e:"diphthong au"},{id:"v13",h:"അം",r:"am",e:"anusvara — nasal"},{id:"v14",h:"അഃ",r:"ah",e:"visarga — aspirate"}];
-const CONSONANTS=[{id:"c1",h:"ക",r:"ka",e:"k sound"},{id:"c2",h:"ഖ",r:"kha",e:"kh aspirated"},{id:"c3",h:"ഗ",r:"ga",e:"g sound"},{id:"c4",h:"ഘ",r:"gha",e:"gh aspirated"},{id:"c5",h:"ങ",r:"nga",e:"ng nasal"},{id:"c6",h:"ച",r:"cha",e:"ch sound"},{id:"c7",h:"ഛ",r:"chha",e:"chh aspirated"},{id:"c8",h:"ജ",r:"ja",e:"j sound"},{id:"c9",h:"ഝ",r:"jha",e:"jh aspirated"},{id:"c10",h:"ഞ",r:"nya",e:"ny palatal nasal"},{id:"c11",h:"ട",r:"ṭa",e:"hard t retroflex"},{id:"c12",h:"ഠ",r:"ṭha",e:"hard th retroflex"},{id:"c13",h:"ഡ",r:"ḍa",e:"hard d retroflex"},{id:"c14",h:"ഢ",r:"ḍha",e:"hard dh retroflex"},{id:"c15",h:"ണ",r:"ṇa",e:"retroflex n"},{id:"c16",h:"ത",r:"ta",e:"soft t dental"},{id:"c17",h:"ഥ",r:"tha",e:"soft th dental"},{id:"c18",h:"ദ",r:"da",e:"soft d dental"},{id:"c19",h:"ധ",r:"dha",e:"soft dh dental"},{id:"c20",h:"ന",r:"na",e:"n sound"},{id:"c21",h:"പ",r:"pa",e:"p sound"},{id:"c22",h:"ഫ",r:"pha",e:"ph/f aspirated"},{id:"c23",h:"ബ",r:"ba",e:"b sound"},{id:"c24",h:"ഭ",r:"bha",e:"bh aspirated"},{id:"c25",h:"മ",r:"ma",e:"m sound"},{id:"c26",h:"യ",r:"ya",e:"y sound"},{id:"c27",h:"ര",r:"ra",e:"r rolled"},{id:"c28",h:"ല",r:"la",e:"l sound"},{id:"c29",h:"വ",r:"va",e:"v / w sound"},{id:"c30",h:"ശ",r:"sha",e:"sh palatal"},{id:"c31",h:"ഷ",r:"ṣha",e:"sh retroflex"},{id:"c32",h:"സ",r:"sa",e:"s sound"},{id:"c33",h:"ഹ",r:"ha",e:"h sound"},{id:"c34",h:"ള",r:"ḷa",e:"retroflex l"},{id:"c35",h:"ഴ",r:"zha",e:"unique Malayalam zh"},{id:"c36",h:"റ",r:"ṟa",e:"hard r alveolar"}];
-const WORD_DECKS=[{id:"greetings",label:"Greetings",cards:[{id:"w1",h:"നമസ്കാരം",r:"namaskaram",e:"Hello / Greetings"},{id:"w2",h:"നന്ദി",r:"nandi",e:"Thank you"},{id:"w3",h:"അതെ",r:"athe",e:"Yes"},{id:"w4",h:"ഇല്ല",r:"illa",e:"No"},{id:"w5",h:"ക്ഷമിക്കൂ",r:"kshamikkoo",e:"Sorry / Excuse me"},{id:"w6",h:"സുഖമാണോ",r:"sukhamaano",e:"Are you well?"},{id:"w7",h:"സുഖമാണ്",r:"sukhaman",e:"I am well"},{id:"w8",h:"വിട",r:"vida",e:"Goodbye"}]},{id:"family",label:"Family",cards:[{id:"fa1",h:"അമ്മ",r:"amma",e:"Mother"},{id:"fa2",h:"അച്ഛൻ",r:"acchan",e:"Father"},{id:"fa3",h:"ചേട്ടൻ",r:"chettan",e:"Elder brother"},{id:"fa4",h:"ചേച്ചി",r:"chechi",e:"Elder sister"},{id:"fa5",h:"അനിയൻ",r:"aniyan",e:"Younger brother"},{id:"fa6",h:"അനിയത്തി",r:"aniyathi",e:"Younger sister"},{id:"fa7",h:"മുത്തച്ഛൻ",r:"muthacchan",e:"Grandfather"},{id:"fa8",h:"മുത്തശ്ശി",r:"muthashi",e:"Grandmother"}]},{id:"body",label:"Body",cards:[{id:"b1",h:"കൈ",r:"kai",e:"Hand"},{id:"b2",h:"കാൽ",r:"kaal",e:"Foot / Leg"},{id:"b3",h:"കണ്ണ്",r:"kann",e:"Eye"},{id:"b4",h:"ചെവി",r:"chevi",e:"Ear"},{id:"b5",h:"മൂക്ക്",r:"mookku",e:"Nose"},{id:"b6",h:"വായ",r:"vaaya",e:"Mouth"},{id:"b7",h:"തല",r:"thala",e:"Head"},{id:"b8",h:"ഹൃദയം",r:"hridayam",e:"Heart"}]},{id:"food",label:"Food",cards:[{id:"fo1",h:"വെള്ളം",r:"vellam",e:"Water"},{id:"fo2",h:"ഭക്ഷണം",r:"bhakshanam",e:"Food"},{id:"fo3",h:"പാൽ",r:"paal",e:"Milk"},{id:"fo4",h:"ചായ",r:"chaaya",e:"Tea"},{id:"fo5",h:"ചോറ്",r:"choru",e:"Rice (cooked)"},{id:"fo6",h:"റൊട്ടി",r:"rotti",e:"Bread / Roti"},{id:"fo7",h:"കറി",r:"kari",e:"Curry"},{id:"fo8",h:"മധുരം",r:"madhuram",e:"Sweet"}]},{id:"numbers",label:"Numbers",cards:[{id:"n1",h:"ഒന്ന്",r:"onnu",e:"One"},{id:"n2",h:"രണ്ട്",r:"randu",e:"Two"},{id:"n3",h:"മൂന്ന്",r:"moonnu",e:"Three"},{id:"n4",h:"നാല്",r:"naalu",e:"Four"},{id:"n5",h:"അഞ്ച്",r:"anchu",e:"Five"},{id:"n6",h:"ആറ്",r:"aaru",e:"Six"},{id:"n7",h:"ഏഴ്",r:"eezhu",e:"Seven"},{id:"n8",h:"എട്ട്",r:"ettu",e:"Eight"},{id:"n9",h:"ഒൻപത്",r:"onpathu",e:"Nine"},{id:"n10",h:"പത്ത്",r:"paththu",e:"Ten"}]},{id:"colors",label:"Colors",cards:[{id:"col1",h:"ചുവപ്പ്",r:"chuvappu",e:"Red"},{id:"col2",h:"നീല",r:"neela",e:"Blue"},{id:"col3",h:"പച്ച",r:"pacha",e:"Green"},{id:"col4",h:"മഞ്ഞ",r:"manja",e:"Yellow"},{id:"col5",h:"വെള്ള",r:"vella",e:"White"},{id:"col6",h:"കറുപ്പ്",r:"karuppu",e:"Black"},{id:"col7",h:"ഓറഞ്ച്",r:"oranchu",e:"Orange"},{id:"col8",h:"പിങ്ക്",r:"pinku",e:"Pink"}]}];
+const VOWELS=[{id:"v1",h:"അ",r:"a",e:"short a",ex:"അമ്മ — amma (mother)"},{id:"v2",h:"ആ",r:"aa",e:"long a",ex:"ആന — aana (elephant)"},{id:"v3",h:"ഇ",r:"i",e:"short i",ex:"ഇല — ila (leaf)"},{id:"v4",h:"ഈ",r:"ee",e:"long i",ex:"ഈന്തപ്പഴം — eenthapazhom (date fruit)"},{id:"v5",h:"ഉ",r:"u",e:"short u",ex:"ഉണ്ണി — unni (baby boy)"},{id:"v6",h:"ഊ",r:"oo",e:"long u",ex:"ഊഞ്ഞാൽ — ooonnjaal (swing)"},{id:"v7",h:"എ",r:"e",e:"short e — like e in bed",ex:"എലി — eli (rat)"},{id:"v8",h:"ഏ",r:"ee",e:"long e — like a in gate",ex:"ഏണി — eeni (ladder)"},{id:"v9",h:"ഐ",r:"ai",e:"ai — like ai in aisle",ex:"ഐശ്വര്യം — aishwaryam (prosperity)"},{id:"v10",h:"ഒ",r:"o",e:"short o",ex:"ഒട്ടകം — ottakam (camel)"},{id:"v11",h:"ഓ",r:"oo",e:"long o — like o in go",ex:"ഓട്ടം — oottam (running)"},{id:"v12",h:"ഔ",r:"au",e:"au — like ow in how",ex:"ഔഷധം — aushadham (medicine)"},{id:"v13",h:"അം",r:"am",e:"anusvara — nasal",ex:""},{id:"v14",h:"അഃ",r:"ah",e:"visarga — aspirate",ex:""}];
+const CONSONANTS=[{id:"c1",h:"ക",r:"ka",e:"k sound",ex:"കണ്ണ് — kann (eye)"},{id:"c2",h:"ഖ",r:"kha",e:"kh aspirated",ex:"ഖേദം — khedam (sorrow)"},{id:"c3",h:"ഗ",r:"ga",e:"g sound",ex:"ഗണം — ganam (group)"},{id:"c4",h:"ഘ",r:"gha",e:"gh aspirated",ex:"ഘടം — ghatam (pot)"},{id:"c5",h:"ങ",r:"ṅa",e:"ng nasal",ex:"ങ — rare standalone"},{id:"c6",h:"ച",r:"ca",e:"ch sound",ex:"ചന്ദ്രൻ — chandran (moon)"},{id:"c7",h:"ഛ",r:"cha",e:"chh aspirated",ex:"ഛായ — chaaya (shadow)"},{id:"c8",h:"ജ",r:"ja",e:"j sound",ex:"ജലം — jalam (water)"},{id:"c9",h:"ഝ",r:"jha",e:"jh aspirated",ex:"ഝടിതി — jhatiti (quickly)"},{id:"c10",h:"ഞ",r:"ña",e:"ny palatal nasal",ex:"ഞാൻ — njaan (I/me)"},{id:"c11",h:"ട",r:"ṭa",e:"hard t retroflex",ex:"ടാ — taa (hey!)"},{id:"c12",h:"ഠ",r:"ṭha",e:"hard th retroflex",ex:"ഠ — rare"},{id:"c13",h:"ഡ",r:"ḍa",e:"hard d retroflex",ex:"ഡ്രം — drum"},{id:"c14",h:"ഢ",r:"ḍha",e:"hard dh retroflex",ex:"ഢ — rare"},{id:"c15",h:"ണ",r:"ṇa",e:"retroflex n",ex:"മണൽ — manal (sand)"},{id:"c16",h:"ത",r:"ta",e:"soft t dental",ex:"തല — thala (head)"},{id:"c17",h:"ഥ",r:"tha",e:"soft th dental",ex:"ഥ — rare"},{id:"c18",h:"ദ",r:"da",e:"soft d dental",ex:"ദയ — daya (mercy)"},{id:"c19",h:"ധ",r:"dha",e:"soft dh dental",ex:"ധൈര്യം — dhairyam (courage)"},{id:"c20",h:"ന",r:"na",e:"n sound",ex:"നല്ല — nalla (good)"},{id:"c21",h:"പ",r:"pa",e:"p sound",ex:"പൂ — poo (flower)"},{id:"c22",h:"ഫ",r:"pha",e:"ph/f aspirated",ex:"ഫലം — phalam (fruit)"},{id:"c23",h:"ബ",r:"ba",e:"b sound",ex:"ബഹുമാനം — bahumaanam (respect)"},{id:"c24",h:"ഭ",r:"bha",e:"bh aspirated",ex:"ഭക്ഷണം — bhakshanam (food)"},{id:"c25",h:"മ",r:"ma",e:"m sound",ex:"മലയാളം — malayaalam"},{id:"c26",h:"യ",r:"ya",e:"y sound",ex:"യന്ത്രം — yantram (machine)"},{id:"c27",h:"ര",r:"ra",e:"r sound",ex:"രാത്രി — raathri (night)"},{id:"c28",h:"ല",r:"la",e:"l sound",ex:"ലോകം — lokam (world)"},{id:"c29",h:"വ",r:"va",e:"v sound",ex:"വാ — vaa (come)"},{id:"c30",h:"ശ",r:"sha",e:"sh palatal",ex:"ശബ്ദം — shabdam (sound)"},{id:"c31",h:"ഷ",r:"ṣha",e:"sh retroflex",ex:"ഷർട്ട് — shirt"},{id:"c32",h:"സ",r:"sa",e:"s sound",ex:"സൂര്യൻ — sooryan (sun)"},{id:"c33",h:"ഹ",r:"ha",e:"h sound",ex:"ഹൃദയം — hridayam (heart)"},{id:"c34",h:"ള",r:"ḷa",e:"retroflex l",ex:"കള — kala (weed)"},{id:"c35",h:"ഴ",r:"zha",e:"unique Malayalam zh",ex:"ഴ — മഴ — mazha (rain)"},{id:"c36",h:"റ",r:"ṟa",e:"hard r — alveolar",ex:"റോഡ് — road"}];
+const WORD_DECKS=[{id:"greetings",label:"Greetings",cards:[{id:"w1",h:"നമസ്കാരം",r:"namaskaram",e:"Hello / Greetings",ex:""},{id:"w2",h:"നന്ദി",r:"nandi",e:"Thank you",ex:""},{id:"w3",h:"അതെ",r:"athe",e:"Yes",ex:""},{id:"w4",h:"ഇല്ല",r:"illa",e:"No",ex:""},{id:"w5",h:"ക്ഷമിക്കൂ",r:"kshamikkoo",e:"Sorry / Excuse me",ex:""},{id:"w6",h:"സുഖമാണോ",r:"sukhamaano",e:"Are you well?",ex:""},{id:"w7",h:"സുഖമാണ്",r:"sukhaman",e:"I am well",ex:""},{id:"w8",h:"വിട",r:"vida",e:"Goodbye",ex:""}]},{id:"family",label:"Family",cards:[{id:"fa1",h:"അമ്മ",r:"amma",e:"Mother",ex:""},{id:"fa2",h:"അച്ഛൻ",r:"acchan",e:"Father",ex:""},{id:"fa3",h:"ചേട്ടൻ",r:"chettan",e:"Elder brother",ex:""},{id:"fa4",h:"ചേച്ചി",r:"chechi",e:"Elder sister",ex:""},{id:"fa5",h:"അനിയൻ",r:"aniyan",e:"Younger brother",ex:""},{id:"fa6",h:"അനിയത്തി",r:"aniyathi",e:"Younger sister",ex:""},{id:"fa7",h:"മുത്തച്ഛൻ",r:"muthacchan",e:"Grandfather",ex:""},{id:"fa8",h:"മുത്തശ്ശി",r:"muthashi",e:"Grandmother",ex:""}]},{id:"body",label:"Body",cards:[{id:"b1",h:"കൈ",r:"kai",e:"Hand",ex:""},{id:"b2",h:"കാൽ",r:"kaal",e:"Foot / Leg",ex:""},{id:"b3",h:"കണ്ണ്",r:"kann",e:"Eye",ex:""},{id:"b4",h:"ചെവി",r:"chevi",e:"Ear",ex:""},{id:"b5",h:"മൂക്ക്",r:"mookku",e:"Nose",ex:""},{id:"b6",h:"വായ",r:"vaaya",e:"Mouth",ex:""},{id:"b7",h:"തല",r:"thala",e:"Head",ex:""},{id:"b8",h:"ഹൃദയം",r:"hridayam",e:"Heart",ex:""}]},{id:"food",label:"Food",cards:[{id:"fo1",h:"വെള്ളം",r:"vellam",e:"Water",ex:""},{id:"fo2",h:"ഭക്ഷണം",r:"bhakshanam",e:"Food",ex:""},{id:"fo3",h:"പാൽ",r:"paal",e:"Milk",ex:""},{id:"fo4",h:"ചായ",r:"chaaya",e:"Tea",ex:""},{id:"fo5",h:"ചോറ്",r:"choru",e:"Rice (cooked)",ex:""},{id:"fo6",h:"റൊട്ടി",r:"rotti",e:"Bread",ex:""},{id:"fo7",h:"കറി",r:"kari",e:"Curry",ex:""},{id:"fo8",h:"മധുരം",r:"madhuram",e:"Sweet",ex:""}]},{id:"numbers",label:"Numbers",cards:[{id:"n1",h:"ഒന്ന്",r:"onnu",e:"One",ex:""},{id:"n2",h:"രണ്ട്",r:"randu",e:"Two",ex:""},{id:"n3",h:"മൂന്ന്",r:"moonnu",e:"Three",ex:""},{id:"n4",h:"നാല്",r:"naalu",e:"Four",ex:""},{id:"n5",h:"അഞ്ച്",r:"anchu",e:"Five",ex:""},{id:"n6",h:"ആറ്",r:"aaru",e:"Six",ex:""},{id:"n7",h:"ഏഴ്",r:"eezhu",e:"Seven",ex:""},{id:"n8",h:"എട്ട്",r:"ettu",e:"Eight",ex:""},{id:"n9",h:"ഒൻപത്",r:"onpathu",e:"Nine",ex:""},{id:"n10",h:"പത്ത്",r:"paththu",e:"Ten",ex:""}]},{id:"colors",label:"Colors",cards:[{id:"col1",h:"ചുവപ്പ്",r:"chuvappu",e:"Red",ex:""},{id:"col2",h:"നീല",r:"neela",e:"Blue",ex:""},{id:"col3",h:"പച്ച",r:"pacha",e:"Green",ex:""},{id:"col4",h:"മഞ്ഞ",r:"manja",e:"Yellow",ex:""},{id:"col5",h:"വെള്ള",r:"vella",e:"White",ex:""},{id:"col6",h:"കറുപ്പ്",r:"karuppu",e:"Black",ex:""},{id:"col7",h:"ഓറഞ്ച്",r:"oranchu",e:"Orange",ex:""},{id:"col8",h:"പിങ്ക്",r:"pinku",e:"Pink",ex:""}]}];
 const ALL_DECKS=[
   {id:"vowels",label:"Vowels",sub:"14 characters",cards:VOWELS,isScript:true},
   {id:"consonants",label:"Consonants",sub:"36 characters",cards:CONSONANTS,isScript:true},
@@ -220,16 +272,11 @@ const SRS_KEY="likho_malayalam_srs";
 function loadSRS(){try{return JSON.parse(localStorage.getItem(SRS_KEY)||"{}")}catch{return{}}}
 function saveSRS(s){try{localStorage.setItem(SRS_KEY,JSON.stringify(s))}catch{}}
 function initCard(){return{interval:1,ease:2.5,due:0,reps:0}}
-function stepSRS(s,q){
-  const ease=Math.max(1.3,s.ease+[-0.3,-0.15,0,0.15][q]);
-  const interval=q===0?1:s.reps===0?1:s.reps===1?3:Math.round(s.interval*ease);
-  return{interval,ease,due:Date.now()+interval*86400000,reps:q===0?0:s.reps+1};
-}
+function stepSRS(s,q){const ease=Math.max(1.3,s.ease+[-0.3,-0.15,0,0.15][q]);const interval=q===0?1:s.reps===0?1:s.reps===1?3:Math.round(s.interval*ease);return{interval,ease,due:Date.now()+interval*86400000,reps:q===0?0:s.reps+1}}
 function dueCards(cards){return cards.filter(c=>(SRS[c.id]?.due??0)<=Date.now())}
 let SRS=loadSRS();
 
-// ── CANVAS — DRAVIDIAN CENTER-MASS GRID ───────────────────────────────────────
-// These scripts float around a center axis — no top bar reference
+// CANVAS — DRAVIDIAN CENTER-MASS
 const cv=document.getElementById("draw-canvas"),ctx=cv.getContext("2d");
 let drawing=false,lx=0,ly=0,ghostChar=null;
 function xy(e){const r=cv.getBoundingClientRect(),sx=cv.width/r.width,sy=cv.height/r.height,s=e.touches?e.touches[0]:e;return[(s.clientX-r.left)*sx,(s.clientY-r.top)*sy]}
@@ -237,11 +284,8 @@ function drawGrid(){
   const W=cv.width,H=cv.height;
   ctx.clearRect(0,0,W,H);
   ctx.fillStyle="#F4F7F5";ctx.fillRect(0,0,W,H);
-  // Faint horizontal lines
   ctx.strokeStyle="rgba(13,26,18,0.05)";ctx.lineWidth=1;
   for(let y=40;y<H;y+=40){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}
-  // ── DRAVIDIAN: prominent center crosshair ──
-  // Characters are center-mass — vertical and horizontal center guides
   ctx.strokeStyle="rgba(26,107,90,0.18)";ctx.lineWidth=1.5;ctx.setLineDash([]);
   ctx.beginPath();ctx.moveTo(0,H/2);ctx.lineTo(W,H/2);ctx.stroke();
   ctx.strokeStyle="rgba(26,107,90,0.10)";ctx.lineWidth=1;
@@ -263,6 +307,7 @@ cv.addEventListener("touchmove",e=>{e.preventDefault();if(!drawing)return;const[
 cv.addEventListener("touchend",()=>drawing=false);
 
 let currentDeck=null,queue=[],qIdx=0,currentCard=null,isRevealed=false,sessionGrades=[];
+let reviewDeck=null,reviewCards=[],flipIdx=0,flipShown=false;
 
 function renderHome(){
   const totalCards=ALL_CARDS.length;
@@ -280,45 +325,77 @@ function renderHome(){
     el.innerHTML=decks.map(deck=>{
       const dueN=dueCards(deck.cards).length,done=dueN===0,total=deck.cards.length;
       const seenN=deck.cards.filter(c=>(SRS[c.id]?.reps??0)>0).length;
-      return`<div class="deck-row"><div class="deck-info"><div class="deck-name">${deck.label}</div><div class="deck-meta"><span class="deck-sub">${deck.sub}</span>${seenN>0?`<span class="deck-seen">${seenN}/${total} seen</span>`:""}<span class="deck-due ${done?"due-off":"due-on"}">${done?"✓ caught up":`${dueN} due`}</span></div></div><div class="prog-track"><div class="prog-fill" style="width:${(seenN/total)*100}%"></div></div><button class="btn-study ${done?"btn-outline":"btn-filled"}" onclick="startStudy(\'${deck.id}\')">${done?"review":"study"}</button></div>`;
+      const reviewBtn=deck.isScript?`<button class="btn-review-deck" onclick="startReview('${deck.id}')">browse</button>`:"";
+      return`<div class="deck-row"><div class="deck-info"><div class="deck-name">${deck.label}</div><div class="deck-meta"><span class="deck-sub">${deck.sub}</span>${seenN>0?`<span class="deck-seen">${seenN}/${total} seen</span>`:""}<span class="deck-due ${done?"due-off":"due-on"}">${done?"✓ caught up":`${dueN} due`}</span></div></div><div class="prog-track"><div class="prog-fill" style="width:${(seenN/total)*100}%"></div></div><div class="deck-btns">${reviewBtn}<button class="btn-study ${done?"btn-outline":"btn-filled"}" onclick="startStudy('${deck.id}')">${done?"review":"study"}</button></div></div>`;
     }).join("");
   });
   buildRef();
 }
+function startReview(id){
+  reviewDeck=ALL_DECKS.find(d=>d.id===id);
+  reviewCards=reviewDeck.cards;flipIdx=0;flipShown=false;
+  document.getElementById("review-title").textContent=reviewDeck.label+" — Browse";
+  document.getElementById("review-sub").textContent=reviewCards.length+" characters";
+  document.getElementById("review-grid").innerHTML=reviewCards.map((c,i)=>`<div class="review-grid-card" id="rgc-${i}" onclick="highlightGrid(${i})"><div class="review-grid-char">${c.h}</div><div class="review-grid-rom">${c.r}</div><div class="review-grid-eng">${c.e}</div></div>`).join("");
+  document.getElementById("review-grid-phase").style.display="block";
+  document.getElementById("review-flip-phase").style.display="none";
+  showScreen("review");
+}
+function highlightGrid(i){document.querySelectorAll(".review-grid-card").forEach(el=>el.classList.remove("active"));document.getElementById("rgc-"+i)?.classList.add("active")}
+function startFlip(){flipIdx=0;flipShown=false;document.getElementById("review-grid-phase").style.display="none";document.getElementById("review-flip-phase").style.display="flex";renderFlip()}
+function renderFlip(){
+  const c=reviewCards[flipIdx];
+  document.getElementById("flip-card").classList.remove("flipped");
+  document.getElementById("flip-front-label").style.display="block";
+  document.getElementById("flip-char").textContent=c.h;document.getElementById("flip-char").style.display="block";
+  document.getElementById("flip-rom").style.display="none";document.getElementById("flip-eng").style.display="none";document.getElementById("flip-example").style.display="none";
+  document.getElementById("flip-count").textContent=`${flipIdx+1} / ${reviewCards.length}`;
+  flipShown=false;
+}
+function flipCard(){
+  if(flipShown){flipNav(1);return;}
+  const c=reviewCards[flipIdx];
+  document.getElementById("flip-card").classList.add("flipped");
+  document.getElementById("flip-front-label").style.display="none";
+  document.getElementById("flip-rom").textContent=c.r;document.getElementById("flip-rom").style.display="block";
+  document.getElementById("flip-eng").textContent=c.e;document.getElementById("flip-eng").style.display="block";
+  if(c.ex){document.getElementById("flip-example").textContent=c.ex;document.getElementById("flip-example").style.display="block";}
+  flipShown=true;
+}
+function flipNav(dir){flipIdx=Math.max(0,Math.min(reviewCards.length-1,flipIdx+dir));renderFlip()}
+function startStudyFromReview(){startStudy(reviewDeck.id)}
 function startStudy(id){
   currentDeck=ALL_DECKS.find(d=>d.id===id);
   const due=dueCards(currentDeck.cards);
   queue=(due.length>0?[...due]:[...currentDeck.cards]).sort(()=>Math.random()-.5);
   qIdx=0;sessionGrades=[];isRevealed=false;ghostChar=null;showScreen("study");loadCard();
 }
-function resizeCanvas(){
-  const isWord=!currentDeck.isScript;
-  const W=isWord?580:320, H=320;
-  cv.width=W; cv.height=H;
-  cv.style.width=W+"px"; cv.style.height=H+"px";
-}
-
+function resizeCanvas(){const isWord=!currentDeck.isScript;const W=isWord?580:320,H=320;cv.width=W;cv.height=H;cv.style.width=W+"px";cv.style.height=H+"px"}
 function loadCard(){
   if(qIdx>=queue.length){showDone();return}
-  currentCard=queue[qIdx];isRevealed=false;ghostChar=null;
-  resizeCanvas(); drawGrid();
+  currentCard=queue[qIdx];isRevealed=false;ghostChar=null;resizeCanvas();drawGrid();
   document.getElementById("progress-bar").style.width=(qIdx/queue.length*50)+"vw";
   document.getElementById("study-count").textContent=`${qIdx+1} / ${queue.length}`;
   document.getElementById("prompt-label").textContent=currentDeck.isScript?"WRITE THIS CHARACTER":"WRITE IN MALAYALAM";
   document.getElementById("prompt-main").innerHTML=currentDeck.isScript?`<div class="prompt-rom-script">${currentCard.r}</div><div class="prompt-eng-script">${currentCard.e}</div>`:`<div class="prompt-word">${currentCard.e}</div><div class="prompt-rom">${currentCard.r}</div>`;
-  document.getElementById("reveal-area").innerHTML=`<button class="btn-reveal" onclick="reveal()">reveal</button>`;
+  document.getElementById("reveal-area").innerHTML=`<div class="reveal-row"><button class="btn-reveal" onclick="reveal()">reveal</button><button class="btn-dontknow" onclick="dontKnow()">don't know</button></div>`;
 }
-function reveal(){
-  isRevealed=true;ghostChar=currentCard.h;drawGrid();
-  document.getElementById("reveal-area").innerHTML=`<div style="text-align:center"><div class="answer-char">${currentCard.h}</div><div class="answer-rom">${currentCard.r}</div>${!currentDeck.isScript?`<div class="answer-eng">${currentCard.e}</div>`:""}</div><div><div class="grade-label">HOW DID YOU DO?</div><div class="grade-bar"><button class="btn-grade g-again" onclick="grade(0)">Again<span>[1]</span></button><button class="btn-grade g-hard" onclick="grade(1)">Hard<span>[2]</span></button><button class="btn-grade g-good" onclick="grade(2)">Good<span>[3]</span></button><button class="btn-grade g-easy" onclick="grade(3)">Easy<span>[4]</span></button></div></div>`;
+function dontKnow(){
+  SRS[currentCard.id]=stepSRS(SRS[currentCard.id]??initCard(),0);saveSRS(SRS);sessionGrades.push(0);
+  isRevealed=true;ghostChar=currentCard.h;drawGrid();showAnswer();
+}
+function reveal(){isRevealed=true;ghostChar=currentCard.h;drawGrid();showAnswer()}
+function showAnswer(){
+  const isWord=!currentDeck.isScript;
+  const exHtml=(!isWord&&currentCard.ex)?`<div class="answer-example">${currentCard.ex}</div>`:"";
+  document.getElementById("reveal-area").innerHTML=`<div style="text-align:center"><div class="answer-char${isWord?" word":""}">${currentCard.h}</div><div class="answer-rom">${currentCard.r}</div>${isWord?`<div class="answer-eng">${currentCard.e}</div>`:""}${exHtml}</div><div><div class="grade-label">HOW DID YOU DO?</div><div class="grade-bar"><button class="btn-grade g-again" onclick="grade(0)">Again<span>[1]</span></button><button class="btn-grade g-hard" onclick="grade(1)">Hard<span>[2]</span></button><button class="btn-grade g-good" onclick="grade(2)">Good<span>[3]</span></button><button class="btn-grade g-easy" onclick="grade(3)">Easy<span>[4]</span></button></div></div>`;
 }
 function grade(q){SRS[currentCard.id]=stepSRS(SRS[currentCard.id]??initCard(),q);saveSRS(SRS);sessionGrades.push(q);qIdx++;loadCard()}
 function showDone(){
   const c=[0,1,2,3].map(q=>sessionGrades.filter(g=>g===q).length);
   const pct=Math.round(((c[2]+c[3])/sessionGrades.length)*100);
-  const[w,s]=pct>=80?["നന്നായി","well done"]:pct>=50?["ശരി","good effort"]:[["വീണ്ടും"],"keep practicing"];
-  document.getElementById("done-word").textContent=Array.isArray(w)?w[0]:w;
-  document.getElementById("done-sub").textContent=s;
+  const[w,s]=pct>=80?["നന്നായി","well done"]:pct>=50?["ശരി","good effort"]:["വീണ്ടും","keep practicing"];
+  document.getElementById("done-word").textContent=w;document.getElementById("done-sub").textContent=s;
   const cols=["var(--again)","var(--hard)","var(--good)","var(--easy)"],lbs=["again","hard","good","easy"];
   document.getElementById("done-grades").innerHTML=c.map((n,i)=>`<div class="done-box"><div class="done-num" style="color:${cols[i]}">${n}</div><div class="done-lbl" style="color:${cols[i]}">${lbs[i]}</div></div>`).join("");
   showScreen("done");
@@ -339,8 +416,13 @@ function doReset(){localStorage.removeItem(SRS_KEY);SRS={};closeConfirm();render
 function showScreen(n){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));document.getElementById(`${n}-screen`).classList.add("active")}
 function goHome(){showScreen("home");renderHome()}
 document.addEventListener("keydown",e=>{
+  if(document.getElementById("review-screen").classList.contains("active")){
+    if(e.key==="ArrowRight")flipNav(1);if(e.key==="ArrowLeft")flipNav(-1);
+    if(e.key===" "){e.preventDefault();flipCard();}return;
+  }
   if(!document.getElementById("study-screen").classList.contains("active"))return;
   if(e.key===" "&&!isRevealed){e.preventDefault();reveal();return}
+  if(e.key==="?"&&!isRevealed){dontKnow();return}
   if(e.key==="1"&&isRevealed)grade(0);if(e.key==="2"&&isRevealed)grade(1);
   if(e.key==="3"&&isRevealed)grade(2);if(e.key==="4"&&isRevealed)grade(3);
 });

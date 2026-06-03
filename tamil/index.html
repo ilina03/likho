@@ -4,20 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Likho · Tamil · தமிழ் Writing Practice</title>
-<meta name="description" content="Free Tamil script writing practice for heritage speakers.">
+<meta name="description" content="Free Indian script writing practice for heritage speakers.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
 <style>
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-  :root{
-    --paper:#F9F4F2;--paperdark:#EFE7E3;--ink:#1F0D08;
-    --inkfade:#6B3A2A;--inkfader:#B08878;--rule:rgba(31,13,8,0.1);
-    --accent:#8A3A2A;--again:#B53A2A;--hard:#B07020;--good:#3A7A4A;--easy:#2A5A8A;
-  }
+  :root{--paper:#F9F4F2;--paperdark:#EFE7E3;--ink:#1F0D08;--inkfade:#6B3A2A;--inkfader:#B08878;--rule:rgba(31,13,8,0.1);--accent:#8A3A2A;--again:#B53A2A;--hard:#B07020;--good:#3A7A4A;--easy:#2A5A8A;}
   body{background:var(--paper);color:var(--ink);font-family:'Crimson Pro',Georgia,serif;min-height:100vh}
   ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--paperdark)}::-webkit-scrollbar-thumb{background:var(--inkfader);border-radius:3px}
   .screen{display:none;min-height:100vh}.screen.active{display:block}
   #study-screen{display:none;flex-direction:row}#study-screen.active{display:flex}
+  #review-screen{display:none;flex-direction:column;min-height:100vh}#review-screen.active{display:flex}
   #done-screen{display:none;align-items:center;justify-content:center;flex-direction:column;gap:36px;min-height:100vh}#done-screen.active{display:flex}
   header{border-bottom:1px solid var(--rule);padding:0 64px;display:flex;align-items:center;justify-content:space-between;height:64px}
   .logo{display:flex;align-items:baseline;gap:12px;text-decoration:none;color:var(--ink)}
@@ -48,10 +45,37 @@
   .deck-due{font-size:11px;font-weight:600;letter-spacing:0.06em}.due-on{color:var(--accent)}.due-off{color:var(--good)}
   .prog-track{width:72px;height:3px;background:var(--paperdark);border-radius:99px;margin:0 20px;overflow:hidden}
   .prog-fill{height:100%;background:var(--accent);border-radius:99px;transition:width .6s}
+  .deck-btns{display:flex;gap:8px}
+  .btn-review-deck{border:1.5px solid var(--accent);border-radius:3px;padding:7px 14px;text-align:center;font-family:inherit;font-size:12px;letter-spacing:0.08em;cursor:pointer;transition:all .15s;background:transparent;color:var(--accent)}.btn-review-deck:hover{background:var(--accent);color:var(--paper)}
   .btn-study{border:1.5px solid var(--ink);border-radius:3px;padding:7px 22px;min-width:84px;text-align:center;font-family:inherit;font-size:13px;letter-spacing:0.1em;cursor:pointer;transition:all .15s}
   .btn-filled{background:var(--ink);color:var(--paper)}.btn-outline{background:transparent;color:var(--ink)}
   .btn-filled:hover{background:var(--paper);color:var(--ink)}.btn-outline:hover{background:var(--ink);color:var(--paper)}
   footer{padding:36px 64px;margin-top:24px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;font-size:12px;color:var(--inkfader);letter-spacing:0.06em}
+  /* REVIEW */
+  .review-header{padding:20px 64px;border-bottom:1px solid var(--rule);display:flex;align-items:center;gap:16px}
+  .review-title{font-size:16px;font-weight:600;color:var(--ink)}
+  .review-sub{font-size:12px;color:var(--inkfader);margin-left:auto}
+  #review-grid-phase{padding:40px 64px}
+  .review-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:12px;max-width:900px}
+  .review-grid-card{background:var(--paperdark);border:1.5px solid var(--rule);border-radius:6px;padding:16px 8px;text-align:center;cursor:pointer;transition:all .15s}
+  .review-grid-card:hover,.review-grid-card.active{border-color:var(--accent);background:var(--paper)}
+  .review-grid-char{font-size:38px;font-family:serif;color:var(--ink);line-height:1.1}
+  .review-grid-rom{font-size:11px;color:var(--accent);margin-top:4px}
+  .review-grid-eng{font-size:9px;color:var(--inkfader);margin-top:2px;line-height:1.3}
+  .review-start-btn{margin-top:32px}
+  #review-flip-phase{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;padding:60px 48px}
+  .flip-card{width:420px;max-width:90vw;min-height:260px;background:var(--paperdark);border:1.5px solid var(--rule);border-radius:12px;padding:40px 36px;text-align:center;cursor:pointer;transition:all .2s;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px}
+  .flip-card.flipped{background:var(--paper);border-color:var(--accent)}
+  .flip-front-label{font-size:10px;color:var(--inkfader);letter-spacing:0.16em}
+  .flip-char{font-size:96px;font-family:serif;color:var(--ink);line-height:1}
+  .flip-rom{font-size:24px;color:var(--accent);font-style:italic}
+  .flip-eng{font-size:15px;color:var(--inkfade)}
+  .flip-example{font-size:13px;color:var(--inkfader);margin-top:4px;font-style:italic}
+  .flip-nav{display:flex;gap:12px;align-items:center}
+  .btn-flip-nav{background:transparent;border:1.5px solid var(--rule);border-radius:3px;padding:8px 20px;font-family:inherit;font-size:13px;color:var(--inkfade);cursor:pointer;letter-spacing:0.06em;transition:all .15s}.btn-flip-nav:hover{border-color:var(--ink);color:var(--ink)}
+  .flip-count{font-size:12px;color:var(--inkfader);min-width:60px;text-align:center}
+  .btn-start-study{background:var(--ink);color:var(--paper);border:none;border-radius:3px;padding:10px 28px;font-family:inherit;font-size:13px;letter-spacing:0.08em;cursor:pointer}.btn-start-study:hover{opacity:.85}
+  /* STUDY */
   #progress-bar{position:fixed;top:0;left:0;height:2px;background:var(--accent);transition:width .4s;z-index:10}
   .study-nav{position:fixed;top:20px;left:24px;display:flex;align-items:center;gap:16px;z-index:10}
   .btn-back{background:transparent;border:none;color:var(--inkfader);cursor:pointer;font-size:13px;letter-spacing:0.08em;font-family:inherit;padding:0}.btn-back:hover{color:var(--ink)}
@@ -67,11 +91,14 @@
   .canvas-wrap{display:flex;flex-direction:column;align-items:center;gap:8px}
   #draw-canvas{display:block;touch-action:none;cursor:crosshair;border-radius:4px;border:1.5px solid var(--rule);box-shadow:inset 0 1px 4px rgba(31,13,8,0.05),0 2px 14px rgba(31,13,8,0.07)}
   .btn-clear{background:transparent;border:none;color:var(--inkfader);font-size:12px;cursor:pointer;letter-spacing:0.1em;font-family:inherit;padding:2px 0}.btn-clear:hover{color:var(--ink)}
-  .btn-reveal{background:var(--ink);color:var(--paper);border:none;border-radius:3px;padding:12px 52px;font-family:inherit;font-size:15px;letter-spacing:0.1em;cursor:pointer}.btn-reveal:hover{opacity:.85}
+  .reveal-row{display:flex;gap:10px;align-items:center}
+  .btn-reveal{background:var(--ink);color:var(--paper);border:none;border-radius:3px;padding:12px 40px;font-family:inherit;font-size:15px;letter-spacing:0.1em;cursor:pointer}.btn-reveal:hover{opacity:.85}
+  .btn-dontknow{background:transparent;border:1.5px solid var(--again);color:var(--again);border-radius:3px;padding:12px 16px;font-family:inherit;font-size:13px;letter-spacing:0.06em;cursor:pointer}.btn-dontknow:hover{background:var(--again);color:#fff}
   .answer-char{font-size:86px;color:var(--ink);font-family:serif;line-height:1;text-align:center}
   .answer-char.word{font-size:52px}
   .answer-rom{font-size:21px;color:var(--accent);margin-top:4px;text-align:center}
   .answer-eng{font-size:14px;color:var(--inkfade);margin-top:3px;text-align:center}
+  .answer-example{font-size:13px;color:var(--inkfader);margin-top:6px;text-align:center;font-style:italic}
   .grade-label{font-size:11px;color:var(--inkfader);letter-spacing:0.1em;text-align:center;margin-bottom:8px}
   .grade-bar{display:flex;gap:8px;justify-content:center}
   .btn-grade{width:84px;padding:9px 0;border-radius:3px;font-family:inherit;font-size:13px;font-weight:600;letter-spacing:0.04em;cursor:pointer;background:var(--paper);transition:background .15s}
@@ -114,6 +141,8 @@
     .study-left,.study-right{width:100%;min-height:auto;padding:48px 28px;border-right:none;border-bottom:1px solid var(--rule)}
     .study-right{border-bottom:none}
     .ref-grid{grid-template-columns:repeat(4,1fr)}.ref-modal{padding:28px 24px}
+    .review-header,#review-grid-phase{padding-left:28px;padding-right:28px}
+    .flip-card{width:90vw}
   }
 </style>
 </head>
@@ -121,10 +150,7 @@
 
 <div id="home-screen" class="screen active">
   <header>
-    <a class="logo" href="../index.html">
-      <span class="logo-script">லிகோ</span>
-      <span class="logo-en">LIKHO</span>
-    </a>
+    <a class="logo" href="../index.html"><span class="logo-script">லிகோ</span><span class="logo-en">LIKHO</span></a>
     <div class="header-right">
       <button class="btn-ghost" onclick="openRef()">reference</button>
       <a class="btn-back-home" href="../index.html">← all languages</a>
@@ -156,6 +182,35 @@
   <footer><span>லிகோ · tamil · தமிழ் script</span><span>draw · reveal · grade · repeat</span></footer>
 </div>
 
+<div id="review-screen" class="screen">
+  <div class="review-header">
+    <button class="btn-back" onclick="goHome()">← decks</button>
+    <div class="review-title" id="review-title"></div>
+    <div class="review-sub" id="review-sub"></div>
+  </div>
+  <div id="review-grid-phase">
+    <div class="review-grid" id="review-grid"></div>
+    <div class="review-start-btn">
+      <button class="btn-filled btn-study" onclick="startFlip()">Flip through →</button>
+    </div>
+  </div>
+  <div id="review-flip-phase" style="display:none">
+    <div class="flip-card" id="flip-card" onclick="flipCard()">
+      <div class="flip-front-label" id="flip-front-label">TAP TO REVEAL</div>
+      <div class="flip-char" id="flip-char"></div>
+      <div class="flip-rom" id="flip-rom" style="display:none"></div>
+      <div class="flip-eng" id="flip-eng" style="display:none"></div>
+      <div class="flip-example" id="flip-example" style="display:none"></div>
+    </div>
+    <div class="flip-nav">
+      <button class="btn-flip-nav" onclick="flipNav(-1)">← prev</button>
+      <div class="flip-count" id="flip-count"></div>
+      <button class="btn-flip-nav" onclick="flipNav(1)">next →</button>
+    </div>
+    <button class="btn-start-study" onclick="startStudyFromReview()">Start writing practice →</button>
+  </div>
+</div>
+
 <div id="study-screen" class="screen">
   <div id="progress-bar"></div>
   <div class="study-nav">
@@ -165,7 +220,7 @@
   <div class="study-left">
     <div class="prompt-label" id="prompt-label"></div>
     <div id="prompt-main"></div>
-    <div class="hint">space to reveal</div>
+    <div class="hint">space to reveal · ? to skip</div>
   </div>
   <div class="study-right">
     <div class="canvas-wrap">
@@ -185,10 +240,7 @@
 
 <div id="ref-overlay" onclick="closeRefOverlay(event)">
   <div class="ref-modal">
-    <div class="ref-header">
-      <div class="ref-title">Tamil Script Reference · எழுத்துக்கள்</div>
-      <button class="btn-close" onclick="closeRef()">✕</button>
-    </div>
+    <div class="ref-header"><div class="ref-title">Tamil Script Reference · எழுத்துக்கள்</div><button class="btn-close" onclick="closeRef()">✕</button></div>
     <div class="ref-sec"><div class="ref-sec-label">VOWELS · உயிரெழுத்து (uyir — soul letters)</div><div class="ref-grid" id="ref-vowels"></div></div>
     <div class="ref-sec"><div class="ref-sec-label">CONSONANTS · மெய்யெழுத்து (mei — body letters)</div><div class="ref-grid" id="ref-consonants"></div></div>
   </div>
@@ -206,9 +258,9 @@
 </div>
 
 <script>
-const VOWELS=[{id:"v1",h:"அ",r:"a",e:"short a"},{id:"v2",h:"ஆ",r:"aa",e:"long a"},{id:"v3",h:"இ",r:"i",e:"short i"},{id:"v4",h:"ஈ",r:"ee",e:"long i"},{id:"v5",h:"உ",r:"u",e:"short u"},{id:"v6",h:"ஊ",r:"oo",e:"long u"},{id:"v7",h:"எ",r:"e",e:"short e"},{id:"v8",h:"ஏ",r:"ee",e:"long e"},{id:"v9",h:"ஐ",r:"ai",e:"diphthong ai"},{id:"v10",h:"ஒ",r:"o",e:"short o"},{id:"v11",h:"ஓ",r:"oo",e:"long o"},{id:"v12",h:"ஔ",r:"au",e:"diphthong au"}];
-const CONSONANTS=[{id:"c1",h:"க்",r:"ka",e:"k/g/kh context"},{id:"c2",h:"ங்",r:"nga",e:"ng nasal"},{id:"c3",h:"ச்",r:"cha",e:"ch/s/j context"},{id:"c4",h:"ஞ்",r:"nya",e:"ny palatal nasal"},{id:"c5",h:"ட்",r:"ṭa",e:"t/d retroflex"},{id:"c6",h:"ண்",r:"ṇa",e:"retroflex n"},{id:"c7",h:"த்",r:"tha",e:"th/dh dental"},{id:"c8",h:"ந்",r:"na",e:"n dental"},{id:"c9",h:"ப்",r:"pa",e:"p/b context"},{id:"c10",h:"ம்",r:"ma",e:"m sound"},{id:"c11",h:"ய்",r:"ya",e:"y sound"},{id:"c12",h:"ர்",r:"ra",e:"r flap"},{id:"c13",h:"ல்",r:"la",e:"l sound"},{id:"c14",h:"வ்",r:"va",e:"v sound"},{id:"c15",h:"ழ்",r:"zha",e:"unique Tamil zh"},{id:"c16",h:"ள்",r:"ḷa",e:"retroflex l"},{id:"c17",h:"ற்",r:"ṟa",e:"hard r alveolar"},{id:"c18",h:"ன்",r:"ṉa",e:"hard n alveolar"}];
-const WORD_DECKS=[{id:"greetings",label:"Greetings",cards:[{id:"w1",h:"வணக்கம்",r:"vanakkam",e:"Hello / Greetings"},{id:"w2",h:"நன்றி",r:"nandri",e:"Thank you"},{id:"w3",h:"ஆம்",r:"aam",e:"Yes"},{id:"w4",h:"இல்லை",r:"illai",e:"No"},{id:"w5",h:"மன்னிக்கவும்",r:"mannikavum",e:"Sorry / Excuse me"},{id:"w6",h:"எப்படி இருக்கீங்க",r:"eppadi irukkinga",e:"How are you?"},{id:"w7",h:"நல்லா இருக்கேன்",r:"nalla irukkeen",e:"I\'m well"},{id:"w8",h:"போய் வருகிறேன்",r:"poi varugiren",e:"Goodbye"}]},{id:"family",label:"Family",cards:[{id:"fa1",h:"அம்மா",r:"amma",e:"Mother"},{id:"fa2",h:"அப்பா",r:"appa",e:"Father"},{id:"fa3",h:"அண்ணன்",r:"annan",e:"Elder brother"},{id:"fa4",h:"அக்கா",r:"akka",e:"Elder sister"},{id:"fa5",h:"தம்பி",r:"thambi",e:"Younger brother"},{id:"fa6",h:"தங்கை",r:"thangai",e:"Younger sister"},{id:"fa7",h:"தாத்தா",r:"thaatha",e:"Grandfather"},{id:"fa8",h:"பாட்டி",r:"paatti",e:"Grandmother"}]},{id:"body",label:"Body",cards:[{id:"b1",h:"கை",r:"kai",e:"Hand"},{id:"b2",h:"கால்",r:"kaal",e:"Foot / Leg"},{id:"b3",h:"கண்",r:"kan",e:"Eye"},{id:"b4",h:"காது",r:"kaadhu",e:"Ear"},{id:"b5",h:"மூக்கு",r:"mookku",e:"Nose"},{id:"b6",h:"வாய்",r:"vaai",e:"Mouth"},{id:"b7",h:"தலை",r:"thalai",e:"Head"},{id:"b8",h:"இதயம்",r:"idhayam",e:"Heart"}]},{id:"food",label:"Food",cards:[{id:"fo1",h:"தண்ணீர்",r:"thanneer",e:"Water"},{id:"fo2",h:"சாப்பாடு",r:"saappaadu",e:"Food / Meal"},{id:"fo3",h:"பால்",r:"paal",e:"Milk"},{id:"fo4",h:"தேநீர்",r:"theneer",e:"Tea"},{id:"fo5",h:"சோறு",r:"soru",e:"Rice (cooked)"},{id:"fo6",h:"ரொட்டி",r:"rotti",e:"Flatbread"},{id:"fo7",h:"கறி",r:"kari",e:"Curry"},{id:"fo8",h:"இனிப்பு",r:"inippu",e:"Sweets"}]},{id:"numbers",label:"Numbers",cards:[{id:"n1",h:"ஒன்று",r:"ondru",e:"One"},{id:"n2",h:"இரண்டு",r:"irandu",e:"Two"},{id:"n3",h:"மூன்று",r:"moondru",e:"Three"},{id:"n4",h:"நான்கு",r:"naangu",e:"Four"},{id:"n5",h:"ஐந்து",r:"aindhu",e:"Five"},{id:"n6",h:"ஆறு",r:"aaru",e:"Six"},{id:"n7",h:"ஏழு",r:"ezhu",e:"Seven"},{id:"n8",h:"எட்டு",r:"ettu",e:"Eight"},{id:"n9",h:"ஒன்பது",r:"onbadhu",e:"Nine"},{id:"n10",h:"பத்து",r:"paththu",e:"Ten"}]},{id:"colors",label:"Colors",cards:[{id:"col1",h:"சிவப்பு",r:"sivappu",e:"Red"},{id:"col2",h:"நீலம்",r:"neelam",e:"Blue"},{id:"col3",h:"பச்சை",r:"pachai",e:"Green"},{id:"col4",h:"மஞ்சள்",r:"manjal",e:"Yellow"},{id:"col5",h:"வெள்ளை",r:"vellai",e:"White"},{id:"col6",h:"கருப்பு",r:"karuppu",e:"Black"},{id:"col7",h:"ஆரஞ்சு",r:"aaranju",e:"Orange"},{id:"col8",h:"இளஞ்சிவப்பு",r:"ilanjivappu",e:"Pink"}]}];
+const VOWELS=[{id:"v1",h:"அ",r:"a",e:"short a",ex:"அம்மா — amma (mother)"},{id:"v2",h:"ஆ",r:"aa",e:"long a",ex:"ஆடு — aadu (goat)"},{id:"v3",h:"இ",r:"i",e:"short i",ex:"இலை — ilai (leaf)"},{id:"v4",h:"ஈ",r:"ee",e:"long i",ex:"ஈ — ee (fly)"},{id:"v5",h:"உ",r:"u",e:"short u",ex:"உப்பு — uppu (salt)"},{id:"v6",h:"ஊ",r:"oo",e:"long u",ex:"ஊர் — oor (village)"},{id:"v7",h:"எ",r:"e",e:"short e — like e in bed",ex:"எலி — eli (rat)"},{id:"v8",h:"ஏ",r:"ee",e:"long e — like a in gate",ex:"ஏணி — eeni (ladder)"},{id:"v9",h:"ஐ",r:"ai",e:"ai — like ai in aisle",ex:"ஐந்து — aindhu (five)"},{id:"v10",h:"ஒ",r:"o",e:"short o",ex:"ஒட்டகம் — ottakam (camel)"},{id:"v11",h:"ஓ",r:"oo",e:"long o — like o in go",ex:"ஓடு — odu (run)"},{id:"v12",h:"ஔ",r:"au",e:"au — like ow in how",ex:"ஔஷதம் — aushadham (medicine)"}];
+const CONSONANTS=[{id:"c1",h:"க்",r:"ka",e:"k/g/kh by position",ex:"கண் — kan (eye)"},{id:"c2",h:"ங்",r:"nga",e:"ng nasal",ex:"ங — rare standalone"},{id:"c3",h:"ச்",r:"cha",e:"ch/s/j by position",ex:"சாப்பாடு — saappaadu (food)"},{id:"c4",h:"ஞ்",r:"nya",e:"ny palatal nasal",ex:"ஞாயிறு — nyaairu (Sunday/sun)"},{id:"c5",h:"ட்",r:"ṭa",e:"t/d retroflex",ex:"டீ — tee (tea)"},{id:"c6",h:"ண்",r:"ṇa",e:"retroflex n",ex:"மணல் — manal (sand)"},{id:"c7",h:"த்",r:"tha",e:"th/dh dental",ex:"தலை — thalai (head)"},{id:"c8",h:"ந்",r:"na",e:"n dental (initial)",ex:"நல்லது — nallathu (good)"},{id:"c9",h:"ப்",r:"pa",e:"p/b by position",ex:"பால் — paal (milk)"},{id:"c10",h:"ம்",r:"ma",e:"m sound",ex:"மழை — mazhai (rain)"},{id:"c11",h:"ய்",r:"ya",e:"y sound",ex:"யானை — yaanai (elephant)"},{id:"c12",h:"ர்",r:"ra",e:"r flap",ex:"ரோடு — road"},{id:"c13",h:"ல்",r:"la",e:"l sound",ex:"லோகம் — lokam (world)"},{id:"c14",h:"வ்",r:"va",e:"v sound",ex:"வானம் — vaanam (sky)"},{id:"c15",h:"ழ்",r:"zha",e:"unique Tamil zh",ex:"மழை — mazhai (rain)"},{id:"c16",h:"ள்",r:"ḷa",e:"retroflex l",ex:"பள்ளி — palli (school)"},{id:"c17",h:"ற்",r:"ṟa",e:"hard r alveolar",ex:"நற்றிணை — natrinai (classical text)"},{id:"c18",h:"ன்",r:"ṉa",e:"hard n alveolar (final)",ex:"தென் — then (south)"}];
+const WORD_DECKS=[{id:"greetings",label:"Greetings",cards:[{id:"w1",h:"வணக்கம்",r:"vanakkam",e:"Hello / Greetings",ex:""},{id:"w2",h:"நன்றி",r:"nandri",e:"Thank you",ex:""},{id:"w3",h:"ஆம்",r:"aam",e:"Yes",ex:""},{id:"w4",h:"இல்லை",r:"illai",e:"No",ex:""},{id:"w5",h:"மன்னிக்கவும்",r:"mannikavum",e:"Sorry / Excuse me",ex:""},{id:"w6",h:"எப்படி இருக்கீங்க",r:"eppadi irukkinga",e:"How are you?",ex:""},{id:"w7",h:"நல்லா இருக்கேன்",r:"nalla irukkeen",e:"I\'m well",ex:""},{id:"w8",h:"போய் வருகிறேன்",r:"poi varugiren",e:"Goodbye",ex:""}]},{id:"family",label:"Family",cards:[{id:"fa1",h:"அம்மா",r:"amma",e:"Mother",ex:""},{id:"fa2",h:"அப்பா",r:"appa",e:"Father",ex:""},{id:"fa3",h:"அண்ணன்",r:"annan",e:"Elder brother",ex:""},{id:"fa4",h:"அக்கா",r:"akka",e:"Elder sister",ex:""},{id:"fa5",h:"தம்பி",r:"thambi",e:"Younger brother",ex:""},{id:"fa6",h:"தங்கை",r:"thangai",e:"Younger sister",ex:""},{id:"fa7",h:"தாத்தா",r:"thaatha",e:"Grandfather",ex:""},{id:"fa8",h:"பாட்டி",r:"paatti",e:"Grandmother",ex:""}]},{id:"body",label:"Body",cards:[{id:"b1",h:"கை",r:"kai",e:"Hand",ex:""},{id:"b2",h:"கால்",r:"kaal",e:"Foot / Leg",ex:""},{id:"b3",h:"கண்",r:"kan",e:"Eye",ex:""},{id:"b4",h:"காது",r:"kaadhu",e:"Ear",ex:""},{id:"b5",h:"மூக்கு",r:"mookku",e:"Nose",ex:""},{id:"b6",h:"வாய்",r:"vaai",e:"Mouth",ex:""},{id:"b7",h:"தலை",r:"thalai",e:"Head",ex:""},{id:"b8",h:"இதயம்",r:"idhayam",e:"Heart",ex:""}]},{id:"food",label:"Food",cards:[{id:"fo1",h:"தண்ணீர்",r:"thanneer",e:"Water",ex:""},{id:"fo2",h:"சாப்பாடு",r:"saappaadu",e:"Food / Meal",ex:""},{id:"fo3",h:"பால்",r:"paal",e:"Milk",ex:""},{id:"fo4",h:"தேநீர்",r:"theneer",e:"Tea",ex:""},{id:"fo5",h:"சோறு",r:"soru",e:"Rice (cooked)",ex:""},{id:"fo6",h:"ரொட்டி",r:"rotti",e:"Flatbread",ex:""},{id:"fo7",h:"கறி",r:"kari",e:"Curry",ex:""},{id:"fo8",h:"இனிப்பு",r:"inippu",e:"Sweets",ex:""}]},{id:"numbers",label:"Numbers",cards:[{id:"n1",h:"ஒன்று",r:"ondru",e:"One",ex:""},{id:"n2",h:"இரண்டு",r:"irandu",e:"Two",ex:""},{id:"n3",h:"மூன்று",r:"moondru",e:"Three",ex:""},{id:"n4",h:"நான்கு",r:"naangu",e:"Four",ex:""},{id:"n5",h:"ஐந்து",r:"aindhu",e:"Five",ex:""},{id:"n6",h:"ஆறு",r:"aaru",e:"Six",ex:""},{id:"n7",h:"ஏழு",r:"ezhu",e:"Seven",ex:""},{id:"n8",h:"எட்டு",r:"ettu",e:"Eight",ex:""},{id:"n9",h:"ஒன்பது",r:"onbadhu",e:"Nine",ex:""},{id:"n10",h:"பத்து",r:"paththu",e:"Ten",ex:""}]},{id:"colors",label:"Colors",cards:[{id:"col1",h:"சிவப்பு",r:"sivappu",e:"Red",ex:""},{id:"col2",h:"நீலம்",r:"neelam",e:"Blue",ex:""},{id:"col3",h:"பச்சை",r:"pachai",e:"Green",ex:""},{id:"col4",h:"மஞ்சள்",r:"manjal",e:"Yellow",ex:""},{id:"col5",h:"வெள்ளை",r:"vellai",e:"White",ex:""},{id:"col6",h:"கருப்பு",r:"karuppu",e:"Black",ex:""},{id:"col7",h:"ஆரஞ்சு",r:"aaranju",e:"Orange",ex:""},{id:"col8",h:"இளஞ்சிவப்பு",r:"ilanjivappu",e:"Pink",ex:""}]}];
 const ALL_DECKS=[
   {id:"vowels",label:"Vowels",sub:"12 soul letters · uyir",cards:VOWELS,isScript:true},
   {id:"consonants",label:"Consonants",sub:"18 body letters · mei",cards:CONSONANTS,isScript:true},
@@ -220,16 +272,11 @@ const SRS_KEY="likho_tamil_srs";
 function loadSRS(){try{return JSON.parse(localStorage.getItem(SRS_KEY)||"{}")}catch{return{}}}
 function saveSRS(s){try{localStorage.setItem(SRS_KEY,JSON.stringify(s))}catch{}}
 function initCard(){return{interval:1,ease:2.5,due:0,reps:0}}
-function stepSRS(s,q){
-  const ease=Math.max(1.3,s.ease+[-0.3,-0.15,0,0.15][q]);
-  const interval=q===0?1:s.reps===0?1:s.reps===1?3:Math.round(s.interval*ease);
-  return{interval,ease,due:Date.now()+interval*86400000,reps:q===0?0:s.reps+1};
-}
+function stepSRS(s,q){const ease=Math.max(1.3,s.ease+[-0.3,-0.15,0,0.15][q]);const interval=q===0?1:s.reps===0?1:s.reps===1?3:Math.round(s.interval*ease);return{interval,ease,due:Date.now()+interval*86400000,reps:q===0?0:s.reps+1}}
 function dueCards(cards){return cards.filter(c=>(SRS[c.id]?.due??0)<=Date.now())}
 let SRS=loadSRS();
 
-// ── CANVAS — DRAVIDIAN CENTER-MASS GRID ───────────────────────────────────────
-// These scripts float around a center axis — no top bar reference
+// CANVAS — DRAVIDIAN CENTER-MASS
 const cv=document.getElementById("draw-canvas"),ctx=cv.getContext("2d");
 let drawing=false,lx=0,ly=0,ghostChar=null;
 function xy(e){const r=cv.getBoundingClientRect(),sx=cv.width/r.width,sy=cv.height/r.height,s=e.touches?e.touches[0]:e;return[(s.clientX-r.left)*sx,(s.clientY-r.top)*sy]}
@@ -237,11 +284,8 @@ function drawGrid(){
   const W=cv.width,H=cv.height;
   ctx.clearRect(0,0,W,H);
   ctx.fillStyle="#F9F4F2";ctx.fillRect(0,0,W,H);
-  // Faint horizontal lines
   ctx.strokeStyle="rgba(31,13,8,0.05)";ctx.lineWidth=1;
   for(let y=40;y<H;y+=40){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}
-  // ── DRAVIDIAN: prominent center crosshair ──
-  // Characters are center-mass — vertical and horizontal center guides
   ctx.strokeStyle="rgba(138,58,42,0.18)";ctx.lineWidth=1.5;ctx.setLineDash([]);
   ctx.beginPath();ctx.moveTo(0,H/2);ctx.lineTo(W,H/2);ctx.stroke();
   ctx.strokeStyle="rgba(138,58,42,0.10)";ctx.lineWidth=1;
@@ -263,6 +307,7 @@ cv.addEventListener("touchmove",e=>{e.preventDefault();if(!drawing)return;const[
 cv.addEventListener("touchend",()=>drawing=false);
 
 let currentDeck=null,queue=[],qIdx=0,currentCard=null,isRevealed=false,sessionGrades=[];
+let reviewDeck=null,reviewCards=[],flipIdx=0,flipShown=false;
 
 function renderHome(){
   const totalCards=ALL_CARDS.length;
@@ -280,45 +325,77 @@ function renderHome(){
     el.innerHTML=decks.map(deck=>{
       const dueN=dueCards(deck.cards).length,done=dueN===0,total=deck.cards.length;
       const seenN=deck.cards.filter(c=>(SRS[c.id]?.reps??0)>0).length;
-      return`<div class="deck-row"><div class="deck-info"><div class="deck-name">${deck.label}</div><div class="deck-meta"><span class="deck-sub">${deck.sub}</span>${seenN>0?`<span class="deck-seen">${seenN}/${total} seen</span>`:""}<span class="deck-due ${done?"due-off":"due-on"}">${done?"✓ caught up":`${dueN} due`}</span></div></div><div class="prog-track"><div class="prog-fill" style="width:${(seenN/total)*100}%"></div></div><button class="btn-study ${done?"btn-outline":"btn-filled"}" onclick="startStudy(\'${deck.id}\')">${done?"review":"study"}</button></div>`;
+      const reviewBtn=deck.isScript?`<button class="btn-review-deck" onclick="startReview('${deck.id}')">browse</button>`:"";
+      return`<div class="deck-row"><div class="deck-info"><div class="deck-name">${deck.label}</div><div class="deck-meta"><span class="deck-sub">${deck.sub}</span>${seenN>0?`<span class="deck-seen">${seenN}/${total} seen</span>`:""}<span class="deck-due ${done?"due-off":"due-on"}">${done?"✓ caught up":`${dueN} due`}</span></div></div><div class="prog-track"><div class="prog-fill" style="width:${(seenN/total)*100}%"></div></div><div class="deck-btns">${reviewBtn}<button class="btn-study ${done?"btn-outline":"btn-filled"}" onclick="startStudy('${deck.id}')">${done?"review":"study"}</button></div></div>`;
     }).join("");
   });
   buildRef();
 }
+function startReview(id){
+  reviewDeck=ALL_DECKS.find(d=>d.id===id);
+  reviewCards=reviewDeck.cards;flipIdx=0;flipShown=false;
+  document.getElementById("review-title").textContent=reviewDeck.label+" — Browse";
+  document.getElementById("review-sub").textContent=reviewCards.length+" characters";
+  document.getElementById("review-grid").innerHTML=reviewCards.map((c,i)=>`<div class="review-grid-card" id="rgc-${i}" onclick="highlightGrid(${i})"><div class="review-grid-char">${c.h}</div><div class="review-grid-rom">${c.r}</div><div class="review-grid-eng">${c.e}</div></div>`).join("");
+  document.getElementById("review-grid-phase").style.display="block";
+  document.getElementById("review-flip-phase").style.display="none";
+  showScreen("review");
+}
+function highlightGrid(i){document.querySelectorAll(".review-grid-card").forEach(el=>el.classList.remove("active"));document.getElementById("rgc-"+i)?.classList.add("active")}
+function startFlip(){flipIdx=0;flipShown=false;document.getElementById("review-grid-phase").style.display="none";document.getElementById("review-flip-phase").style.display="flex";renderFlip()}
+function renderFlip(){
+  const c=reviewCards[flipIdx];
+  document.getElementById("flip-card").classList.remove("flipped");
+  document.getElementById("flip-front-label").style.display="block";
+  document.getElementById("flip-char").textContent=c.h;document.getElementById("flip-char").style.display="block";
+  document.getElementById("flip-rom").style.display="none";document.getElementById("flip-eng").style.display="none";document.getElementById("flip-example").style.display="none";
+  document.getElementById("flip-count").textContent=`${flipIdx+1} / ${reviewCards.length}`;
+  flipShown=false;
+}
+function flipCard(){
+  if(flipShown){flipNav(1);return;}
+  const c=reviewCards[flipIdx];
+  document.getElementById("flip-card").classList.add("flipped");
+  document.getElementById("flip-front-label").style.display="none";
+  document.getElementById("flip-rom").textContent=c.r;document.getElementById("flip-rom").style.display="block";
+  document.getElementById("flip-eng").textContent=c.e;document.getElementById("flip-eng").style.display="block";
+  if(c.ex){document.getElementById("flip-example").textContent=c.ex;document.getElementById("flip-example").style.display="block";}
+  flipShown=true;
+}
+function flipNav(dir){flipIdx=Math.max(0,Math.min(reviewCards.length-1,flipIdx+dir));renderFlip()}
+function startStudyFromReview(){startStudy(reviewDeck.id)}
 function startStudy(id){
   currentDeck=ALL_DECKS.find(d=>d.id===id);
   const due=dueCards(currentDeck.cards);
   queue=(due.length>0?[...due]:[...currentDeck.cards]).sort(()=>Math.random()-.5);
   qIdx=0;sessionGrades=[];isRevealed=false;ghostChar=null;showScreen("study");loadCard();
 }
-function resizeCanvas(){
-  const isWord=!currentDeck.isScript;
-  const W=isWord?580:320, H=320;
-  cv.width=W; cv.height=H;
-  cv.style.width=W+"px"; cv.style.height=H+"px";
-}
-
+function resizeCanvas(){const isWord=!currentDeck.isScript;const W=isWord?580:320,H=320;cv.width=W;cv.height=H;cv.style.width=W+"px";cv.style.height=H+"px"}
 function loadCard(){
   if(qIdx>=queue.length){showDone();return}
-  currentCard=queue[qIdx];isRevealed=false;ghostChar=null;
-  resizeCanvas(); drawGrid();
+  currentCard=queue[qIdx];isRevealed=false;ghostChar=null;resizeCanvas();drawGrid();
   document.getElementById("progress-bar").style.width=(qIdx/queue.length*50)+"vw";
   document.getElementById("study-count").textContent=`${qIdx+1} / ${queue.length}`;
   document.getElementById("prompt-label").textContent=currentDeck.isScript?"WRITE THIS CHARACTER":"WRITE IN TAMIL";
   document.getElementById("prompt-main").innerHTML=currentDeck.isScript?`<div class="prompt-rom-script">${currentCard.r}</div><div class="prompt-eng-script">${currentCard.e}</div>`:`<div class="prompt-word">${currentCard.e}</div><div class="prompt-rom">${currentCard.r}</div>`;
-  document.getElementById("reveal-area").innerHTML=`<button class="btn-reveal" onclick="reveal()">reveal</button>`;
+  document.getElementById("reveal-area").innerHTML=`<div class="reveal-row"><button class="btn-reveal" onclick="reveal()">reveal</button><button class="btn-dontknow" onclick="dontKnow()">don't know</button></div>`;
 }
-function reveal(){
-  isRevealed=true;ghostChar=currentCard.h;drawGrid();
-  document.getElementById("reveal-area").innerHTML=`<div style="text-align:center"><div class="answer-char">${currentCard.h}</div><div class="answer-rom">${currentCard.r}</div>${!currentDeck.isScript?`<div class="answer-eng">${currentCard.e}</div>`:""}</div><div><div class="grade-label">HOW DID YOU DO?</div><div class="grade-bar"><button class="btn-grade g-again" onclick="grade(0)">Again<span>[1]</span></button><button class="btn-grade g-hard" onclick="grade(1)">Hard<span>[2]</span></button><button class="btn-grade g-good" onclick="grade(2)">Good<span>[3]</span></button><button class="btn-grade g-easy" onclick="grade(3)">Easy<span>[4]</span></button></div></div>`;
+function dontKnow(){
+  SRS[currentCard.id]=stepSRS(SRS[currentCard.id]??initCard(),0);saveSRS(SRS);sessionGrades.push(0);
+  isRevealed=true;ghostChar=currentCard.h;drawGrid();showAnswer();
+}
+function reveal(){isRevealed=true;ghostChar=currentCard.h;drawGrid();showAnswer()}
+function showAnswer(){
+  const isWord=!currentDeck.isScript;
+  const exHtml=(!isWord&&currentCard.ex)?`<div class="answer-example">${currentCard.ex}</div>`:"";
+  document.getElementById("reveal-area").innerHTML=`<div style="text-align:center"><div class="answer-char${isWord?" word":""}">${currentCard.h}</div><div class="answer-rom">${currentCard.r}</div>${isWord?`<div class="answer-eng">${currentCard.e}</div>`:""}${exHtml}</div><div><div class="grade-label">HOW DID YOU DO?</div><div class="grade-bar"><button class="btn-grade g-again" onclick="grade(0)">Again<span>[1]</span></button><button class="btn-grade g-hard" onclick="grade(1)">Hard<span>[2]</span></button><button class="btn-grade g-good" onclick="grade(2)">Good<span>[3]</span></button><button class="btn-grade g-easy" onclick="grade(3)">Easy<span>[4]</span></button></div></div>`;
 }
 function grade(q){SRS[currentCard.id]=stepSRS(SRS[currentCard.id]??initCard(),q);saveSRS(SRS);sessionGrades.push(q);qIdx++;loadCard()}
 function showDone(){
   const c=[0,1,2,3].map(q=>sessionGrades.filter(g=>g===q).length);
   const pct=Math.round(((c[2]+c[3])/sessionGrades.length)*100);
-  const[w,s]=pct>=80?["நன்றாக உள்ளது","well done"]:pct>=50?["நல்லது","good effort"]:[["மீண்டும்"],"keep practicing"];
-  document.getElementById("done-word").textContent=Array.isArray(w)?w[0]:w;
-  document.getElementById("done-sub").textContent=s;
+  const[w,s]=pct>=80?["நன்றாக உள்ளது","well done"]:pct>=50?["நல்லது","good effort"]:["மீண்டும்","keep practicing"];
+  document.getElementById("done-word").textContent=w;document.getElementById("done-sub").textContent=s;
   const cols=["var(--again)","var(--hard)","var(--good)","var(--easy)"],lbs=["again","hard","good","easy"];
   document.getElementById("done-grades").innerHTML=c.map((n,i)=>`<div class="done-box"><div class="done-num" style="color:${cols[i]}">${n}</div><div class="done-lbl" style="color:${cols[i]}">${lbs[i]}</div></div>`).join("");
   showScreen("done");
@@ -339,8 +416,13 @@ function doReset(){localStorage.removeItem(SRS_KEY);SRS={};closeConfirm();render
 function showScreen(n){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));document.getElementById(`${n}-screen`).classList.add("active")}
 function goHome(){showScreen("home");renderHome()}
 document.addEventListener("keydown",e=>{
+  if(document.getElementById("review-screen").classList.contains("active")){
+    if(e.key==="ArrowRight")flipNav(1);if(e.key==="ArrowLeft")flipNav(-1);
+    if(e.key===" "){e.preventDefault();flipCard();}return;
+  }
   if(!document.getElementById("study-screen").classList.contains("active"))return;
   if(e.key===" "&&!isRevealed){e.preventDefault();reveal();return}
+  if(e.key==="?"&&!isRevealed){dontKnow();return}
   if(e.key==="1"&&isRevealed)grade(0);if(e.key==="2"&&isRevealed)grade(1);
   if(e.key==="3"&&isRevealed)grade(2);if(e.key==="4"&&isRevealed)grade(3);
 });

@@ -4,38 +4,30 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Likho · Hindi · हिन्दी Writing Practice</title>
-<meta name="description" content="Free Hindi Devanagari writing practice for heritage speakers. SRS flashcards with drawing canvas.">
+<meta name="description" content="Free Hindi Devanagari writing practice for heritage speakers.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
 <style>
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-  :root{
-    --paper:#F7F3EC;--paperdark:#EDE8DF;--ink:#1A1209;
-    --inkfade:#6B5E4A;--inkfader:#A8997F;--rule:rgba(26,18,9,0.1);
-    --accent:#C8690A;--again:#B53A2A;--hard:#B07020;--good:#3A7A4A;--easy:#2A5A8A;
-  }
+  :root{--paper:#F7F3EC;--paperdark:#EDE8DF;--ink:#1A1209;--inkfade:#6B5E4A;--inkfader:#A8997F;--rule:rgba(26,18,9,0.1);--accent:#C8690A;--again:#B53A2A;--hard:#B07020;--good:#3A7A4A;--easy:#2A5A8A;}
   body{background:var(--paper);color:var(--ink);font-family:'Crimson Pro',Georgia,serif;min-height:100vh}
   ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--paperdark)}::-webkit-scrollbar-thumb{background:var(--inkfader);border-radius:3px}
   .screen{display:none;min-height:100vh}.screen.active{display:block}
   #study-screen{display:none;flex-direction:row}#study-screen.active{display:flex}
+  #review-screen{display:none;flex-direction:column;min-height:100vh}#review-screen.active{display:flex}
   #done-screen{display:none;align-items:center;justify-content:center;flex-direction:column;gap:36px;min-height:100vh}#done-screen.active{display:flex}
-
   header{border-bottom:1px solid var(--rule);padding:0 64px;display:flex;align-items:center;justify-content:space-between;height:64px}
   .logo{display:flex;align-items:baseline;gap:12px;text-decoration:none;color:var(--ink)}
   .logo-script{font-size:24px;font-weight:600;letter-spacing:-0.02em}
   .logo-en{font-size:13px;color:var(--inkfader);letter-spacing:0.12em}
   .header-right{display:flex;align-items:center;gap:28px}
-  .stats{font-size:13px;color:var(--inkfade);letter-spacing:0.06em}.stats-due{color:var(--accent)}
   .btn-ghost{background:transparent;border:none;color:var(--inkfader);cursor:pointer;font-size:13px;letter-spacing:0.1em;font-family:inherit;padding:0}.btn-ghost:hover{color:var(--ink)}
   .btn-back-home{background:transparent;border:none;color:var(--inkfader);cursor:pointer;font-size:13px;letter-spacing:0.08em;font-family:inherit;padding:0;text-decoration:none}.btn-back-home:hover{color:var(--ink)}
-
   .hero{padding:56px 64px 40px;border-bottom:1px solid var(--rule);display:flex;align-items:flex-end;justify-content:space-between}
   .hero-title{font-size:60px;font-weight:300;letter-spacing:-0.03em;line-height:1.05;margin-bottom:12px}
   .hero-sub{font-size:15px;color:var(--inkfade);max-width:440px;line-height:1.6}
   .hero-char{font-size:140px;color:var(--accent);opacity:0.1;font-family:serif;line-height:1;user-select:none;margin-bottom:-12px}
-
-  /* ── OVERALL PROGRESS ── */
-  .overall-progress{padding:24px 64px;border-bottom:1px solid var(--rule);display:flex;align-items:center;gap:32px}
+  .overall-progress{padding:24px 64px;border-bottom:1px solid var(--rule);display:flex;align-items:center;gap:32px;flex-wrap:wrap}
   .overall-stat{text-align:center}
   .overall-num{font-size:28px;font-weight:300;color:var(--ink);letter-spacing:-0.02em}
   .overall-lbl{font-size:10px;color:var(--inkfader);letter-spacing:0.14em;margin-top:2px}
@@ -44,7 +36,6 @@
   .overall-bar-track{height:4px;background:var(--paperdark);border-radius:99px;overflow:hidden}
   .overall-bar-fill{height:100%;background:var(--accent);border-radius:99px;transition:width .6s}
   .btn-reset{background:transparent;border:none;color:var(--inkfader);font-size:11px;cursor:pointer;font-family:inherit;letter-spacing:0.1em;padding:0;margin-left:auto}.btn-reset:hover{color:var(--again)}
-
   .decks{padding:0 64px;max-width:860px}
   .section-label{padding:28px 0 8px;font-size:11px;color:var(--inkfader);letter-spacing:0.18em}
   .deck-row{display:flex;align-items:center;padding:16px 0;border-bottom:1px solid var(--rule)}
@@ -54,10 +45,40 @@
   .deck-due{font-size:11px;font-weight:600;letter-spacing:0.06em}.due-on{color:var(--accent)}.due-off{color:var(--good)}
   .prog-track{width:72px;height:3px;background:var(--paperdark);border-radius:99px;margin:0 20px;overflow:hidden}
   .prog-fill{height:100%;background:var(--accent);border-radius:99px;transition:width .6s}
+  .deck-btns{display:flex;gap:8px}
+  .btn-review-deck{border:1.5px solid var(--accent);border-radius:3px;padding:7px 14px;text-align:center;font-family:inherit;font-size:12px;letter-spacing:0.08em;cursor:pointer;transition:all .15s;background:transparent;color:var(--accent)}.btn-review-deck:hover{background:var(--accent);color:var(--paper)}
   .btn-study{border:1.5px solid var(--ink);border-radius:3px;padding:7px 22px;min-width:84px;text-align:center;font-family:inherit;font-size:13px;letter-spacing:0.1em;cursor:pointer;transition:all .15s}
   .btn-filled{background:var(--ink);color:var(--paper)}.btn-outline{background:transparent;color:var(--ink)}
   .btn-filled:hover{background:var(--paper);color:var(--ink)}.btn-outline:hover{background:var(--ink);color:var(--paper)}
   footer{padding:36px 64px;margin-top:24px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;font-size:12px;color:var(--inkfader);letter-spacing:0.06em}
+
+  /* ── REVIEW MODE ── */
+  .review-header{padding:20px 64px;border-bottom:1px solid var(--rule);display:flex;align-items:center;gap:16px}
+  .review-title{font-size:16px;font-weight:600;color:var(--ink)}
+  .review-sub{font-size:12px;color:var(--inkfader);margin-left:auto}
+  /* Grid phase */
+  #review-grid-phase{padding:40px 64px}
+  .review-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:12px;max-width:900px}
+  .review-grid-card{background:var(--paperdark);border:1.5px solid var(--rule);border-radius:6px;padding:16px 8px;text-align:center;cursor:pointer;transition:all .15s}
+  .review-grid-card:hover,.review-grid-card.active{border-color:var(--accent);background:var(--paper)}
+  .review-grid-char{font-size:38px;font-family:serif;color:var(--ink);line-height:1.1}
+  .review-grid-rom{font-size:11px;color:var(--accent);margin-top:4px}
+  .review-grid-eng{font-size:9px;color:var(--inkfader);margin-top:2px;line-height:1.3}
+  .review-start-btn{margin-top:32px}
+  /* Flip phase */
+  #review-flip-phase{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;padding:60px 48px}
+  .flip-card{width:420px;max-width:90vw;min-height:260px;background:var(--paperdark);border:1.5px solid var(--rule);border-radius:12px;padding:40px 36px;text-align:center;cursor:pointer;transition:all .2s;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px}
+  .flip-card.flipped{background:var(--paper);border-color:var(--accent)}
+  .flip-front-label{font-size:10px;color:var(--inkfader);letter-spacing:0.16em}
+  .flip-char{font-size:96px;font-family:serif;color:var(--ink);line-height:1}
+  .flip-rom{font-size:24px;color:var(--accent);font-style:italic}
+  .flip-eng{font-size:15px;color:var(--inkfade)}
+  .flip-example{font-size:13px;color:var(--inkfader);margin-top:4px;font-style:italic}
+  .flip-tap-hint{font-size:11px;color:var(--inkfader);letter-spacing:0.1em}
+  .flip-nav{display:flex;gap:12px;align-items:center}
+  .btn-flip-nav{background:transparent;border:1.5px solid var(--rule);border-radius:3px;padding:8px 20px;font-family:inherit;font-size:13px;color:var(--inkfade);cursor:pointer;letter-spacing:0.06em;transition:all .15s}.btn-flip-nav:hover{border-color:var(--ink);color:var(--ink)}
+  .flip-count{font-size:12px;color:var(--inkfader);min-width:60px;text-align:center}
+  .btn-start-study{background:var(--ink);color:var(--paper);border:none;border-radius:3px;padding:10px 28px;font-family:inherit;font-size:13px;letter-spacing:0.08em;cursor:pointer}.btn-start-study:hover{opacity:.85}
 
   /* ── STUDY ── */
   #progress-bar{position:fixed;top:0;left:0;height:2px;background:var(--accent);transition:width .4s;z-index:10}
@@ -73,15 +94,16 @@
   .prompt-eng-script{font-size:15px;color:var(--inkfade);text-align:center}
   .hint{font-size:11px;color:var(--inkfader);letter-spacing:0.1em}
   .canvas-wrap{display:flex;flex-direction:column;align-items:center;gap:8px}
-  #draw-canvas{display:block;touch-action:none;cursor:crosshair;
-    border-radius:4px;border:1.5px solid var(--rule);
-    box-shadow:inset 0 1px 4px rgba(26,18,9,0.05),0 2px 14px rgba(26,18,9,0.07)}
+  #draw-canvas{display:block;touch-action:none;cursor:crosshair;border-radius:4px;border:1.5px solid var(--rule);box-shadow:inset 0 1px 4px rgba(26,18,9,0.05),0 2px 14px rgba(26,18,9,0.07)}
   .btn-clear{background:transparent;border:none;color:var(--inkfader);font-size:12px;cursor:pointer;letter-spacing:0.1em;font-family:inherit;padding:2px 0}.btn-clear:hover{color:var(--ink)}
-  .btn-reveal{background:var(--ink);color:var(--paper);border:none;border-radius:3px;padding:12px 52px;font-family:inherit;font-size:15px;letter-spacing:0.1em;cursor:pointer}.btn-reveal:hover{opacity:.85}
+  .reveal-row{display:flex;gap:10px;align-items:center}
+  .btn-reveal{background:var(--ink);color:var(--paper);border:none;border-radius:3px;padding:12px 40px;font-family:inherit;font-size:15px;letter-spacing:0.1em;cursor:pointer}.btn-reveal:hover{opacity:.85}
+  .btn-dontknow{background:transparent;border:1.5px solid var(--again);color:var(--again);border-radius:3px;padding:12px 16px;font-family:inherit;font-size:13px;letter-spacing:0.06em;cursor:pointer}.btn-dontknow:hover{background:var(--again);color:#fff}
   .answer-char{font-size:86px;color:var(--ink);font-family:serif;line-height:1;text-align:center}
   .answer-char.word{font-size:52px}
   .answer-rom{font-size:21px;color:var(--accent);margin-top:4px;text-align:center}
   .answer-eng{font-size:14px;color:var(--inkfade);margin-top:3px;text-align:center}
+  .answer-example{font-size:13px;color:var(--inkfader);margin-top:6px;text-align:center;font-style:italic}
   .grade-label{font-size:11px;color:var(--inkfader);letter-spacing:0.1em;text-align:center;margin-bottom:8px}
   .grade-bar{display:flex;gap:8px;justify-content:center}
   .btn-grade{width:84px;padding:9px 0;border-radius:3px;font-family:inherit;font-size:13px;font-weight:600;letter-spacing:0.04em;cursor:pointer;background:var(--paper);transition:background .15s}
@@ -90,8 +112,6 @@
   .g-hard{border:1.5px solid var(--hard);color:var(--hard)}.g-hard:hover{background:rgba(176,112,32,0.08)}
   .g-good{border:1.5px solid var(--good);color:var(--good)}.g-good:hover{background:rgba(58,122,74,0.08)}
   .g-easy{border:1.5px solid var(--easy);color:var(--easy)}.g-easy:hover{background:rgba(42,90,138,0.08)}
-
-  /* ── DONE ── */
   .done-word{font-size:52px;font-weight:300;letter-spacing:-0.02em}
   .done-sub{font-size:14px;color:var(--inkfade);letter-spacing:0.1em}
   .done-grades{display:flex;gap:20px}
@@ -99,8 +119,6 @@
   .done-num{font-size:30px;font-weight:600}
   .done-lbl{font-size:11px;letter-spacing:0.08em;margin-top:2px}
   .btn-home{background:transparent;border:1.5px solid var(--ink);border-radius:3px;padding:10px 32px;font-family:inherit;font-size:14px;color:var(--ink);letter-spacing:0.08em;cursor:pointer}.btn-home:hover{background:var(--ink);color:var(--paper)}
-
-  /* ── REFERENCE ── */
   #ref-overlay{display:none;position:fixed;inset:0;background:rgba(26,18,9,0.5);z-index:200;align-items:center;justify-content:center;backdrop-filter:blur(2px)}
   #ref-overlay.open{display:flex}
   .ref-modal{background:var(--paper);border-radius:4px;padding:40px 48px;width:820px;max-width:92vw;max-height:86vh;overflow-y:auto;box-shadow:0 24px 80px rgba(26,18,9,0.25)}
@@ -113,8 +131,6 @@
   .ref-char{font-size:26px;color:var(--ink);font-family:serif;line-height:1.2}
   .ref-rom{font-size:11px;color:var(--accent);margin-top:3px}
   .ref-eng{font-size:9px;color:var(--inkfader);margin-top:2px;line-height:1.3}
-
-  /* ── CONFIRM MODAL ── */
   #confirm-overlay{display:none;position:fixed;inset:0;background:rgba(26,18,9,0.4);z-index:300;align-items:center;justify-content:center;backdrop-filter:blur(2px)}
   #confirm-overlay.open{display:flex}
   .confirm-box{background:var(--paper);border-radius:4px;padding:36px 40px;width:360px;max-width:90vw;box-shadow:0 12px 48px rgba(26,18,9,0.2);text-align:center}
@@ -123,7 +139,6 @@
   .confirm-btns{display:flex;gap:10px;justify-content:center}
   .btn-cancel{background:transparent;border:1.5px solid var(--rule);border-radius:3px;padding:8px 24px;font-family:inherit;font-size:13px;color:var(--inkfade);cursor:pointer;letter-spacing:0.06em}.btn-cancel:hover{border-color:var(--ink);color:var(--ink)}
   .btn-confirm-reset{background:var(--again);color:#fff;border:none;border-radius:3px;padding:8px 24px;font-family:inherit;font-size:13px;cursor:pointer;letter-spacing:0.06em;font-weight:600}.btn-confirm-reset:hover{opacity:.85}
-
   @media(max-width:900px){
     header,.hero,.overall-progress,.decks,footer{padding-left:28px;padding-right:28px}
     .hero-title{font-size:40px}.hero-char{display:none}
@@ -132,6 +147,8 @@
     .study-right{border-bottom:none}
     .ref-grid{grid-template-columns:repeat(4,1fr)}.ref-modal{padding:28px 24px}
     .overall-progress{flex-wrap:wrap;gap:20px}
+    .review-header,#review-grid-phase{padding-left:28px;padding-right:28px}
+    .flip-card{width:90vw}
   }
 </style>
 </head>
@@ -140,16 +157,12 @@
 <!-- HOME -->
 <div id="home-screen" class="screen active">
   <header>
-    <a class="logo" href="../index.html">
-      <span class="logo-script">लिखो</span>
-      <span class="logo-en">LIKHO</span>
-    </a>
+    <a class="logo" href="../index.html"><span class="logo-script">लिखो</span><span class="logo-en">LIKHO</span></a>
     <div class="header-right">
       <button class="btn-ghost" onclick="openRef()">reference</button>
       <a class="btn-back-home" href="../index.html">← all languages</a>
     </div>
   </header>
-
   <div class="hero">
     <div>
       <div class="hero-title">Hindi writing<br>practice.</div>
@@ -157,44 +170,55 @@
     </div>
     <div class="hero-char">क</div>
   </div>
-
-  <!-- OVERALL PROGRESS -->
   <div class="overall-progress">
-    <div class="overall-stat">
-      <div class="overall-num" id="stat-seen">0</div>
-      <div class="overall-lbl">CARDS SEEN</div>
-    </div>
-    <div class="overall-stat">
-      <div class="overall-num" id="stat-due">0</div>
-      <div class="overall-lbl">DUE TODAY</div>
-    </div>
-    <div class="overall-stat">
-      <div class="overall-num" id="stat-total">0</div>
-      <div class="overall-lbl">TOTAL CARDS</div>
-    </div>
+    <div class="overall-stat"><div class="overall-num" id="stat-seen">0</div><div class="overall-lbl">CARDS SEEN</div></div>
+    <div class="overall-stat"><div class="overall-num" id="stat-due">0</div><div class="overall-lbl">DUE TODAY</div></div>
+    <div class="overall-stat"><div class="overall-num" id="stat-total">0</div><div class="overall-lbl">TOTAL CARDS</div></div>
     <div class="overall-bar-wrap">
-      <div class="overall-bar-label">
-        <span id="bar-label-left">overall progress</span>
-        <span id="bar-label-right">0%</span>
-      </div>
-      <div class="overall-bar-track">
-        <div class="overall-bar-fill" id="overall-bar" style="width:0%"></div>
-      </div>
+      <div class="overall-bar-label"><span>overall progress</span><span id="bar-pct">0%</span></div>
+      <div class="overall-bar-track"><div class="overall-bar-fill" id="overall-bar" style="width:0%"></div></div>
     </div>
     <button class="btn-reset" onclick="confirmReset()">reset progress</button>
   </div>
-
   <div class="decks">
     <div class="section-label">ALPHABET</div>
     <div id="deck-list-script"></div>
     <div class="section-label">WORDS</div>
     <div id="deck-list-words"></div>
   </div>
+  <footer><span>लिखो · hindi · devanagari script</span><span>draw · reveal · grade · repeat</span></footer>
+</div>
 
-  <footer>
-    <span>लिखो · hindi · devanagari script</span>
-    <span>draw · reveal · grade · repeat</span>
-  </footer>
+<!-- REVIEW -->
+<div id="review-screen" class="screen">
+  <div class="review-header">
+    <button class="btn-back" onclick="goHome()">← decks</button>
+    <div class="review-title" id="review-title"></div>
+    <div class="review-sub" id="review-sub"></div>
+  </div>
+  <!-- Grid phase -->
+  <div id="review-grid-phase">
+    <div class="review-grid" id="review-grid"></div>
+    <div class="review-start-btn">
+      <button class="btn-filled btn-study" onclick="startFlip()">Flip through →</button>
+    </div>
+  </div>
+  <!-- Flip phase -->
+  <div id="review-flip-phase" style="display:none">
+    <div class="flip-card" id="flip-card" onclick="flipCard()">
+      <div class="flip-front-label" id="flip-front-label">TAP TO REVEAL</div>
+      <div class="flip-char" id="flip-char"></div>
+      <div class="flip-rom" id="flip-rom" style="display:none"></div>
+      <div class="flip-eng" id="flip-eng" style="display:none"></div>
+      <div class="flip-example" id="flip-example" style="display:none"></div>
+    </div>
+    <div class="flip-nav">
+      <button class="btn-flip-nav" onclick="flipNav(-1)">← prev</button>
+      <div class="flip-count" id="flip-count"></div>
+      <button class="btn-flip-nav" onclick="flipNav(1)">next →</button>
+    </div>
+    <button class="btn-start-study" onclick="startStudyFromReview()">Start writing practice →</button>
+  </div>
 </div>
 
 <!-- STUDY -->
@@ -207,7 +231,7 @@
   <div class="study-left">
     <div class="prompt-label" id="prompt-label"></div>
     <div id="prompt-main"></div>
-    <div class="hint">space to reveal</div>
+    <div class="hint">space to reveal · ? to skip</div>
   </div>
   <div class="study-right">
     <div class="canvas-wrap">
@@ -229,10 +253,7 @@
 <!-- REFERENCE -->
 <div id="ref-overlay" onclick="closeRefOverlay(event)">
   <div class="ref-modal">
-    <div class="ref-header">
-      <div class="ref-title">Devanagari Reference</div>
-      <button class="btn-close" onclick="closeRef()">✕</button>
-    </div>
+    <div class="ref-header"><div class="ref-title">Devanagari Reference</div><button class="btn-close" onclick="closeRef()">✕</button></div>
     <div class="ref-sec"><div class="ref-sec-label">VOWELS</div><div class="ref-grid" id="ref-vowels"></div></div>
     <div class="ref-sec"><div class="ref-sec-label">CONSONANTS</div><div class="ref-grid" id="ref-consonants"></div></div>
   </div>
@@ -253,27 +274,46 @@
 <script>
 // ── DATA ─────────────────────────────────────────────────────────────────────
 const VOWELS=[
-  {id:"v1",h:"अ",r:"a",e:"short a — 'u' in but"},{id:"v2",h:"आ",r:"aa",e:"long a — 'a' in father"},
-  {id:"v3",h:"इ",r:"i",e:"short i — 'i' in bit"},{id:"v4",h:"ई",r:"ee",e:"long i — 'ee' in feet"},
-  {id:"v5",h:"उ",r:"u",e:"short u — 'u' in put"},{id:"v6",h:"ऊ",r:"oo",e:"long u — 'oo' in food"},
-  {id:"v7",h:"ए",r:"e",e:"'a' in gate"},{id:"v8",h:"ऐ",r:"ai",e:"'ai' in aisle"},
-  {id:"v9",h:"ओ",r:"o",e:"'o' in go"},{id:"v10",h:"औ",r:"au",e:"'ou' in out"},
-  {id:"v11",h:"अं",r:"an",e:"nasal — anusvara"},{id:"v12",h:"अः",r:"ah",e:"aspirate — visarga"},
+  {id:"v1",h:"अ",r:"a",e:"short a",ex:"अमर — amar (immortal)"},
+  {id:"v2",h:"आ",r:"aa",e:"long a",ex:"आम — aam (mango)"},
+  {id:"v3",h:"इ",r:"i",e:"short i",ex:"इधर — idhar (here)"},
+  {id:"v4",h:"ई",r:"ee",e:"long i",ex:"ईश्वर — ishwar (God)"},
+  {id:"v5",h:"उ",r:"u",e:"short u",ex:"उठो — utho (get up)"},
+  {id:"v6",h:"ऊ",r:"oo",e:"long u",ex:"ऊन — oon (wool)"},
+  {id:"v7",h:"ए",r:"e",e:"like e in prey",ex:"एक — ek (one)"},
+  {id:"v8",h:"ऐ",r:"ai",e:"like ai in aisle",ex:"ऐनक — ainak (glasses)"},
+  {id:"v9",h:"ओ",r:"o",e:"like o in go",ex:"ओस — os (dew)"},
+  {id:"v10",h:"औ",r:"au",e:"like au in auto",ex:"औरत — aurat (woman)"},
+  {id:"v11",h:"अं",r:"an",e:"nasal vowel — anusvara",ex:"अंगूर — angoor (grapes)"},
+  {id:"v12",h:"अः",r:"ah",e:"aspirate — visarga",ex:"rare in modern Hindi"},
 ];
 const CONSONANTS=[
-  {id:"c1",h:"क",r:"ka",e:"k unaspirated"},{id:"c2",h:"ख",r:"kha",e:"kh aspirated"},
-  {id:"c3",h:"ग",r:"ga",e:"g unaspirated"},{id:"c4",h:"घ",r:"gha",e:"gh aspirated"},
-  {id:"c5",h:"च",r:"cha",e:"ch unaspirated"},{id:"c6",h:"छ",r:"chha",e:"chh aspirated"},
-  {id:"c7",h:"ज",r:"ja",e:"j unaspirated"},{id:"c8",h:"झ",r:"jha",e:"jh aspirated"},
-  {id:"c9",h:"ट",r:"ṭa",e:"hard t retroflex"},{id:"c10",h:"ड",r:"ḍa",e:"hard d retroflex"},
-  {id:"c11",h:"त",r:"ta",e:"soft t dental"},{id:"c12",h:"द",r:"da",e:"soft d dental"},
-  {id:"c13",h:"न",r:"na",e:"n sound"},{id:"c14",h:"प",r:"pa",e:"p unaspirated"},
-  {id:"c15",h:"फ",r:"pha",e:"ph/f aspirated"},{id:"c16",h:"ब",r:"ba",e:"b unaspirated"},
-  {id:"c17",h:"भ",r:"bha",e:"bh aspirated"},{id:"c18",h:"म",r:"ma",e:"m sound"},
-  {id:"c19",h:"य",r:"ya",e:"y sound"},{id:"c20",h:"र",r:"ra",e:"r rolled"},
-  {id:"c21",h:"ल",r:"la",e:"l sound"},{id:"c22",h:"व",r:"va",e:"v / w sound"},
-  {id:"c23",h:"श",r:"sha",e:"sh palatal"},{id:"c24",h:"ष",r:"ṣha",e:"sh retroflex"},
-  {id:"c25",h:"स",r:"sa",e:"s sound"},{id:"c26",h:"ह",r:"ha",e:"h sound"},
+  {id:"c1",h:"क",r:"ka",e:"k unaspirated",ex:"कल — kal (tomorrow)"},
+  {id:"c2",h:"ख",r:"kha",e:"kh aspirated",ex:"खाना — khaana (food)"},
+  {id:"c3",h:"ग",r:"ga",e:"g unaspirated",ex:"गाना — gaana (song)"},
+  {id:"c4",h:"घ",r:"gha",e:"gh aspirated",ex:"घर — ghar (home)"},
+  {id:"c5",h:"च",r:"cha",e:"ch unaspirated",ex:"चाय — chai (tea)"},
+  {id:"c6",h:"छ",r:"chha",e:"chh aspirated",ex:"छाता — chhaata (umbrella)"},
+  {id:"c7",h:"ज",r:"ja",e:"j unaspirated",ex:"जल — jal (water)"},
+  {id:"c8",h:"झ",r:"jha",e:"jh aspirated",ex:"झील — jheel (lake)"},
+  {id:"c9",h:"ट",r:"ṭa",e:"hard t retroflex",ex:"टमाटर — tamaatar (tomato)"},
+  {id:"c10",h:"ड",r:"ḍa",e:"hard d retroflex",ex:"डाल — daal (branch)"},
+  {id:"c11",h:"त",r:"ta",e:"soft t dental",ex:"तारा — taara (star)"},
+  {id:"c12",h:"द",r:"da",e:"soft d dental",ex:"दिल — dil (heart)"},
+  {id:"c13",h:"न",r:"na",e:"n sound",ex:"नाम — naam (name)"},
+  {id:"c14",h:"प",r:"pa",e:"p unaspirated",ex:"पानी — paani (water)"},
+  {id:"c15",h:"फ",r:"pha",e:"ph/f aspirated",ex:"फूल — phool (flower)"},
+  {id:"c16",h:"ब",r:"ba",e:"b unaspirated",ex:"बात — baat (talk)"},
+  {id:"c17",h:"भ",r:"bha",e:"bh aspirated",ex:"भाई — bhai (brother)"},
+  {id:"c18",h:"म",r:"ma",e:"m sound",ex:"माँ — maa (mother)"},
+  {id:"c19",h:"य",r:"ya",e:"y sound",ex:"यार — yaar (friend)"},
+  {id:"c20",h:"र",r:"ra",e:"r rolled",ex:"राज — raaj (kingdom)"},
+  {id:"c21",h:"ल",r:"la",e:"l sound",ex:"लाल — laal (red)"},
+  {id:"c22",h:"व",r:"va",e:"v / w sound",ex:"वक्त — waqt (time)"},
+  {id:"c23",h:"श",r:"sha",e:"sh palatal",ex:"शहर — shahar (city)"},
+  {id:"c24",h:"ष",r:"ṣha",e:"sh retroflex",ex:"षट् — shat (six, Sanskrit)"},
+  {id:"c25",h:"स",r:"sa",e:"s sound",ex:"सच — sach (truth)"},
+  {id:"c26",h:"ह",r:"ha",e:"h sound",ex:"हाथ — haath (hand)"},
 ];
 const WORD_DECKS=[
   {id:"greetings",label:"Greetings",cards:[
@@ -334,71 +374,42 @@ function stepSRS(s,q){
 function dueCards(cards){return cards.filter(c=>(SRS[c.id]?.due??0)<=Date.now())}
 let SRS=loadSRS();
 
-// ── CANVAS — DEVANAGARI GRID ──────────────────────────────────────────────────
-// Shirorekha (top bar) hangs at ~28% from top — guide line placed there
+// ── CANVAS ────────────────────────────────────────────────────────────────────
 const cv=document.getElementById("draw-canvas"),ctx=cv.getContext("2d");
 let drawing=false,lx=0,ly=0,ghostChar=null;
-
-function xy(e){
-  const r=cv.getBoundingClientRect(),sx=cv.width/r.width,sy=cv.height/r.height,s=e.touches?e.touches[0]:e;
-  return[(s.clientX-r.left)*sx,(s.clientY-r.top)*sy];
-}
-
+function xy(e){const r=cv.getBoundingClientRect(),sx=cv.width/r.width,sy=cv.height/r.height,s=e.touches?e.touches[0]:e;return[(s.clientX-r.left)*sx,(s.clientY-r.top)*sy]}
 function drawGrid(){
   const W=cv.width,H=cv.height;
   ctx.clearRect(0,0,W,H);
-
-  // Paper background
-  ctx.fillStyle="#F7F3EC";
-  ctx.fillRect(0,0,W,H);
-
-  // Faint horizontal notebook lines
+  ctx.fillStyle="#F7F3EC";ctx.fillRect(0,0,W,H);
   ctx.strokeStyle="rgba(26,18,9,0.05)";ctx.lineWidth=1;
   for(let y=40;y<H;y+=40){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}
-
-  // ── DEVANAGARI: shirorekha guide at top third ──
-  // Characters hang from this line — it's the most important reference
+  // Devanagari shirorekha guide
   const shiro=Math.round(H*0.28);
   ctx.strokeStyle="rgba(200,105,10,0.22)";ctx.lineWidth=1.5;ctx.setLineDash([]);
   ctx.beginPath();ctx.moveTo(0,shiro);ctx.lineTo(W,shiro);ctx.stroke();
-
-  // Faint vertical center (secondary reference)
   ctx.strokeStyle="rgba(200,105,10,0.08)";ctx.lineWidth=1;ctx.setLineDash([4,6]);
   ctx.beginPath();ctx.moveTo(W/2,0);ctx.lineTo(W/2,H);ctx.stroke();
   ctx.setLineDash([]);
-
-  // Ghost character
   if(ghostChar){
-    const isWord=!currentDeck.isScript;
-    ctx.font=`${isWord ? Math.round(H*0.42) : Math.round(W*0.58)}px serif`;
+    const isWord=currentDeck&&!currentDeck.isScript;
+    ctx.font=`${isWord?Math.round(H*0.42):Math.round(W*0.58)}px serif`;
     ctx.fillStyle="rgba(200,105,10,0.08)";
     ctx.textAlign="center";ctx.textBaseline="middle";
     ctx.fillText(ghostChar,W/2,H/2+W*0.04);
   }
 }
-
 function clearCanvas(){ghostChar=currentCard&&isRevealed?currentCard.h:null;drawGrid()}
-
 cv.addEventListener("mousedown",e=>{drawing=true;[lx,ly]=xy(e)});
-cv.addEventListener("mousemove",e=>{
-  if(!drawing)return;const[x,y]=xy(e);
-  ctx.beginPath();ctx.moveTo(lx,ly);ctx.lineTo(x,y);
-  ctx.strokeStyle="#1A1209";ctx.lineWidth=3.5;ctx.lineCap=ctx.lineJoin="round";ctx.stroke();
-  [lx,ly]=[x,y];
-});
-cv.addEventListener("mouseup",()=>drawing=false);
-cv.addEventListener("mouseleave",()=>drawing=false);
+cv.addEventListener("mousemove",e=>{if(!drawing)return;const[x,y]=xy(e);ctx.beginPath();ctx.moveTo(lx,ly);ctx.lineTo(x,y);ctx.strokeStyle="#1A1209";ctx.lineWidth=3.5;ctx.lineCap=ctx.lineJoin="round";ctx.stroke();[lx,ly]=[x,y]});
+cv.addEventListener("mouseup",()=>drawing=false);cv.addEventListener("mouseleave",()=>drawing=false);
 cv.addEventListener("touchstart",e=>{e.preventDefault();drawing=true;[lx,ly]=xy(e)},{passive:false});
-cv.addEventListener("touchmove",e=>{
-  e.preventDefault();if(!drawing)return;const[x,y]=xy(e);
-  ctx.beginPath();ctx.moveTo(lx,ly);ctx.lineTo(x,y);
-  ctx.strokeStyle="#1A1209";ctx.lineWidth=3.5;ctx.lineCap=ctx.lineJoin="round";ctx.stroke();
-  [lx,ly]=[x,y];
-},{passive:false});
+cv.addEventListener("touchmove",e=>{e.preventDefault();if(!drawing)return;const[x,y]=xy(e);ctx.beginPath();ctx.moveTo(lx,ly);ctx.lineTo(x,y);ctx.strokeStyle="#1A1209";ctx.lineWidth=3.5;ctx.lineCap=ctx.lineJoin="round";ctx.stroke();[lx,ly]=[x,y]},{passive:false});
 cv.addEventListener("touchend",()=>drawing=false);
 
 // ── STATE ─────────────────────────────────────────────────────────────────────
 let currentDeck=null,queue=[],qIdx=0,currentCard=null,isRevealed=false,sessionGrades=[];
+let reviewDeck=null,reviewCards=[],flipIdx=0,flipShown=false;
 
 // ── HOME ─────────────────────────────────────────────────────────────────────
 function renderHome(){
@@ -406,34 +417,81 @@ function renderHome(){
   const seen=ALL_CARDS.filter(c=>(SRS[c.id]?.reps??0)>0).length;
   const due=ALL_DECKS.reduce((n,d)=>n+dueCards(d.cards).length,0);
   const pct=totalCards>0?Math.round((seen/totalCards)*100):0;
-
   document.getElementById("stat-seen").textContent=seen;
   document.getElementById("stat-due").textContent=due;
   document.getElementById("stat-total").textContent=totalCards;
   document.getElementById("overall-bar").style.width=pct+"%";
-  document.getElementById("bar-label-right").textContent=pct+"%";
-
+  document.getElementById("bar-pct").textContent=pct+"%";
   ["script","words"].forEach(type=>{
     const el=document.getElementById(`deck-list-${type}`);
     const decks=type==="script"?ALL_DECKS.filter(d=>d.isScript):ALL_DECKS.filter(d=>!d.isScript);
     el.innerHTML=decks.map(deck=>{
       const dueN=dueCards(deck.cards).length,done=dueN===0,total=deck.cards.length;
       const seenN=deck.cards.filter(c=>(SRS[c.id]?.reps??0)>0).length;
-      return`<div class="deck-row">
-        <div class="deck-info">
-          <div class="deck-name">${deck.label}</div>
-          <div class="deck-meta">
-            <span class="deck-sub">${deck.sub}</span>
-            ${seenN>0?`<span class="deck-seen">${seenN}/${total} seen</span>`:""}
-            <span class="deck-due ${done?"due-off":"due-on"}">${done?"✓ caught up":`${dueN} due`}</span>
-          </div>
-        </div>
-        <div class="prog-track"><div class="prog-fill" style="width:${(seenN/total)*100}%"></div></div>
-        <button class="btn-study ${done?"btn-outline":"btn-filled"}" onclick="startStudy('${deck.id}')">${done?"review":"study"}</button>
-      </div>`;
+      const reviewBtn=deck.isScript?`<button class="btn-review-deck" onclick="startReview('${deck.id}')">browse</button>`:"";
+      return`<div class="deck-row"><div class="deck-info"><div class="deck-name">${deck.label}</div><div class="deck-meta"><span class="deck-sub">${deck.sub}</span>${seenN>0?`<span class="deck-seen">${seenN}/${total} seen</span>`:""}<span class="deck-due ${done?"due-off":"due-on"}">${done?"✓ caught up":`${dueN} due`}</span></div></div><div class="prog-track"><div class="prog-fill" style="width:${(seenN/total)*100}%"></div></div><div class="deck-btns">${reviewBtn}<button class="btn-study ${done?"btn-outline":"btn-filled"}" onclick="startStudy('${deck.id}')">${done?"review":"study"}</button></div></div>`;
     }).join("");
   });
   buildRef();
+}
+
+// ── REVIEW MODE ───────────────────────────────────────────────────────────────
+function startReview(id){
+  reviewDeck=ALL_DECKS.find(d=>d.id===id);
+  reviewCards=reviewDeck.cards;
+  flipIdx=0;flipShown=false;
+  document.getElementById("review-title").textContent=reviewDeck.label+" — Browse";
+  document.getElementById("review-sub").textContent=reviewCards.length+" characters";
+  // Build grid
+  document.getElementById("review-grid").innerHTML=reviewCards.map((c,i)=>`
+    <div class="review-grid-card" id="rgc-${i}" onclick="highlightGrid(${i})">
+      <div class="review-grid-char">${c.h}</div>
+      <div class="review-grid-rom">${c.r}</div>
+      <div class="review-grid-eng">${c.e}</div>
+    </div>`).join("");
+  document.getElementById("review-grid-phase").style.display="block";
+  document.getElementById("review-flip-phase").style.display="none";
+  showScreen("review");
+}
+function highlightGrid(i){
+  document.querySelectorAll(".review-grid-card").forEach(el=>el.classList.remove("active"));
+  document.getElementById("rgc-"+i)?.classList.add("active");
+}
+function startFlip(){
+  flipIdx=0;flipShown=false;
+  document.getElementById("review-grid-phase").style.display="none";
+  document.getElementById("review-flip-phase").style.display="flex";
+  renderFlip();
+}
+function renderFlip(){
+  const c=reviewCards[flipIdx];
+  const card=document.getElementById("flip-card");
+  card.classList.remove("flipped");
+  document.getElementById("flip-front-label").style.display="block";
+  document.getElementById("flip-char").textContent=c.h;
+  document.getElementById("flip-char").style.display="block";
+  document.getElementById("flip-rom").style.display="none";
+  document.getElementById("flip-eng").style.display="none";
+  document.getElementById("flip-example").style.display="none";
+  document.getElementById("flip-count").textContent=`${flipIdx+1} / ${reviewCards.length}`;
+  flipShown=false;
+}
+function flipCard(){
+  if(flipShown){flipNav(1);return;}
+  const c=reviewCards[flipIdx];
+  document.getElementById("flip-card").classList.add("flipped");
+  document.getElementById("flip-front-label").style.display="none";
+  document.getElementById("flip-rom").textContent=c.r;document.getElementById("flip-rom").style.display="block";
+  document.getElementById("flip-eng").textContent=c.e;document.getElementById("flip-eng").style.display="block";
+  if(c.ex){document.getElementById("flip-example").textContent=c.ex;document.getElementById("flip-example").style.display="block";}
+  flipShown=true;
+}
+function flipNav(dir){
+  flipIdx=Math.max(0,Math.min(reviewCards.length-1,flipIdx+dir));
+  renderFlip();
+}
+function startStudyFromReview(){
+  startStudy(reviewDeck.id);
 }
 
 // ── STUDY ─────────────────────────────────────────────────────────────────────
@@ -446,30 +504,45 @@ function startStudy(id){
 }
 function resizeCanvas(){
   const isWord=!currentDeck.isScript;
-  const W=isWord?580:320, H=320;
-  cv.width=W; cv.height=H;
-  cv.style.width=W+"px"; cv.style.height=H+"px";
+  const W=isWord?580:320,H=320;
+  cv.width=W;cv.height=H;cv.style.width=W+"px";cv.style.height=H+"px";
 }
-
 function loadCard(){
   if(qIdx>=queue.length){showDone();return}
   currentCard=queue[qIdx];isRevealed=false;ghostChar=null;
-  resizeCanvas(); drawGrid();
+  resizeCanvas();drawGrid();
   document.getElementById("progress-bar").style.width=(qIdx/queue.length*50)+"vw";
   document.getElementById("study-count").textContent=`${qIdx+1} / ${queue.length}`;
   document.getElementById("prompt-label").textContent=currentDeck.isScript?"WRITE THIS CHARACTER":"WRITE IN DEVANAGARI";
   document.getElementById("prompt-main").innerHTML=currentDeck.isScript
     ?`<div class="prompt-rom-script">${currentCard.r}</div><div class="prompt-eng-script">${currentCard.e}</div>`
     :`<div class="prompt-word">${currentCard.e}</div><div class="prompt-rom">${currentCard.r}</div>`;
-  document.getElementById("reveal-area").innerHTML=`<button class="btn-reveal" onclick="reveal()">reveal</button>`;
+  document.getElementById("reveal-area").innerHTML=`
+    <div class="reveal-row">
+      <button class="btn-reveal" onclick="reveal()">reveal</button>
+      <button class="btn-dontknow" onclick="dontKnow()" title="Mark as Again and reveal">don't know</button>
+    </div>`;
+}
+function dontKnow(){
+  // Auto-grade Again then reveal
+  SRS[currentCard.id]=stepSRS(SRS[currentCard.id]??initCard(),0);
+  saveSRS(SRS);sessionGrades.push(0);
+  isRevealed=true;ghostChar=currentCard.h;drawGrid();
+  showAnswer();
 }
 function reveal(){
   isRevealed=true;ghostChar=currentCard.h;drawGrid();
+  showAnswer();
+}
+function showAnswer(){
+  const isWord=!currentDeck.isScript;
+  const exHtml=(!isWord&&currentCard.ex)?`<div class="answer-example">${currentCard.ex}</div>`:"";
   document.getElementById("reveal-area").innerHTML=`
     <div style="text-align:center">
-      <div class="answer-char${!currentDeck.isScript?' word':''}">${currentCard.h}</div>
+      <div class="answer-char${isWord?" word":""}">${currentCard.h}</div>
       <div class="answer-rom">${currentCard.r}</div>
-      ${!currentDeck.isScript?`<div class="answer-eng">${currentCard.e}</div>`:""}
+      ${isWord?`<div class="answer-eng">${currentCard.e}</div>`:""}
+      ${exHtml}
     </div>
     <div>
       <div class="grade-label">HOW DID YOU DO?</div>
@@ -482,8 +555,13 @@ function reveal(){
     </div>`;
 }
 function grade(q){
-  SRS[currentCard.id]=stepSRS(SRS[currentCard.id]??initCard(),q);
-  saveSRS(SRS);sessionGrades.push(q);qIdx++;loadCard();
+  // If dontKnow was pressed, SRS already updated — just advance
+  if(!isRevealed){SRS[currentCard.id]=stepSRS(SRS[currentCard.id]??initCard(),q);saveSRS(SRS);sessionGrades.push(q);}
+  else if(sessionGrades[sessionGrades.length-1]!==0||isRevealed){
+    // normal grade path (dontKnow already pushed 0)
+    if(document.querySelector(".btn-dontknow")){SRS[currentCard.id]=stepSRS(SRS[currentCard.id]??initCard(),q);saveSRS(SRS);sessionGrades.push(q);}
+  }
+  qIdx++;loadCard();
 }
 function showDone(){
   const c=[0,1,2,3].map(q=>sessionGrades.filter(g=>g===q).length);
@@ -500,32 +578,43 @@ function showDone(){
 function buildRef(){
   ["vowels","consonants"].forEach(t=>{
     const arr=t==="vowels"?VOWELS:CONSONANTS;
-    document.getElementById(`ref-${t}`).innerHTML=arr.map(c=>`<div class="ref-card"><div class="ref-char">${c.h}</div><div class="ref-rom">${c.r}</div><div class="ref-eng">${c.e.split("—")[0].trim()}</div></div>`).join("");
+    document.getElementById(`ref-${t}`).innerHTML=arr.map(c=>`<div class="ref-card"><div class="ref-char">${c.h}</div><div class="ref-rom">${c.r}</div><div class="ref-eng">${c.e}</div></div>`).join("");
   });
 }
 function openRef(){document.getElementById("ref-overlay").classList.add("open")}
 function closeRef(){document.getElementById("ref-overlay").classList.remove("open")}
 function closeRefOverlay(e){if(e.target===document.getElementById("ref-overlay"))closeRef()}
-
-// ── RESET ─────────────────────────────────────────────────────────────────────
 function confirmReset(){document.getElementById("confirm-overlay").classList.add("open")}
 function closeConfirm(){document.getElementById("confirm-overlay").classList.remove("open")}
 function closeConfirmOverlay(e){if(e.target===document.getElementById("confirm-overlay"))closeConfirm()}
-function doReset(){
-  localStorage.removeItem(SRS_KEY);
-  SRS={};closeConfirm();renderHome();
-}
-
-// ── NAV ───────────────────────────────────────────────────────────────────────
+function doReset(){localStorage.removeItem(SRS_KEY);SRS={};closeConfirm();renderHome()}
 function showScreen(n){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));document.getElementById(`${n}-screen`).classList.add("active")}
 function goHome(){showScreen("home");renderHome()}
 
 document.addEventListener("keydown",e=>{
+  if(document.getElementById("review-screen").classList.contains("active")){
+    if(e.key==="ArrowRight")flipNav(1);
+    if(e.key==="ArrowLeft")flipNav(-1);
+    if(e.key===" "){e.preventDefault();flipCard();}
+    return;
+  }
   if(!document.getElementById("study-screen").classList.contains("active"))return;
   if(e.key===" "&&!isRevealed){e.preventDefault();reveal();return}
+  if(e.key==="?"&&!isRevealed){dontKnow();return}
   if(e.key==="1"&&isRevealed)grade(0);if(e.key==="2"&&isRevealed)grade(1);
   if(e.key==="3"&&isRevealed)grade(2);if(e.key==="4"&&isRevealed)grade(3);
 });
+
+// Fix grade function - simplify
+function grade(q){
+  SRS[currentCard.id]=stepSRS(SRS[currentCard.id]??initCard(),q);
+  saveSRS(SRS);
+  // Only push grade if dontKnow didn't already push
+  const lastGrade=sessionGrades[sessionGrades.length-1];
+  const dontKnowWasPressed=isRevealed&&lastGrade===0&&document.querySelector(".g-again");
+  if(!dontKnowWasPressed)sessionGrades.push(q);
+  qIdx++;loadCard();
+}
 
 renderHome();drawGrid();
 </script>
