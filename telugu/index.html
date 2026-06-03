@@ -51,6 +51,14 @@
   .btn-filled{background:var(--ink);color:var(--paper)}.btn-outline{background:transparent;color:var(--ink)}
   .btn-filled:hover{background:var(--paper);color:var(--ink)}.btn-outline:hover{background:var(--ink);color:var(--paper)}
   footer{padding:36px 64px;margin-top:24px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;font-size:12px;color:var(--inkfader);letter-spacing:0.06em}
+
+  /* DIACRITICS */
+  .prompt-mark{font-size:88px;font-family:serif;color:var(--accent);line-height:1.2;text-align:center}
+  .prompt-mark-label{font-size:11px;color:var(--inkfader);letter-spacing:0.12em;text-align:center;margin-top:4px}
+  .answer-mark-row{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap}
+  .answer-mark{font-size:52px;font-family:serif;color:var(--accent);line-height:1}
+  .answer-mark-arrow{font-size:20px;color:var(--inkfader)}
+  .answer-with-base{font-size:86px;font-family:serif;color:var(--ink);line-height:1}
   /* REVIEW */
   .review-header{padding:20px 64px;border-bottom:1px solid var(--rule);display:flex;align-items:center;gap:16px}
   .review-title{font-size:16px;font-weight:600;color:var(--ink)}
@@ -263,6 +271,7 @@ const CONSONANTS=[{id:"c1",h:"క",r:"ka",e:"k sound",ex:"కన్ను — ka
 const WORD_DECKS=[{id:"greetings",label:"Greetings",cards:[{id:"w1",h:"నమస్కారం",r:"namaskaram",e:"Hello / Greetings",ex:""},{id:"w2",h:"ధన్యవాదాలు",r:"dhanyavaadaalu",e:"Thank you",ex:""},{id:"w3",h:"అవును",r:"avunu",e:"Yes",ex:""},{id:"w4",h:"కాదు",r:"kaadu",e:"No",ex:""},{id:"w5",h:"క్షమించండి",r:"kshamincandi",e:"Sorry / Excuse me",ex:""},{id:"w6",h:"ఎలా ఉన్నారు",r:"elaa unnaaru",e:"How are you?",ex:""},{id:"w7",h:"బాగున్నాను",r:"baagunnaanu",e:"I am well",ex:""},{id:"w8",h:"వెళ్ళొస్తాను",r:"vellostaanu",e:"Goodbye",ex:""}]},{id:"family",label:"Family",cards:[{id:"fa1",h:"అమ్మ",r:"amma",e:"Mother",ex:""},{id:"fa2",h:"నాన్న",r:"naanna",e:"Father",ex:""},{id:"fa3",h:"అన్న",r:"anna",e:"Elder brother",ex:""},{id:"fa4",h:"అక్క",r:"akka",e:"Elder sister",ex:""},{id:"fa5",h:"తమ్ముడు",r:"tammudu",e:"Younger brother",ex:""},{id:"fa6",h:"చెల్లి",r:"chelli",e:"Younger sister",ex:""},{id:"fa7",h:"తాత",r:"taata",e:"Grandfather",ex:""},{id:"fa8",h:"నాన్నమ్మ",r:"naanamma",e:"Grandmother",ex:""}]},{id:"body",label:"Body",cards:[{id:"b1",h:"చెయ్యి",r:"cheyyi",e:"Hand",ex:""},{id:"b2",h:"కాలు",r:"kaalu",e:"Foot / Leg",ex:""},{id:"b3",h:"కన్ను",r:"kannu",e:"Eye",ex:""},{id:"b4",h:"చెవి",r:"chevi",e:"Ear",ex:""},{id:"b5",h:"ముక్కు",r:"mukku",e:"Nose",ex:""},{id:"b6",h:"నోరు",r:"noru",e:"Mouth",ex:""},{id:"b7",h:"తల",r:"thala",e:"Head",ex:""},{id:"b8",h:"హృదయం",r:"hridayam",e:"Heart",ex:""}]},{id:"food",label:"Food",cards:[{id:"fo1",h:"నీళ్ళు",r:"neellu",e:"Water",ex:""},{id:"fo2",h:"భోజనం",r:"bhojanam",e:"Food / Meal",ex:""},{id:"fo3",h:"పాలు",r:"paalu",e:"Milk",ex:""},{id:"fo4",h:"టీ",r:"tee",e:"Tea",ex:""},{id:"fo5",h:"అన్నం",r:"annam",e:"Rice (cooked)",ex:""},{id:"fo6",h:"రొట్టె",r:"rotte",e:"Flatbread",ex:""},{id:"fo7",h:"కూర",r:"koora",e:"Curry",ex:""},{id:"fo8",h:"మిఠాయి",r:"mithayi",e:"Sweets",ex:""}]},{id:"numbers",label:"Numbers",cards:[{id:"n1",h:"ఒకటి",r:"okati",e:"One",ex:""},{id:"n2",h:"రెండు",r:"rendu",e:"Two",ex:""},{id:"n3",h:"మూడు",r:"moodu",e:"Three",ex:""},{id:"n4",h:"నాలుగు",r:"naalugu",e:"Four",ex:""},{id:"n5",h:"అయిదు",r:"ayidu",e:"Five",ex:""},{id:"n6",h:"ఆరు",r:"aaru",e:"Six",ex:""},{id:"n7",h:"ఏడు",r:"edu",e:"Seven",ex:""},{id:"n8",h:"ఎనిమిది",r:"enimidi",e:"Eight",ex:""},{id:"n9",h:"తొమ్మిది",r:"tommidi",e:"Nine",ex:""},{id:"n10",h:"పది",r:"padi",e:"Ten",ex:""}]},{id:"colors",label:"Colors",cards:[{id:"col1",h:"ఎరుపు",r:"erupu",e:"Red",ex:""},{id:"col2",h:"నీలం",r:"neelam",e:"Blue",ex:""},{id:"col3",h:"పచ్చ",r:"pachcha",e:"Green",ex:""},{id:"col4",h:"పసుపు",r:"pasapu",e:"Yellow",ex:""},{id:"col5",h:"తెలుపు",r:"telupu",e:"White",ex:""},{id:"col6",h:"నలుపు",r:"nalupu",e:"Black",ex:""},{id:"col7",h:"నారింజ",r:"naarinja",e:"Orange",ex:""},{id:"col8",h:"గులాబి",r:"gulaabi",e:"Pink",ex:""}]}];
 const ALL_DECKS=[
   {id:"vowels",label:"Vowels",sub:"14 characters",cards:VOWELS,isScript:true},
+  {id:"diacritics",label:"Vowel Signs · గుర్తులు",sub:"13 diacritics",cards:[{id:"teld1",mark:"ా",h:"కా",base:"క",r:"k+kaa=kaa",baseRom:"k",vowelRom:"kaa",e:"long a — ఆ sound",ex:""},{id:"teld2",mark:"ి",h:"కి",base:"క",r:"k+ki=ki",baseRom:"k",vowelRom:"ki",e:"short i — ఇ sound",ex:""},{id:"teld3",mark:"ీ",h:"కీ",base:"క",r:"k+kee=kee",baseRom:"k",vowelRom:"kee",e:"long i — ఈ sound",ex:""},{id:"teld4",mark:"ు",h:"కు",base:"క",r:"k+ku=ku",baseRom:"k",vowelRom:"ku",e:"short u — ఉ sound",ex:""},{id:"teld5",mark:"ూ",h:"కూ",base:"క",r:"k+koo=koo",baseRom:"k",vowelRom:"koo",e:"long u — ఊ sound",ex:""},{id:"teld6",mark:"ె",h:"కె",base:"క",r:"k+ke=ke",baseRom:"k",vowelRom:"ke",e:"short e — ఎ sound",ex:""},{id:"teld7",mark:"ే",h:"కే",base:"క",r:"k+kee=kee",baseRom:"k",vowelRom:"kee",e:"long e — ఏ sound",ex:""},{id:"teld8",mark:"ై",h:"కై",base:"క",r:"k+kai=kai",baseRom:"k",vowelRom:"kai",e:"ai — ఐ sound",ex:""},{id:"teld9",mark:"ొ",h:"కొ",base:"క",r:"k+ko=ko",baseRom:"k",vowelRom:"ko",e:"short o — ఒ sound",ex:""},{id:"teld10",mark:"ో",h:"కో",base:"క",r:"k+koo=koo",baseRom:"k",vowelRom:"koo",e:"long o — ఓ sound",ex:""},{id:"teld11",mark:"ౌ",h:"కౌ",base:"క",r:"k+kau=kau",baseRom:"k",vowelRom:"kau",e:"au — ఔ sound",ex:""},{id:"teld12",mark:"ం",h:"కం",base:"క",r:"k+kam=kam",baseRom:"k",vowelRom:"kam",e:"anusvara — nasal ending",ex:""},{id:"teld13",mark:"్",h:"క్",base:"క",r:"k+k=k",baseRom:"k",vowelRom:"k",e:"halant — removes inherent vowel",ex:""}],isScript:true,isDiacritic:true},
   {id:"consonants",label:"Consonants",sub:"34 characters",cards:CONSONANTS,isScript:true},
   ...WORD_DECKS.map(d=>({...d,sub:`${d.cards.length} words`,isScript:false})),
 ];
@@ -325,7 +334,7 @@ function renderHome(){
     el.innerHTML=decks.map(deck=>{
       const dueN=dueCards(deck.cards).length,done=dueN===0,total=deck.cards.length;
       const seenN=deck.cards.filter(c=>(SRS[c.id]?.reps??0)>0).length;
-      const reviewBtn=deck.isScript?`<button class="btn-review-deck" onclick="startReview('${deck.id}')">browse</button>`:"";
+      const reviewBtn=`<button class="btn-review-deck" onclick="startReview('${deck.id}')">browse</button>`;
       return`<div class="deck-row"><div class="deck-info"><div class="deck-name">${deck.label}</div><div class="deck-meta"><span class="deck-sub">${deck.sub}</span>${seenN>0?`<span class="deck-seen">${seenN}/${total} seen</span>`:""}<span class="deck-due ${done?"due-off":"due-on"}">${done?"✓ caught up":`${dueN} due`}</span></div></div><div class="prog-track"><div class="prog-fill" style="width:${(seenN/total)*100}%"></div></div><div class="deck-btns">${reviewBtn}<button class="btn-study ${done?"btn-outline":"btn-filled"}" onclick="startStudy('${deck.id}')">${done?"review":"study"}</button></div></div>`;
     }).join("");
   });
@@ -336,7 +345,12 @@ function startReview(id){
   reviewCards=reviewDeck.cards;flipIdx=0;flipShown=false;
   document.getElementById("review-title").textContent=reviewDeck.label+" — Browse";
   document.getElementById("review-sub").textContent=reviewCards.length+" characters";
-  document.getElementById("review-grid").innerHTML=reviewCards.map((c,i)=>`<div class="review-grid-card" id="rgc-${i}" onclick="highlightGrid(${i})"><div class="review-grid-char">${c.h}</div><div class="review-grid-rom">${c.r}</div><div class="review-grid-eng">${c.e}</div></div>`).join("");
+  document.getElementById("review-grid").innerHTML=reviewCards.map((c,i)=>{
+    const isDiac=reviewDeck.isDiacritic;
+    const charDisplay=isDiac?`${c.mark}<span style="font-size:18px;color:var(--inkfade);margin-left:6px">→ ${c.h}</span>`:c.h;
+    const romDisplay=isDiac?c.vowelRom:c.r;
+    return`<div class="review-grid-card" id="rgc-${i}" onclick="highlightGrid(${i})"><div class="review-grid-char">${charDisplay}</div><div class="review-grid-rom">${romDisplay}</div><div class="review-grid-eng">${c.e}</div></div>`;
+  }).join("");
   document.getElementById("review-grid-phase").style.display="block";
   document.getElementById("review-flip-phase").style.display="none";
   showScreen("review");
@@ -345,21 +359,34 @@ function highlightGrid(i){document.querySelectorAll(".review-grid-card").forEach
 function startFlip(){flipIdx=0;flipShown=false;document.getElementById("review-grid-phase").style.display="none";document.getElementById("review-flip-phase").style.display="flex";renderFlip()}
 function renderFlip(){
   const c=reviewCards[flipIdx];
+  const isDiac=reviewDeck.isDiacritic;
   document.getElementById("flip-card").classList.remove("flipped");
   document.getElementById("flip-front-label").style.display="block";
-  document.getElementById("flip-char").textContent=c.h;document.getElementById("flip-char").style.display="block";
-  document.getElementById("flip-rom").style.display="none";document.getElementById("flip-eng").style.display="none";document.getElementById("flip-example").style.display="none";
+  // Front: show the mark for diacritics, script word for others
+  document.getElementById("flip-char").textContent=isDiac?c.mark:c.h;
+  document.getElementById("flip-char").style.display="block";
+  document.getElementById("flip-rom").style.display="none";
+  document.getElementById("flip-eng").style.display="none";
+  document.getElementById("flip-example").style.display="none";
   document.getElementById("flip-count").textContent=`${flipIdx+1} / ${reviewCards.length}`;
   flipShown=false;
 }
 function flipCard(){
   if(flipShown){flipNav(1);return;}
   const c=reviewCards[flipIdx];
+  const isDiac=reviewDeck.isDiacritic;
   document.getElementById("flip-card").classList.add("flipped");
   document.getElementById("flip-front-label").style.display="none";
-  document.getElementById("flip-rom").textContent=c.r;document.getElementById("flip-rom").style.display="block";
-  document.getElementById("flip-eng").textContent=c.e;document.getElementById("flip-eng").style.display="block";
-  if(c.ex){document.getElementById("flip-example").textContent=c.ex;document.getElementById("flip-example").style.display="block";}
+  if(isDiac){
+    document.getElementById("flip-rom").textContent=`${c.mark} + ${c.base} = ${c.h} · ${c.vowelRom}`;
+    document.getElementById("flip-eng").textContent=c.e;
+  }else{
+    document.getElementById("flip-rom").textContent=c.r;
+    document.getElementById("flip-eng").textContent=c.e;
+  }
+  document.getElementById("flip-rom").style.display="block";
+  document.getElementById("flip-eng").style.display="block";
+  if(c.ex&&!isDiac){document.getElementById("flip-example").textContent=c.ex;document.getElementById("flip-example").style.display="block";}
   flipShown=true;
 }
 function flipNav(dir){flipIdx=Math.max(0,Math.min(reviewCards.length-1,flipIdx+dir));renderFlip()}
@@ -376,8 +403,13 @@ function loadCard(){
   currentCard=queue[qIdx];isRevealed=false;ghostChar=null;resizeCanvas();drawGrid();
   document.getElementById("progress-bar").style.width=(qIdx/queue.length*50)+"vw";
   document.getElementById("study-count").textContent=`${qIdx+1} / ${queue.length}`;
-  document.getElementById("prompt-label").textContent=currentDeck.isScript?"WRITE THIS CHARACTER":"WRITE IN TELUGU";
-  document.getElementById("prompt-main").innerHTML=currentDeck.isScript?`<div class="prompt-rom-script">${currentCard.r}</div><div class="prompt-eng-script">${currentCard.e}</div>`:`<div class="prompt-word">${currentCard.e}</div><div class="prompt-rom">${currentCard.r}</div>`;
+  if(currentDeck.isDiacritic){
+    document.getElementById("prompt-label").textContent="WHAT DOES THIS MARK DO?";
+    document.getElementById("prompt-main").innerHTML=`<div class="prompt-mark">${currentCard.mark}</div><div class="prompt-mark-label">${currentCard.e}</div>`;
+  }else{
+    document.getElementById("prompt-label").textContent=currentDeck.isScript?"WRITE THIS CHARACTER":"WRITE IN TELUGU";
+    document.getElementById("prompt-main").innerHTML=currentDeck.isScript?`<div class="prompt-rom-script">${currentCard.r}</div><div class="prompt-eng-script">${currentCard.e}</div>`:`<div class="prompt-word">${currentCard.e}</div><div class="prompt-rom">${currentCard.r}</div>`;
+  }
   document.getElementById("reveal-area").innerHTML=`<div class="reveal-row"><button class="btn-reveal" onclick="reveal()">reveal</button><button class="btn-dontknow" onclick="dontKnow()">don't know</button></div>`;
 }
 function dontKnow(){
@@ -387,6 +419,20 @@ function dontKnow(){
 function reveal(){isRevealed=true;ghostChar=currentCard.h;drawGrid();showAnswer()}
 function showAnswer(){
   const isWord=!currentDeck.isScript;
+  if(currentDeck.isDiacritic){
+    document.getElementById("reveal-area").innerHTML=`<div style="text-align:center">
+      <div class="answer-mark-row">
+        <div class="answer-mark">${currentCard.mark}</div>
+        <div class="answer-mark-arrow">+</div>
+        <div class="answer-mark">${currentCard.base}</div>
+        <div class="answer-mark-arrow">=</div>
+        <div class="answer-with-base">${currentCard.h}</div>
+      </div>
+      <div class="answer-rom" style="margin-top:8px">${currentCard.h} · ${currentCard.vowelRom}</div>
+      <div class="answer-eng">${currentCard.e}</div>
+    </div><div><div class="grade-label">HOW DID YOU DO?</div><div class="grade-bar"><button class="btn-grade g-again" onclick="grade(0)">Again<span>[1]</span></button><button class="btn-grade g-hard" onclick="grade(1)">Hard<span>[2]</span></button><button class="btn-grade g-good" onclick="grade(2)">Good<span>[3]</span></button><button class="btn-grade g-easy" onclick="grade(3)">Easy<span>[4]</span></button></div></div>`;
+    return;
+  }
   const exHtml=(!isWord&&currentCard.ex)?`<div class="answer-example">${currentCard.ex}</div>`:"";
   document.getElementById("reveal-area").innerHTML=`<div style="text-align:center"><div class="answer-char${isWord?" word":""}">${currentCard.h}</div><div class="answer-rom">${currentCard.r}</div>${isWord?`<div class="answer-eng">${currentCard.e}</div>`:""}${exHtml}</div><div><div class="grade-label">HOW DID YOU DO?</div><div class="grade-bar"><button class="btn-grade g-again" onclick="grade(0)">Again<span>[1]</span></button><button class="btn-grade g-hard" onclick="grade(1)">Hard<span>[2]</span></button><button class="btn-grade g-good" onclick="grade(2)">Good<span>[3]</span></button><button class="btn-grade g-easy" onclick="grade(3)">Easy<span>[4]</span></button></div></div>`;
 }

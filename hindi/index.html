@@ -52,6 +52,14 @@
   .btn-filled:hover{background:var(--paper);color:var(--ink)}.btn-outline:hover{background:var(--ink);color:var(--paper)}
   footer{padding:36px 64px;margin-top:24px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;font-size:12px;color:var(--inkfader);letter-spacing:0.06em}
 
+
+  /* DIACRITICS */
+  .prompt-mark{font-size:88px;font-family:serif;color:var(--accent);line-height:1.2;text-align:center}
+  .prompt-mark-label{font-size:11px;color:var(--inkfader);letter-spacing:0.12em;text-align:center;margin-top:4px}
+  .answer-mark-row{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap}
+  .answer-mark{font-size:52px;font-family:serif;color:var(--accent);line-height:1}
+  .answer-mark-arrow{font-size:20px;color:var(--inkfader)}
+  .answer-with-base{font-size:86px;font-family:serif;color:var(--ink);line-height:1}
   /* ── REVIEW MODE ── */
   .review-header{padding:20px 64px;border-bottom:1px solid var(--rule);display:flex;align-items:center;gap:16px}
   .review-title{font-size:16px;font-weight:600;color:var(--ink)}
@@ -356,6 +364,7 @@ const WORD_DECKS=[
 ];
 const ALL_DECKS=[
   {id:"vowels",label:"Vowels",sub:"12 characters",cards:VOWELS,isScript:true},
+  {id:"diacritics",label:"Vowel Signs · मात्राएँ",sub:"12 diacritics",cards:[{id:"hd1",mark:"ा",h:"का",base:"क",r:"k+kaa=kaa",baseRom:"k",vowelRom:"kaa",e:"long a — extends the vowel",ex:""},{id:"hd2",mark:"ि",h:"कि",base:"क",r:"k+ki=ki",baseRom:"k",vowelRom:"ki",e:"short i — before the consonant visually",ex:""},{id:"hd3",mark:"ी",h:"की",base:"क",r:"k+kee=kee",baseRom:"k",vowelRom:"kee",e:"long i",ex:""},{id:"hd4",mark:"ु",h:"कु",base:"क",r:"k+ku=ku",baseRom:"k",vowelRom:"ku",e:"short u — below the consonant",ex:""},{id:"hd5",mark:"ू",h:"कू",base:"क",r:"k+koo=koo",baseRom:"k",vowelRom:"koo",e:"long u — below the consonant",ex:""},{id:"hd6",mark:"े",h:"के",base:"क",r:"k+ke=ke",baseRom:"k",vowelRom:"ke",e:"e — like a in gate",ex:""},{id:"hd7",mark:"ै",h:"कै",base:"क",r:"k+kai=kai",baseRom:"k",vowelRom:"kai",e:"ai — like ai in aisle",ex:""},{id:"hd8",mark:"ो",h:"को",base:"क",r:"k+ko=ko",baseRom:"k",vowelRom:"ko",e:"o — like o in go",ex:""},{id:"hd9",mark:"ौ",h:"कौ",base:"क",r:"k+kau=kau",baseRom:"k",vowelRom:"kau",e:"au — like ow in how",ex:""},{id:"hd10",mark:"ं",h:"कं",base:"क",r:"k+kan=kan",baseRom:"k",vowelRom:"kan",e:"anusvara — nasalizes the vowel",ex:""},{id:"hd11",mark:"ः",h:"कः",base:"क",r:"k+kah=kah",baseRom:"k",vowelRom:"kah",e:"visarga — adds breath after",ex:""},{id:"hd12",mark:"्",h:"क्",base:"क",r:"k+k=k",baseRom:"k",vowelRom:"k",e:"halant — removes inherent vowel, pure consonant",ex:""}],isScript:true,isDiacritic:true},
   {id:"consonants",label:"Consonants",sub:"26 characters",cards:CONSONANTS,isScript:true},
   ...WORD_DECKS.map(d=>({...d,sub:`${d.cards.length} words`,isScript:false})),
 ];
@@ -428,7 +437,7 @@ function renderHome(){
     el.innerHTML=decks.map(deck=>{
       const dueN=dueCards(deck.cards).length,done=dueN===0,total=deck.cards.length;
       const seenN=deck.cards.filter(c=>(SRS[c.id]?.reps??0)>0).length;
-      const reviewBtn=deck.isScript?`<button class="btn-review-deck" onclick="startReview('${deck.id}')">browse</button>`:"";
+      const reviewBtn=`<button class="btn-review-deck" onclick="startReview('${deck.id}')">browse</button>`;
       return`<div class="deck-row"><div class="deck-info"><div class="deck-name">${deck.label}</div><div class="deck-meta"><span class="deck-sub">${deck.sub}</span>${seenN>0?`<span class="deck-seen">${seenN}/${total} seen</span>`:""}<span class="deck-due ${done?"due-off":"due-on"}">${done?"✓ caught up":`${dueN} due`}</span></div></div><div class="prog-track"><div class="prog-fill" style="width:${(seenN/total)*100}%"></div></div><div class="deck-btns">${reviewBtn}<button class="btn-study ${done?"btn-outline":"btn-filled"}" onclick="startStudy('${deck.id}')">${done?"review":"study"}</button></div></div>`;
     }).join("");
   });
@@ -513,10 +522,15 @@ function loadCard(){
   resizeCanvas();drawGrid();
   document.getElementById("progress-bar").style.width=(qIdx/queue.length*50)+"vw";
   document.getElementById("study-count").textContent=`${qIdx+1} / ${queue.length}`;
-  document.getElementById("prompt-label").textContent=currentDeck.isScript?"WRITE THIS CHARACTER":"WRITE IN DEVANAGARI";
-  document.getElementById("prompt-main").innerHTML=currentDeck.isScript
-    ?`<div class="prompt-rom-script">${currentCard.r}</div><div class="prompt-eng-script">${currentCard.e}</div>`
-    :`<div class="prompt-word">${currentCard.e}</div><div class="prompt-rom">${currentCard.r}</div>`;
+  if(currentDeck.isDiacritic){
+    document.getElementById("prompt-label").textContent="WHAT DOES THIS MARK DO?";
+    document.getElementById("prompt-main").innerHTML=`<div class="prompt-mark">${currentCard.mark}</div><div class="prompt-mark-label">${currentCard.e}</div>`;
+  }else{
+    document.getElementById("prompt-label").textContent=currentDeck.isScript?"WRITE THIS CHARACTER":"WRITE IN DEVANAGARI";
+    document.getElementById("prompt-main").innerHTML=currentDeck.isScript
+      ?`<div class="prompt-rom-script">${currentCard.r}</div><div class="prompt-eng-script">${currentCard.e}</div>`
+      :`<div class="prompt-word">${currentCard.e}</div><div class="prompt-rom">${currentCard.r}</div>`;
+  }
   document.getElementById("reveal-area").innerHTML=`
     <div class="reveal-row">
       <button class="btn-reveal" onclick="reveal()">reveal</button>
