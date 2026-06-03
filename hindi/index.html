@@ -66,12 +66,12 @@
   .review-sub{font-size:12px;color:var(--inkfader);margin-left:auto}
   /* Grid phase */
   #review-grid-phase{padding:40px 64px}
-  .review-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:12px;max-width:900px}
-  .review-grid-card{background:var(--paperdark);border:1.5px solid var(--rule);border-radius:6px;padding:16px 8px;text-align:center;cursor:pointer;transition:all .15s}
+  .review-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;max-width:960px}
+  .review-grid-card{background:var(--paperdark);border:1.5px solid var(--rule);border-radius:6px;padding:12px 8px;text-align:center;cursor:pointer;transition:all .15s;overflow:hidden;min-height:90px;display:flex;flex-direction:column;align-items:center;justify-content:center}
   .review-grid-card:hover,.review-grid-card.active{border-color:var(--accent);background:var(--paper)}
-  .review-grid-char{font-size:38px;font-family:serif;color:var(--ink);line-height:1.1}
-  .review-grid-rom{font-size:11px;color:var(--accent);margin-top:4px}
-  .review-grid-eng{font-size:9px;color:var(--inkfader);margin-top:2px;line-height:1.3}
+  .review-grid-char{font-size:28px;font-family:serif;color:var(--ink);line-height:1.2;word-break:break-all;overflow-wrap:break-word;width:100%}
+  .review-grid-rom{font-size:10px;color:var(--accent);margin-top:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%}
+  .review-grid-eng{font-size:9px;color:var(--inkfader);margin-top:2px;line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%}
   .review-start-btn{margin-top:32px}
   /* Flip phase */
   #review-flip-phase{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;padding:60px 48px}
@@ -213,14 +213,16 @@
   </div>
   <!-- Flip phase -->
   <div id="review-flip-phase" style="display:none">
-    <div class="flip-card" id="flip-card" onclick="flipCard()">
+    <div class="flip-card" id="flip-card">
       <div class="flip-front-label" id="flip-front-label">TAP TO REVEAL</div>
       <div class="flip-char" id="flip-char"></div>
       <div class="flip-rom" id="flip-rom" style="display:none"></div>
       <div class="flip-eng" id="flip-eng" style="display:none"></div>
       <div class="flip-example" id="flip-example" style="display:none"></div>
+      <div id="trace-area"></div>
     </div>
     <div class="flip-nav">
+      <button class="btn-flip-nav" onclick="backToGrid()">⊞ grid</button>
       <button class="btn-flip-nav" onclick="flipNav(-1)">← prev</button>
       <div class="flip-count" id="flip-count"></div>
       <button class="btn-flip-nav" onclick="flipNav(1)">next →</button>
@@ -364,8 +366,8 @@ const WORD_DECKS=[
 ];
 const ALL_DECKS=[
   {id:"vowels",label:"Vowels",sub:"12 characters",cards:VOWELS,isScript:true},
-  {id:"diacritics",label:"Vowel Signs · मात्राएँ",sub:"12 diacritics",cards:[{id:"hd1",mark:"ा",h:"का",base:"क",r:"k+kaa=kaa",baseRom:"k",vowelRom:"kaa",e:"long a — extends the vowel",ex:""},{id:"hd2",mark:"ि",h:"कि",base:"क",r:"k+ki=ki",baseRom:"k",vowelRom:"ki",e:"short i — before the consonant visually",ex:""},{id:"hd3",mark:"ी",h:"की",base:"क",r:"k+kee=kee",baseRom:"k",vowelRom:"kee",e:"long i",ex:""},{id:"hd4",mark:"ु",h:"कु",base:"क",r:"k+ku=ku",baseRom:"k",vowelRom:"ku",e:"short u — below the consonant",ex:""},{id:"hd5",mark:"ू",h:"कू",base:"क",r:"k+koo=koo",baseRom:"k",vowelRom:"koo",e:"long u — below the consonant",ex:""},{id:"hd6",mark:"े",h:"के",base:"क",r:"k+ke=ke",baseRom:"k",vowelRom:"ke",e:"e — like a in gate",ex:""},{id:"hd7",mark:"ै",h:"कै",base:"क",r:"k+kai=kai",baseRom:"k",vowelRom:"kai",e:"ai — like ai in aisle",ex:""},{id:"hd8",mark:"ो",h:"को",base:"क",r:"k+ko=ko",baseRom:"k",vowelRom:"ko",e:"o — like o in go",ex:""},{id:"hd9",mark:"ौ",h:"कौ",base:"क",r:"k+kau=kau",baseRom:"k",vowelRom:"kau",e:"au — like ow in how",ex:""},{id:"hd10",mark:"ं",h:"कं",base:"क",r:"k+kan=kan",baseRom:"k",vowelRom:"kan",e:"anusvara — nasalizes the vowel",ex:""},{id:"hd11",mark:"ः",h:"कः",base:"क",r:"k+kah=kah",baseRom:"k",vowelRom:"kah",e:"visarga — adds breath after",ex:""},{id:"hd12",mark:"्",h:"क्",base:"क",r:"k+k=k",baseRom:"k",vowelRom:"k",e:"halant — removes inherent vowel, pure consonant",ex:""}],isScript:true,isDiacritic:true},
   {id:"consonants",label:"Consonants",sub:"26 characters",cards:CONSONANTS,isScript:true},
+  {id:"diacritics",label:"Vowel Signs · मात्राएँ",sub:"12 diacritics",cards:[{id:"hd1",mark:"ा",h:"का",base:"क",r:"k+kaa=kaa",baseRom:"k",vowelRom:"kaa",e:"long a — extends the vowel",ex:""},{id:"hd2",mark:"ि",h:"कि",base:"क",r:"k+ki=ki",baseRom:"k",vowelRom:"ki",e:"short i — before the consonant visually",ex:""},{id:"hd3",mark:"ी",h:"की",base:"क",r:"k+kee=kee",baseRom:"k",vowelRom:"kee",e:"long i",ex:""},{id:"hd4",mark:"ु",h:"कु",base:"क",r:"k+ku=ku",baseRom:"k",vowelRom:"ku",e:"short u — below the consonant",ex:""},{id:"hd5",mark:"ू",h:"कू",base:"क",r:"k+koo=koo",baseRom:"k",vowelRom:"koo",e:"long u — below the consonant",ex:""},{id:"hd6",mark:"े",h:"के",base:"क",r:"k+ke=ke",baseRom:"k",vowelRom:"ke",e:"e — like a in gate",ex:""},{id:"hd7",mark:"ै",h:"कै",base:"क",r:"k+kai=kai",baseRom:"k",vowelRom:"kai",e:"ai — like ai in aisle",ex:""},{id:"hd8",mark:"ो",h:"को",base:"क",r:"k+ko=ko",baseRom:"k",vowelRom:"ko",e:"o — like o in go",ex:""},{id:"hd9",mark:"ौ",h:"कौ",base:"क",r:"k+kau=kau",baseRom:"k",vowelRom:"kau",e:"au — like ow in how",ex:""},{id:"hd10",mark:"ं",h:"कं",base:"क",r:"k+kan=kan",baseRom:"k",vowelRom:"kan",e:"anusvara — nasalizes the vowel",ex:""},{id:"hd11",mark:"ः",h:"कः",base:"क",r:"k+kah=kah",baseRom:"k",vowelRom:"kah",e:"visarga — adds breath after",ex:""},{id:"hd12",mark:"्",h:"क्",base:"क",r:"k+k=k",baseRom:"k",vowelRom:"k",e:"halant — removes inherent vowel, pure consonant",ex:""}],isScript:true,isDiacritic:true},
   ...WORD_DECKS.map(d=>({...d,sub:`${d.cards.length} words`,isScript:false})),
 ];
 const ALL_CARDS=ALL_DECKS.flatMap(d=>d.cards);
@@ -420,6 +422,92 @@ cv.addEventListener("touchend",()=>drawing=false);
 let currentDeck=null,queue=[],qIdx=0,currentCard=null,isRevealed=false,sessionGrades=[];
 let reviewDeck=null,reviewCards=[],flipIdx=0,flipShown=false;
 
+
+
+// ── TRACE IN BROWSE ───────────────────────────────────────────────────────────
+let traceCanvas=null,traceCtx=null,traceDrawing=false,traceLX=0,traceLY=0;
+
+
+
+
+
+
+function toggleTrace(e, ghostChar){
+  if(e)e.stopPropagation();
+  const wrap=document.getElementById("trace-wrap");
+  const btn=document.getElementById("btn-trace-toggle");
+  if(!wrap||!btn)return;
+  const showing=wrap.style.display==="flex";
+  if(showing){
+    wrap.style.display="none";
+    btn.textContent="✍️ trace";
+  }else{
+    wrap.style.display="flex";
+    btn.textContent="✕ hide";
+    drawTraceGrid(ghostChar);
+    initTrace(ghostChar);
+  }
+}
+
+function clearTrace(e, ghostChar){
+  if(e)e.stopPropagation();
+  drawTraceGrid(ghostChar);
+}
+
+let _tDraw=false,_tLx=0,_tLy=0;
+
+function drawTraceGrid(ghost){
+  const cv=document.getElementById("trace-canvas");
+  if(!cv)return;
+  const ctx=cv.getContext("2d");
+  const W=cv.width,H=cv.height;
+  ctx.clearRect(0,0,W,H);
+  ctx.fillStyle="#F7F3EC";ctx.fillRect(0,0,W,H);
+  ctx.strokeStyle="rgba(200,105,10,0.12)";ctx.lineWidth=1;ctx.setLineDash([3,5]);
+  ctx.beginPath();ctx.moveTo(W/2,0);ctx.lineTo(W/2,H);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(0,H/2);ctx.lineTo(W,H/2);ctx.stroke();
+  ctx.setLineDash([]);
+  if(ghost){
+    ctx.font=Math.round(W*0.62)+"px serif";
+    ctx.fillStyle="rgba(200,105,10,0.13)";
+    ctx.textAlign="center";ctx.textBaseline="middle";
+    ctx.fillText(ghost,W/2,H/2+W*0.04);
+  }
+}
+
+function initTrace(ghost){
+  const cv=document.getElementById("trace-canvas");
+  if(!cv)return;
+  // remove old listeners by cloning
+  const fresh=cv.cloneNode(true);
+  cv.parentNode.replaceChild(fresh,cv);
+  drawTraceGrid(ghost);
+  const ctx=fresh.getContext("2d");
+  function getP(e){
+    const r=fresh.getBoundingClientRect(),sx=fresh.width/r.width,sy=fresh.height/r.height;
+    const s=e.touches?e.touches[0]:e;
+    return[(s.clientX-r.left)*sx,(s.clientY-r.top)*sy];
+  }
+  let drawing=false,lx=0,ly=0;
+  fresh.addEventListener("mousedown",e=>{e.stopPropagation();drawing=true;[lx,ly]=getP(e)});
+  fresh.addEventListener("mousemove",e=>{
+    if(!drawing)return;const[x,y]=getP(e);
+    ctx.beginPath();ctx.moveTo(lx,ly);ctx.lineTo(x,y);
+    ctx.strokeStyle="#1A1209";ctx.lineWidth=3;ctx.lineCap=ctx.lineJoin="round";
+    ctx.stroke();lx=x;ly=y;
+  });
+  fresh.addEventListener("mouseup",()=>drawing=false);
+  fresh.addEventListener("mouseleave",()=>drawing=false);
+  fresh.addEventListener("touchstart",e=>{e.stopPropagation();e.preventDefault();drawing=true;[lx,ly]=getP(e)},{passive:false});
+  fresh.addEventListener("touchmove",e=>{
+    e.stopPropagation();e.preventDefault();if(!drawing)return;const[x,y]=getP(e);
+    ctx.beginPath();ctx.moveTo(lx,ly);ctx.lineTo(x,y);
+    ctx.strokeStyle="#1A1209";ctx.lineWidth=3;ctx.lineCap=ctx.lineJoin="round";
+    ctx.stroke();lx=x;ly=y;
+  },{passive:false});
+  fresh.addEventListener("touchend",e=>{e.stopPropagation();drawing=false;},{passive:false});
+}
+
 // ── HOME ─────────────────────────────────────────────────────────────────────
 function renderHome(){
   const totalCards=ALL_CARDS.length;
@@ -452,19 +540,29 @@ function startReview(id){
   document.getElementById("review-title").textContent=reviewDeck.label+" — Browse";
   document.getElementById("review-sub").textContent=reviewCards.length+" characters";
   // Build grid
-  document.getElementById("review-grid").innerHTML=reviewCards.map((c,i)=>`
-    <div class="review-grid-card" id="rgc-${i}" onclick="highlightGrid(${i})">
-      <div class="review-grid-char">${c.h}</div>
-      <div class="review-grid-rom">${c.r}</div>
-      <div class="review-grid-eng">${c.e}</div>
-    </div>`).join("");
+  document.getElementById("review-grid").innerHTML=(()=>{
+    const isDiac=!!reviewDeck.isDiacritic;
+    return reviewCards.map((c,i)=>{
+      const charDisplay=isDiac?`${c.mark} → ${c.h}`:c.h;
+      const romDisplay=isDiac?c.vowelRom:c.r;
+      const charLen=(isDiac?c.mark:c.h).length;
+      const fontSize=charLen<=2?28:charLen<=4?22:charLen<=6?18:14;
+      return`<div class="review-grid-card" id="rgc-${i}" onclick="highlightGrid(${i})"><div class="review-grid-char" style="font-size:${fontSize}px">${charDisplay}</div><div class="review-grid-rom">${romDisplay}</div><div class="review-grid-eng">${c.e}</div></div>`;
+    }).join("");
+  })();
   document.getElementById("review-grid-phase").style.display="block";
   document.getElementById("review-flip-phase").style.display="none";
   showScreen("review");
 }
+function backToGrid(){document.getElementById("review-grid-phase").style.display="block";document.getElementById("review-flip-phase").style.display="none";}
 function highlightGrid(i){
   document.querySelectorAll(".review-grid-card").forEach(el=>el.classList.remove("active"));
   document.getElementById("rgc-"+i)?.classList.add("active");
+  // Jump to this card in flip mode
+  flipIdx=i;
+  document.getElementById("review-grid-phase").style.display="none";
+  document.getElementById("review-flip-phase").style.display="flex";
+  renderFlip();
 }
 function startFlip(){
   flipIdx=0;flipShown=false;
@@ -483,16 +581,31 @@ function renderFlip(){
   document.getElementById("flip-eng").style.display="none";
   document.getElementById("flip-example").style.display="none";
   document.getElementById("flip-count").textContent=`${flipIdx+1} / ${reviewCards.length}`;
+  const ta=document.getElementById("trace-area");if(ta)ta.innerHTML="";
   flipShown=false;
 }
 function flipCard(){
   if(flipShown){flipNav(1);return;}
   const c=reviewCards[flipIdx];
+  const isDiac=!!reviewDeck.isDiacritic;
   document.getElementById("flip-card").classList.add("flipped");
   document.getElementById("flip-front-label").style.display="none";
-  document.getElementById("flip-rom").textContent=c.r;document.getElementById("flip-rom").style.display="block";
-  document.getElementById("flip-eng").textContent=c.e;document.getElementById("flip-eng").style.display="block";
-  if(c.ex){document.getElementById("flip-example").textContent=c.ex;document.getElementById("flip-example").style.display="block";}
+  if(isDiac){
+    document.getElementById("flip-rom").textContent=c.mark+" + "+c.base+" = "+c.h+" · "+c.vowelRom;
+    document.getElementById("flip-eng").textContent=c.e;
+  }else{
+    document.getElementById("flip-rom").textContent=c.r;
+    document.getElementById("flip-eng").textContent=c.e;
+  }
+  document.getElementById("flip-rom").style.display="block";
+  document.getElementById("flip-eng").style.display="block";
+  if(c.ex&&!isDiac){document.getElementById("flip-example").textContent=c.ex;document.getElementById("flip-example").style.display="block";}
+  // inject trace UI
+  const ta=document.getElementById("trace-area");
+  if(ta){
+    const ghost=isDiac?c.mark:c.h;
+    ta.innerHTML='<div style="margin-top:10px;display:flex;flex-direction:column;align-items:center;gap:6px"><button id="btn-trace-toggle" style="background:transparent;border:1.5px solid var(--accent);border-radius:3px;padding:5px 16px;font-family:inherit;font-size:12px;color:var(--accent);cursor:pointer;letter-spacing:0.08em" onclick="toggleTrace(event,\''+ghost+'\')">✍️ trace</button><div id="trace-wrap" style="display:none;flex-direction:column;align-items:center;gap:6px"><canvas id="trace-canvas" width="220" height="220" style="width:220px;height:220px;display:block;touch-action:none;cursor:crosshair;border-radius:6px;border:1.5px solid var(--rule);box-shadow:inset 0 1px 4px rgba(0,0,0,0.05)"></canvas><button onclick="clearTrace(event,\''+ghost+'\')" style="background:transparent;border:1.5px solid var(--rule);border-radius:3px;padding:4px 14px;font-family:inherit;font-size:11px;color:var(--inkfader);cursor:pointer">↺ clear</button></div></div>';
+  }
   flipShown=true;
 }
 function flipNav(dir){
@@ -631,6 +744,17 @@ function grade(q){
 }
 
 renderHome();drawGrid();
+
+// Flip card click — only advance if trace is NOT open
+document.getElementById("flip-card").addEventListener("click", function(e){
+  // Don't advance if clicking inside trace area or trace is visible
+  if(document.getElementById("trace-wrap") &&
+     document.getElementById("trace-wrap").style.display === "flex"){
+    return; // trace is open, ignore card click
+  }
+  flipCard();
+});
+
 </script>
 </body>
 </html>

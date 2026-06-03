@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Likho · Urdu · اردو Writing Practice</title>
+<meta name="description" content="Free Urdu Nastaliq writing practice for heritage speakers. SRS flashcards with drawing canvas.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<!-- Nastaliq -->
+<link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
+<!-- Naskh -->
+<link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --paper:#F8F5F0;--paperdark:#EEE8DF;--ink:#1A1006;
+    --inkfade:#5C4A2A;--inkfader:#A8916A;--rule:rgba(26,16,6,0.1);
+    --accent:#1A5276;--accent2:#7D3C98;--again:#B53A2A;--hard:#B07020;--good:#3A7A4A;--easy:#2A5A8A;
+    --nastaliq:'Noto Nastaliq Urdu',serif;
+    --naskh:'Noto Naskh Arabic',serif;
+    --ufont:var(--nastaliq);
+  }
+  body{background:var(--paper);color:var(--ink);font-family:'Crimson Pro',Georgia,serif;min-height:100vh}
+  body.naskh-mode{--ufont:var(--naskh)}
+  ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--paperdark)}::-webkit-scrollbar-thumb{background:var(--inkfader);border-radius:3px}
+
+  /* RTL overrides for LTR UI elements */
+  .ltr{direction:ltr;text-align:left}
+  .ltr-inline{direction:ltr;display:inline-block}
+
+  .screen{display:none;min-height:100vh}.screen.active{display:block}
+  #study-screen{display:none;flex-direction:row}#study-screen.active{display:flex}
+  #review-screen{display:none;flex-direction:column;min-height:100vh}#review-screen.active{display:flex}
+  #done-screen{display:none;align-items:center;justify-content:center;flex-direction:column;gap:36px;min-height:100vh}#done-screen.active{display:flex}
+
+  header{border-bottom:1px solid var(--rule);padding:0 64px;display:flex;align-items:center;justify-content:space-between;height:64px;direction:ltr}
+  .logo{display:flex;align-items:baseline;gap:12px;text-decoration:none;color:var(--ink)}
+  .logo-script{font-size:24px;font-weight:600;font-family:var(--ufont);direction:rtl}
+  .logo-en{font-size:13px;color:var(--inkfader);letter-spacing:0.12em}
+  .header-right{display:flex;align-items:center;gap:20px}
+  .btn-ghost{background:transparent;border:none;color:var(--inkfader);cursor:pointer;font-size:13px;letter-spacing:0.1em;font-family:'Crimson Pro',Georgia,serif;padding:0}.btn-ghost:hover{color:var(--ink)}
+  .btn-back-home{background:transparent;border:none;color:var(--inkfader);cursor:pointer;font-size:13px;letter-spacing:0.08em;font-family:'Crimson Pro',Georgia,serif;padding:0;text-decoration:none}.btn-back-home:hover{color:var(--ink)}
+
+  /* Font toggle */
+  .font-toggle{display:flex;gap:0;background:var(--paperdark);border-radius:8px;padding:3px;border:1px solid var(--rule)}
+  .font-btn{padding:4px 10px;border-radius:6px;border:none;background:transparent;cursor:pointer;font-size:12px;letter-spacing:0.06em;color:var(--inkfader);font-family:'Crimson Pro',Georgia,serif;transition:all .15s}
+  .font-btn.active{background:var(--ink);color:var(--paper)}
+  .font-btn.urdu-sample{font-family:var(--ufont);font-size:14px;letter-spacing:0}
+
+  .hero{padding:56px 64px 40px;border-bottom:1px solid var(--rule);display:flex;align-items:flex-end;justify-content:space-between;direction:ltr}
+  .hero-title{font-size:60px;font-weight:300;letter-spacing:-0.03em;line-height:1.05;margin-bottom:12px}
+  .hero-sub{font-size:15px;color:var(--inkfade);max-width:440px;line-height:1.6}
+  .hero-char{font-size:140px;color:var(--accent);opacity:0.1;font-family:var(--ufont);line-height:1;user-select:none;margin-bottom:-12px;direction:rtl}
+
+  .overall-progress{padding:24px 64px;border-bottom:1px solid var(--rule);display:flex;align-items:center;gap:32px;flex-wrap:wrap;direction:ltr}
+  .overall-stat{text-align:center}
+  .overall-num{font-size:28px;font-weight:300;color:var(--ink);letter-spacing:-0.02em}
+  .overall-lbl{font-size:10px;color:var(--inkfader);letter-spacing:0.14em;margin-top:2px}
+  .overall-bar-wrap{flex:1;max-width:320px}
+  .overall-bar-label{font-size:11px;color:var(--inkfader);letter-spacing:0.1em;margin-bottom:6px;display:flex;justify-content:space-between}
+  .overall-bar-track{height:4px;background:var(--paperdark);border-radius:99px;overflow:hidden}
+  .overall-bar-fill{height:100%;background:var(--accent);border-radius:99px;transition:width .6s}
+  .btn-reset{background:transparent;border:none;color:var(--inkfader);font-size:11px;cursor:pointer;font-family:'Crimson Pro',Georgia,serif;letter-spacing:0.1em;padding:0;margin-left:auto}.btn-reset:hover{color:var(--again)}
+
+  .decks{padding:0 64px;max-width:900px;direction:ltr}
+  .section-label{padding:28px 0 8px;font-size:11px;color:var(--inkfader);letter-spacing:0.18em}
+  .deck-row{display:flex;align-items:center;padding:16px 0;border-bottom:1px solid var(--rule)}
+  .deck-info{flex:1}.deck-name{font-size:17px;font-weight:600;letter-spacing:-0.01em}
+  .deck-meta{display:flex;align-items:center;gap:14px;margin-top:3px}
+  .deck-sub,.deck-seen{font-size:12px;color:var(--inkfader)}
+  .deck-due{font-size:11px;font-weight:600;letter-spacing:0.06em}.due-on{color:var(--accent)}.due-off{color:var(--good)}
+  .prog-track{width:72px;height:3px;background:var(--paperdark);border-radius:99px;margin:0 20px;overflow:hidden}
+  .prog-fill{height:100%;background:var(--accent);border-radius:99px;transition:width .6s}
+  .deck-btns{display:flex;gap:8px}
+  .btn-review-deck{border:1.5px solid var(--accent);border-radius:3px;padding:7px 14px;font-family:'Crimson Pro',Georgia,serif;font-size:12px;letter-spacing:0.08em;cursor:pointer;transition:all .15s;background:transparent;color:var(--accent)}.btn-review-deck:hover{background:var(--accent);color:var(--paper)}
+  .btn-study{border:1.5px solid var(--ink);border-radius:3px;padding:7px 22px;min-width:84px;text-align:center;font-family:'Crimson Pro',Georgia,serif;font-size:13px;letter-spacing:0.1em;cursor:pointer;transition:all .15s}
+  .btn-filled{background:var(--ink);color:var(--paper)}.btn-outline{background:transparent;color:var(--ink)}
+  .btn-filled:hover{background:var(--paper);color:var(--ink)}.btn-outline:hover{background:var(--ink);color:var(--paper)}
+  footer{padding:36px 64px;margin-top:24px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;font-size:12px;color:var(--inkfader);letter-spacing:0.06em;direction:ltr}
+
+  /* REVIEW */
+  .review-header{padding:20px 64px;border-bottom:1px solid var(--rule);display:flex;align-items:center;gap:16px;direction:ltr}
+  .review-title{font-size:16px;font-weight:600;color:var(--ink)}
+  .review-sub{font-size:12px;color:var(--inkfader);margin-left:auto}
+  #review-grid-phase{padding:40px 64px;direction:ltr}
+  .review-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px;max-width:960px}
+  .review-grid-card{background:var(--paperdark);border:1.5px solid var(--rule);border-radius:6px;padding:12px 8px;text-align:center;cursor:pointer;transition:all .15s;overflow:hidden;min-height:100px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+  .review-grid-card:hover,.review-grid-card.active{border-color:var(--accent);background:var(--paper)}
+  .review-grid-char{font-family:var(--ufont);color:var(--ink);line-height:1.3;direction:rtl}
+  .review-grid-rom{font-size:10px;color:var(--accent);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%}
+  .review-grid-eng{font-size:9px;color:var(--inkfader);line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%}
+  .review-start-btn{margin-top:32px;direction:ltr}
+  #review-flip-phase{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;padding:60px 48px}
+  .flip-card{width:440px;max-width:90vw;min-height:280px;background:var(--paperdark);border:1.5px solid var(--rule);border-radius:12px;padding:40px 36px;text-align:center;cursor:pointer;transition:all .2s;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px}
+  .flip-card.flipped{background:var(--paper);border-color:var(--accent)}
+  .flip-front-label{font-size:10px;color:var(--inkfader);letter-spacing:0.16em;font-family:'Crimson Pro',Georgia,serif}
+  .flip-char{font-family:var(--ufont);color:var(--ink);line-height:1.2;direction:rtl}
+  .flip-rom{font-size:20px;color:var(--accent);font-style:italic;font-family:'Crimson Pro',Georgia,serif}
+  .flip-eng{font-size:15px;color:var(--inkfade);font-family:'Crimson Pro',Georgia,serif}
+  .flip-forms{font-size:13px;color:var(--inkfader);font-family:var(--ufont);direction:rtl;line-height:1.8}
+  .flip-nav{display:flex;gap:12px;align-items:center;direction:ltr}
+  .btn-flip-nav{background:transparent;border:1.5px solid var(--rule);border-radius:3px;padding:8px 20px;font-family:'Crimson Pro',Georgia,serif;font-size:13px;color:var(--inkfade);cursor:pointer;letter-spacing:0.06em;transition:all .15s}.btn-flip-nav:hover{border-color:var(--ink);color:var(--ink)}
+  .flip-count{font-size:12px;color:var(--inkfader);min-width:60px;text-align:center;font-family:'Crimson Pro',Georgia,serif}
+  .btn-start-study{background:var(--ink);color:var(--paper);border:none;border-radius:3px;padding:10px 28px;font-family:'Crimson Pro',Georgia,serif;font-size:13px;letter-spacing:0.08em;cursor:pointer}.btn-start-study:hover{opacity:.85}
+
+  /* STUDY — RTL canvas layout */
+  #progress-bar{position:fixed;top:0;left:0;height:2px;background:var(--accent);transition:width .4s;z-index:10}
+  .study-nav{position:fixed;top:20px;left:24px;display:flex;align-items:center;gap:16px;z-index:10;direction:ltr}
+  .btn-back{background:transparent;border:none;color:var(--inkfader);cursor:pointer;font-size:13px;letter-spacing:0.08em;font-family:'Crimson Pro',Georgia,serif;padding:0}.btn-back:hover{color:var(--ink)}
+  .study-count{font-size:12px;color:var(--inkfader);letter-spacing:0.1em;font-family:'Crimson Pro',Georgia,serif}
+  /* Left panel = canvas (RTL: canvas on right conceptually, but we keep layout LTR for usability) */
+  .study-left,.study-right{width:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 48px;gap:28px;min-height:100vh}
+  .study-left{border-right:1px solid var(--rule)}
+  .prompt-label{font-size:11px;color:var(--accent);letter-spacing:0.18em;text-align:center;font-family:'Crimson Pro',Georgia,serif}
+  .prompt-word{font-size:44px;font-family:var(--ufont);color:var(--ink);line-height:1.4;margin-bottom:8px;text-align:center;direction:rtl}
+  .prompt-rom{font-size:21px;color:var(--inkfade);font-style:italic;text-align:center;font-family:'Crimson Pro',Georgia,serif}
+  .prompt-rom-script{font-size:72px;font-family:var(--ufont);color:var(--accent);margin-bottom:6px;text-align:center;direction:rtl;line-height:1.4}
+  .prompt-eng-script{font-size:15px;color:var(--inkfade);text-align:center;font-family:'Crimson Pro',Georgia,serif}
+  .hint{font-size:11px;color:var(--inkfader);letter-spacing:0.1em;font-family:'Crimson Pro',Georgia,serif}
+  .canvas-wrap{display:flex;flex-direction:column;align-items:center;gap:8px}
+  #draw-canvas{display:block;touch-action:none;cursor:crosshair;border-radius:4px;border:1.5px solid var(--rule);box-shadow:inset 0 1px 4px rgba(26,16,6,0.05),0 2px 14px rgba(26,16,6,0.07)}
+  .btn-clear{background:transparent;border:none;color:var(--inkfader);font-size:12px;cursor:pointer;letter-spacing:0.1em;font-family:'Crimson Pro',Georgia,serif;padding:2px 0}.btn-clear:hover{color:var(--ink)}
+  /* RTL note under canvas */
+  .rtl-hint{font-size:10px;color:var(--inkfader);letter-spacing:0.06em;text-align:center;font-family:'Crimson Pro',Georgia,serif;margin-top:2px}
+  .reveal-row{display:flex;gap:10px;align-items:center}
+  .btn-reveal{background:var(--ink);color:var(--paper);border:none;border-radius:3px;padding:12px 40px;font-family:'Crimson Pro',Georgia,serif;font-size:15px;letter-spacing:0.1em;cursor:pointer}.btn-reveal:hover{opacity:.85}
+  .btn-dontknow{background:transparent;border:1.5px solid var(--again);color:var(--again);border-radius:3px;padding:12px 16px;font-family:'Crimson Pro',Georgia,serif;font-size:13px;letter-spacing:0.06em;cursor:pointer}.btn-dontknow:hover{background:var(--again);color:#fff}
+  .answer-char{font-family:var(--ufont);color:var(--ink);line-height:1.3;text-align:center;direction:rtl}
+  .answer-char.word{font-size:48px}
+  .answer-rom{font-size:21px;color:var(--accent);margin-top:4px;text-align:center;font-family:'Crimson Pro',Georgia,serif}
+  .answer-eng{font-size:14px;color:var(--inkfade);margin-top:3px;text-align:center;font-family:'Crimson Pro',Georgia,serif}
+  .answer-forms{font-size:18px;color:var(--inkfader);margin-top:8px;text-align:center;font-family:var(--ufont);direction:rtl;line-height:1.8}
+  .answer-forms-label{font-size:10px;color:var(--inkfader);letter-spacing:0.1em;margin-top:6px;font-family:'Crimson Pro',Georgia,serif}
+  .grade-label{font-size:11px;color:var(--inkfader);letter-spacing:0.1em;text-align:center;margin-bottom:8px;font-family:'Crimson Pro',Georgia,serif}
+  .grade-bar{display:flex;gap:8px;justify-content:center}
+  .btn-grade{width:84px;padding:9px 0;border-radius:3px;font-family:'Crimson Pro',Georgia,serif;font-size:13px;font-weight:600;letter-spacing:0.04em;cursor:pointer;background:var(--paper);transition:background .15s}
+  .btn-grade span{display:block;font-size:10px;opacity:.5;font-weight:400;margin-top:2px}
+  .g-again{border:1.5px solid var(--again);color:var(--again)}.g-again:hover{background:rgba(181,58,42,0.08)}
+  .g-hard{border:1.5px solid var(--hard);color:var(--hard)}.g-hard:hover{background:rgba(176,112,32,0.08)}
+  .g-good{border:1.5px solid var(--good);color:var(--good)}.g-good:hover{background:rgba(58,122,74,0.08)}
+  .g-easy{border:1.5px solid var(--easy);color:var(--easy)}.g-easy:hover{background:rgba(42,90,138,0.08)}
+
+  /* DIACRITICS */
+  .prompt-mark{font-size:88px;font-family:var(--ufont);color:var(--accent);line-height:1.4;text-align:center;direction:rtl}
+  .prompt-mark-label{font-size:11px;color:var(--inkfader);letter-spacing:0.12em;text-align:center;margin-top:4px;font-family:'Crimson Pro',Georgia,serif}
+  .answer-mark-row{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;direction:ltr}
+  .answer-mark{font-size:52px;font-family:var(--ufont);color:var(--accent);line-height:1;direction:rtl}
+  .answer-mark-arrow{font-size:20px;color:var(--inkfader)}
+  .answer-with-base{font-size:86px;font-family:var(--ufont);color:var(--ink);line-height:1;direction:rtl}
+
+  /* DONE */
+  .done-word{font-size:52px;font-weight:300;letter-spacing:-0.02em;font-family:var(--ufont);direction:rtl}
+  .done-sub{font-size:14px;color:var(--inkfade);letter-spacing:0.1em;font-family:'Crimson Pro',Georgia,serif}
+  .done-grades{display:flex;gap:20px;direction:ltr}
+  .done-box{text-align:center;width:68px}
+  .done-num{font-size:30px;font-weight:600}
+  .done-lbl{font-size:11px;letter-spacing:0.08em;margin-top:2px;font-family:'Crimson Pro',Georgia,serif}
+  .btn-home{background:transparent;border:1.5px solid var(--ink);border-radius:3px;padding:10px 32px;font-family:'Crimson Pro',Georgia,serif;font-size:14px;color:var(--ink);letter-spacing:0.08em;cursor:pointer}.btn-home:hover{background:var(--ink);color:var(--paper)}
+
+  /* REFERENCE */
+  #ref-overlay{display:none;position:fixed;inset:0;background:rgba(26,16,6,0.5);z-index:200;align-items:center;justify-content:center;backdrop-filter:blur(2px)}
+  #ref-overlay.open{display:flex}
+  .ref-modal{background:var(--paper);border-radius:4px;padding:40px 48px;width:860px;max-width:92vw;max-height:86vh;overflow-y:auto;box-shadow:0 24px 80px rgba(26,16,6,0.25);direction:ltr}
+  .ref-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:28px}
+  .ref-title{font-size:20px;font-weight:600;letter-spacing:-0.01em}
+  .btn-close{background:transparent;border:none;color:var(--inkfader);cursor:pointer;font-size:20px;line-height:1}
+  .ref-sec{margin-bottom:28px}.ref-sec-label{font-size:11px;color:var(--accent);letter-spacing:0.16em;margin-bottom:12px}
+  .ref-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
+  .ref-card{background:var(--paperdark);border:1px solid var(--rule);border-radius:3px;padding:10px 6px;text-align:center}
+  .ref-char{font-size:28px;font-family:var(--ufont);color:var(--ink);line-height:1.4;direction:rtl}
+  .ref-rom{font-size:11px;color:var(--accent);margin-top:3px}
+  .ref-name{font-size:9px;color:var(--inkfader);margin-top:2px;line-height:1.3}
+
+  /* CONFIRM */
+  #confirm-overlay{display:none;position:fixed;inset:0;background:rgba(26,16,6,0.4);z-index:300;align-items:center;justify-content:center;backdrop-filter:blur(2px)}
+  #confirm-overlay.open{display:flex}
+  .confirm-box{background:var(--paper);border-radius:4px;padding:36px 40px;width:360px;max-width:90vw;box-shadow:0 12px 48px rgba(26,16,6,0.2);text-align:center;direction:ltr}
+  .confirm-title{font-size:18px;font-weight:600;margin-bottom:8px}
+  .confirm-sub{font-size:14px;color:var(--inkfade);margin-bottom:24px;line-height:1.5}
+  .confirm-btns{display:flex;gap:10px;justify-content:center}
+  .btn-cancel{background:transparent;border:1.5px solid var(--rule);border-radius:3px;padding:8px 24px;font-family:'Crimson Pro',Georgia,serif;font-size:13px;color:var(--inkfade);cursor:pointer;letter-spacing:0.06em}.btn-cancel:hover{border-color:var(--ink);color:var(--ink)}
+  .btn-confirm-reset{background:var(--again);color:#fff;border:none;border-radius:3px;padding:8px 24px;font-family:'Crimson Pro',Georgia,serif;font-size:13px;cursor:pointer;letter-spacing:0.06em;font-weight:600}.btn-confirm-reset:hover{opacity:.85}
+
+  @media(max-width:900px){
+    header,.hero,.overall-progress,.decks,footer{padding-left:28px;padding-right:28px}
+    .hero-title{font-size:40px}.hero-char{display:none}
+    #study-screen.active{flex-direction:column}
+    .study-left,.study-right{width:100%;min-height:auto;padding:48px 28px;border-right:none;border-bottom:1px solid var(--rule)}
+    .study-right{border-bottom:none}
+    .ref-grid{grid-template-columns:repeat(4,1fr)}.ref-modal{padding:28px 24px}
+    .review-header,#review-grid-phase{padding-left:28px;padding-right:28px}
+    .flip-card{width:90vw}
+  }
+</style>
+</head>
+<body>
+
+<!-- HOME -->
+<div id="home-screen" class="screen active">
+  <header>
+    <a class="logo" href="../index.html">
+      <span class="logo-script">لکھو</span>
+      <span class="logo-en">LIKHO</span>
+    </a>
+    <div class="header-right">
+      <div class="font-toggle">
+        <button class="font-btn urdu-sample active" id="btn-nastaliq" onclick="setFont('nastaliq')">نستعلیق</button>
+        <button class="font-btn urdu-sample" id="btn-naskh" onclick="setFont('naskh')">نسخ</button>
+      </div>
+      <button class="btn-ghost" onclick="openRef()">reference</button>
+      <a class="btn-back-home" href="../index.html">← all languages</a>
+    </div>
+  </header>
+
+  <div class="hero">
+    <div>
+      <div class="hero-title">Urdu writing<br>practice.</div>
+      <div class="hero-sub">Draw on the canvas. Reveal the answer.<br>Grade yourself honestly. The algorithm handles the rest.</div>
+    </div>
+    <div class="hero-char">ا</div>
+  </div>
+
+  <div class="overall-progress">
+    <div class="overall-stat"><div class="overall-num" id="stat-seen">0</div><div class="overall-lbl">CARDS SEEN</div></div>
+    <div class="overall-stat"><div class="overall-num" id="stat-due">0</div><div class="overall-lbl">DUE TODAY</div></div>
+    <div class="overall-stat"><div class="overall-num" id="stat-total">0</div><div class="overall-lbl">TOTAL CARDS</div></div>
+    <div class="overall-bar-wrap">
+      <div class="overall-bar-label"><span>overall progress</span><span id="bar-pct">0%</span></div>
+      <div class="overall-bar-track"><div class="overall-bar-fill" id="overall-bar" style="width:0%"></div></div>
+    </div>
+    <button class="btn-reset" onclick="confirmReset()">reset progress</button>
+  </div>
+
+  <div class="decks">
+    <div class="section-label">ALPHABET · حروفِ تہجی</div>
+    <div id="deck-list-script"></div>
+    <div class="section-label">WORDS · الفاظ</div>
+    <div id="deck-list-words"></div>
+  </div>
+  <footer>
+    <span>لکھو · urdu · اردو script</span>
+    <span>draw · reveal · grade · repeat</span>
+  </footer>
+</div>
+
+<!-- REVIEW -->
+<div id="review-screen" class="screen">
+  <div class="review-header">
+    <button class="btn-back" onclick="goHome()">← decks</button>
+    <div class="review-title" id="review-title"></div>
+    <div class="review-sub" id="review-sub"></div>
+  </div>
+  <div id="review-grid-phase">
+    <div class="review-grid" id="review-grid"></div>
+    <div class="review-start-btn">
+      <button class="btn-filled btn-study" onclick="startFlip()">Flip through →</button>
+    </div>
+  </div>
+  <div id="review-flip-phase" style="display:none">
+    <div class="flip-card" id="flip-card">
+      <div class="flip-front-label" id="flip-front-label">TAP TO REVEAL</div>
+      <div class="flip-char" id="flip-char"></div>
+      <div class="flip-rom" id="flip-rom" style="display:none"></div>
+      <div class="flip-eng" id="flip-eng" style="display:none"></div>
+      <div class="flip-forms" id="flip-forms" style="display:none"></div>
+      <div id="trace-area"></div>
+    </div>
+    <div class="flip-nav">
+      <button class="btn-flip-nav" onclick="backToGrid()">⊞ grid</button>
+      <button class="btn-flip-nav" onclick="flipNav(-1)">← prev</button>
+      <div class="flip-count" id="flip-count"></div>
+      <button class="btn-flip-nav" onclick="flipNav(1)">next →</button>
+    </div>
+    <button class="btn-start-study" onclick="startStudyFromReview()">Start writing practice →</button>
+  </div>
+</div>
+
+<!-- STUDY -->
+<div id="study-screen" class="screen">
+  <div id="progress-bar"></div>
+  <div class="study-nav">
+    <button class="btn-back" onclick="goHome()">← decks</button>
+    <span class="study-count" id="study-count"></span>
+  </div>
+  <div class="study-left">
+    <div class="prompt-label" id="prompt-label"></div>
+    <div id="prompt-main"></div>
+    <div class="hint">space to reveal · ? to skip</div>
+  </div>
+  <div class="study-right">
+    <div class="canvas-wrap">
+      <canvas id="draw-canvas" width="320" height="320" style="width:320px;height:320px;transition:all 0.2s"></canvas>
+      <button class="btn-clear" onclick="clearCanvas()">↺ clear</button>
+      <div class="rtl-hint">← write right to left</div>
+    </div>
+    <div id="reveal-area"></div>
+  </div>
+</div>
+
+<!-- DONE -->
+<div id="done-screen" class="screen">
+  <div class="done-word" id="done-word"></div>
+  <div class="done-sub" id="done-sub"></div>
+  <div class="done-grades" id="done-grades"></div>
+  <button class="btn-home" onclick="goHome()">back to decks</button>
+</div>
+
+<!-- REFERENCE -->
+<div id="ref-overlay" onclick="closeRefOverlay(event)">
+  <div class="ref-modal">
+    <div class="ref-header">
+      <div class="ref-title">Urdu Alphabet Reference · حروفِ تہجی</div>
+      <button class="btn-close" onclick="closeRef()">✕</button>
+    </div>
+    <div class="ref-sec">
+      <div class="ref-sec-label">LETTERS · حروف (isolated form)</div>
+      <div class="ref-grid" id="ref-letters"></div>
+    </div>
+    <div style="font-size:12px;color:var(--inkfader);margin-top:16px;line-height:1.6">
+      <strong>Note on Urdu script:</strong> Each letter has up to 4 forms — isolated, initial (start of word), medial (middle), and final (end of word). These cards practice the isolated form. The letter's shape changes when connected to others in cursive writing.
+    </div>
+  </div>
+</div>
+
+<!-- CONFIRM -->
+<div id="confirm-overlay" onclick="closeConfirmOverlay(event)">
+  <div class="confirm-box">
+    <div class="confirm-title">Reset all progress?</div>
+    <div class="confirm-sub">This will clear your SRS history for all Urdu decks. This cannot be undone.</div>
+    <div class="confirm-btns">
+      <button class="btn-cancel" onclick="closeConfirm()">Cancel</button>
+      <button class="btn-confirm-reset" onclick="doReset()">Reset</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── DATA ─────────────────────────────────────────────────────────────────────
+// Urdu uses Perso-Arabic script, 38 letters (28 Arabic + 10 Urdu-specific)
+// Format: id, isolated form, name, romanization, description, letter forms note
+const LETTERS = [
+  // The 28 + 10 letters of Urdu
+  {id:"u1",  h:"ا", r:"alif",  rom:"a/aa", e:"vowel carrier — long a",       forms:"ا ـا"},
+  {id:"u2",  h:"ب", r:"be",    rom:"b",    e:"b sound",                       forms:"ب بـ ـبـ ـب"},
+  {id:"u3",  h:"پ", r:"pe",    rom:"p",    e:"p sound (Urdu-specific)",        forms:"پ پـ ـپـ ـپ"},
+  {id:"u4",  h:"ت", r:"te",    rom:"t",    e:"dental t",                      forms:"ت تـ ـتـ ـت"},
+  {id:"u5",  h:"ٹ", r:"ṭe",   rom:"ṭ",    e:"retroflex t (Urdu-specific)",   forms:"ٹ ٹـ ـٹـ ـٹ"},
+  {id:"u6",  h:"ث", r:"se",    rom:"s",    e:"s sound (Arabic origin)",       forms:"ث ثـ ـثـ ـث"},
+  {id:"u7",  h:"ج", r:"jeem",  rom:"j",    e:"j sound",                       forms:"ج جـ ـجـ ـج"},
+  {id:"u8",  h:"چ", r:"che",   rom:"ch",   e:"ch sound (Urdu-specific)",      forms:"چ چـ ـچـ ـچ"},
+  {id:"u9",  h:"ح", r:"baṛī he",rom:"h",  e:"h sound (breathy)",             forms:"ح حـ ـحـ ـح"},
+  {id:"u10", h:"خ", r:"khe",   rom:"kh",   e:"kh — guttural",                forms:"خ خـ ـخـ ـخ"},
+  {id:"u11", h:"د", r:"daal",  rom:"d",    e:"dental d",                      forms:"د ـد"},
+  {id:"u12", h:"ڈ", r:"ḍaal",  rom:"ḍ",   e:"retroflex d (Urdu-specific)",   forms:"ڈ ـڈ"},
+  {id:"u13", h:"ذ", r:"zaal",  rom:"z",    e:"z sound (Arabic origin)",       forms:"ذ ـذ"},
+  {id:"u14", h:"ر", r:"re",    rom:"r",    e:"r — flap",                      forms:"ر ـر"},
+  {id:"u15", h:"ڑ", r:"ṛe",   rom:"ṛ",    e:"retroflex r (Urdu-specific)",   forms:"ڑ ـڑ"},
+  {id:"u16", h:"ز", r:"ze",    rom:"z",    e:"z sound",                       forms:"ز ـز"},
+  {id:"u17", h:"ژ", r:"zhe",   rom:"zh",   e:"zh — like measure (rare)",      forms:"ژ ـژ"},
+  {id:"u18", h:"س", r:"seen",  rom:"s",    e:"s sound",                       forms:"س سـ ـسـ ـس"},
+  {id:"u19", h:"ش", r:"sheen", rom:"sh",   e:"sh sound",                      forms:"ش شـ ـشـ ـش"},
+  {id:"u20", h:"ص", r:"suaad", rom:"s",    e:"emphatic s (Arabic origin)",    forms:"ص صـ ـصـ ـص"},
+  {id:"u21", h:"ض", r:"zuaad", rom:"z",    e:"emphatic z (Arabic origin)",    forms:"ض ضـ ـضـ ـض"},
+  {id:"u22", h:"ط", r:"to'e",  rom:"t",    e:"emphatic t (Arabic origin)",    forms:"ط طـ ـطـ ـط"},
+  {id:"u23", h:"ظ", r:"zo'e",  rom:"z",    e:"emphatic z (Arabic origin)",    forms:"ظ ظـ ـظـ ـظ"},
+  {id:"u24", h:"ع", r:"ain",   rom:"'",    e:"voiced pharyngeal — unique",    forms:"ع عـ ـعـ ـع"},
+  {id:"u25", h:"غ", r:"ghain", rom:"gh",   e:"gh — guttural g",              forms:"غ غـ ـغـ ـغ"},
+  {id:"u26", h:"ف", r:"fe",    rom:"f",    e:"f sound",                       forms:"ف فـ ـفـ ـف"},
+  {id:"u27", h:"ق", r:"qaaf",  rom:"q",    e:"q — deep k sound",             forms:"ق قـ ـقـ ـق"},
+  {id:"u28", h:"ک", r:"kaaf",  rom:"k",    e:"k sound",                       forms:"ک کـ ـکـ ـک"},
+  {id:"u29", h:"گ", r:"gaaf",  rom:"g",    e:"g sound (Urdu-specific)",       forms:"گ گـ ـگـ ـگ"},
+  {id:"u30", h:"ل", r:"laam",  rom:"l",    e:"l sound",                       forms:"ل لـ ـلـ ـل"},
+  {id:"u31", h:"م", r:"meem",  rom:"m",    e:"m sound",                       forms:"م مـ ـمـ ـم"},
+  {id:"u32", h:"ن", r:"noon",  rom:"n",    e:"n sound",                       forms:"ن نـ ـنـ ـن"},
+  {id:"u33", h:"و", r:"wao",   rom:"w/v/oo",e:"w, v, or long oo",            forms:"و ـو"},
+  {id:"u34", h:"ہ", r:"choṭī he",rom:"h", e:"h sound",                       forms:"ہ ہـ ـہـ ـہ"},
+  {id:"u35", h:"ھ", r:"do chashmi he",rom:"h",e:"aspirated h — used in digraphs",forms:"ھ ھـ ـھـ ـھ"},
+  {id:"u36", h:"ء", r:"hamza", rom:"'",    e:"glottal stop",                  forms:"ء"},
+  {id:"u37", h:"ی", r:"choṭī ye",rom:"y/ee",e:"y sound or long ee",         forms:"ی یـ ـیـ ـی"},
+  {id:"u38", h:"ے", r:"baṛī ye",rom:"e/ai",e:"long e / ai (word-final only)",forms:"ے ـے"},
+];
+
+const WORD_DECKS=[
+  {id:"greetings",label:"Greetings",cards:[
+    {id:"w1",h:"السلام علیکم",r:"as-salamu alaykum",e:"Hello (Islamic greeting)",ex:""},
+    {id:"w2",h:"شکریہ",r:"shukriya",e:"Thank you",ex:""},
+    {id:"w3",h:"ہاں",r:"haan",e:"Yes",ex:""},
+    {id:"w4",h:"نہیں",r:"nahin",e:"No",ex:""},
+    {id:"w5",h:"معاف کریں",r:"muaaf karein",e:"Sorry / Excuse me",ex:""},
+    {id:"w6",h:"کیسے ہیں",r:"kaise hain",e:"How are you?",ex:""},
+    {id:"w7",h:"ٹھیک ہوں",r:"theek hoon",e:"I am fine",ex:""},
+    {id:"w8",h:"خدا حافظ",r:"khuda hafiz",e:"Goodbye",ex:""},
+  ]},
+  {id:"family",label:"Family",cards:[
+    {id:"fa1",h:"اماں",r:"amaan",e:"Mother",ex:""},
+    {id:"fa2",h:"ابا",r:"abba",e:"Father",ex:""},
+    {id:"fa3",h:"بھائی",r:"bhai",e:"Brother",ex:""},
+    {id:"fa4",h:"بہن",r:"behen",e:"Sister",ex:""},
+    {id:"fa5",h:"دادا",r:"daada",e:"Paternal grandfather",ex:""},
+    {id:"fa6",h:"دادی",r:"daadi",e:"Paternal grandmother",ex:""},
+    {id:"fa7",h:"نانا",r:"naana",e:"Maternal grandfather",ex:""},
+    {id:"fa8",h:"نانی",r:"naani",e:"Maternal grandmother",ex:""},
+  ]},
+  {id:"body",label:"Body",cards:[
+    {id:"b1",h:"ہاتھ",r:"haath",e:"Hand",ex:""},
+    {id:"b2",h:"پاؤں",r:"paaon",e:"Foot",ex:""},
+    {id:"b3",h:"آنکھ",r:"aankh",e:"Eye",ex:""},
+    {id:"b4",h:"کان",r:"kaan",e:"Ear",ex:""},
+    {id:"b5",h:"ناک",r:"naak",e:"Nose",ex:""},
+    {id:"b6",h:"منہ",r:"munh",e:"Mouth",ex:""},
+    {id:"b7",h:"سر",r:"sar",e:"Head",ex:""},
+    {id:"b8",h:"دل",r:"dil",e:"Heart",ex:""},
+  ]},
+  {id:"food",label:"Food",cards:[
+    {id:"fo1",h:"پانی",r:"paani",e:"Water",ex:""},
+    {id:"fo2",h:"کھانا",r:"khaana",e:"Food / Meal",ex:""},
+    {id:"fo3",h:"دودھ",r:"doodh",e:"Milk",ex:""},
+    {id:"fo4",h:"چائے",r:"chaai",e:"Tea",ex:""},
+    {id:"fo5",h:"روٹی",r:"roti",e:"Flatbread",ex:""},
+    {id:"fo6",h:"چاول",r:"chaaval",e:"Rice",ex:""},
+    {id:"fo7",h:"دال",r:"daal",e:"Lentils",ex:""},
+    {id:"fo8",h:"مٹھائی",r:"mithai",e:"Sweets",ex:""},
+  ]},
+  {id:"numbers",label:"Numbers",cards:[
+    {id:"n1",h:"ایک",r:"ek",e:"One",ex:""},
+    {id:"n2",h:"دو",r:"do",e:"Two",ex:""},
+    {id:"n3",h:"تین",r:"teen",e:"Three",ex:""},
+    {id:"n4",h:"چار",r:"chaar",e:"Four",ex:""},
+    {id:"n5",h:"پانچ",r:"paanch",e:"Five",ex:""},
+    {id:"n6",h:"چھ",r:"chhah",e:"Six",ex:""},
+    {id:"n7",h:"سات",r:"saat",e:"Seven",ex:""},
+    {id:"n8",h:"آٹھ",r:"aath",e:"Eight",ex:""},
+    {id:"n9",h:"نو",r:"nau",e:"Nine",ex:""},
+    {id:"n10",h:"دس",r:"das",e:"Ten",ex:""},
+  ]},
+];
+
+const ALL_DECKS=[
+  {id:"letters",label:"Letters",sub:"38 characters",cards:LETTERS,isScript:true},
+  ...WORD_DECKS.map(d=>({...d,sub:`${d.cards.length} words`,isScript:false})),
+];
+const ALL_CARDS=ALL_DECKS.flatMap(d=>d.cards);
+
+// ── SRS ───────────────────────────────────────────────────────────────────────
+const SRS_KEY="likho_urdu_srs";
+function loadSRS(){try{return JSON.parse(localStorage.getItem(SRS_KEY)||"{}")}catch{return{}}}
+function saveSRS(s){try{localStorage.setItem(SRS_KEY,JSON.stringify(s))}catch{}}
+function initCard(){return{interval:1,ease:2.5,due:0,reps:0}}
+function stepSRS(s,q){
+  const ease=Math.max(1.3,s.ease+[-0.3,-0.15,0,0.15][q]);
+  const interval=q===0?1:s.reps===0?1:s.reps===1?3:Math.round(s.interval*ease);
+  return{interval,ease,due:Date.now()+interval*86400000,reps:q===0?0:s.reps+1};
+}
+function dueCards(cards){return cards.filter(c=>(SRS[c.id]?.due??0)<=Date.now())}
+let SRS=loadSRS();
+
+// ── FONT TOGGLE ───────────────────────────────────────────────────────────────
+function setFont(type){
+  document.body.classList.toggle("naskh-mode", type==="naskh");
+  document.getElementById("btn-nastaliq").classList.toggle("active", type==="nastaliq");
+  document.getElementById("btn-naskh").classList.toggle("active", type==="naskh");
+  localStorage.setItem("likho_urdu_font", type);
+  // Only redraw if canvas state is initialized
+  if(typeof ghostChar !== "undefined" && ghostChar) drawGrid();
+}
+// Restore saved font preference (called after all vars declared)
+function initFontPref(){
+  const savedFont=localStorage.getItem("likho_urdu_font")||"nastaliq";
+  setFont(savedFont);
+}
+
+// ── CANVAS — RTL, right-to-left guide ────────────────────────────────────────
+const cv=document.getElementById("draw-canvas"),ctx=cv.getContext("2d");
+let drawing=false,lx=0,ly=0;
+function xy(e){
+  const r=cv.getBoundingClientRect(),sx=cv.width/r.width,sy=cv.height/r.height,s=e.touches?e.touches[0]:e;
+  return[(s.clientX-r.left)*sx,(s.clientY-r.top)*sy];
+}
+function getUrduFont(){
+  const isNaskh=document.body.classList.contains("naskh-mode");
+  return isNaskh?"'Noto Naskh Arabic',serif":"'Noto Nastaliq Urdu',serif";
+}
+function drawGrid(){
+  const W=cv.width,H=cv.height;
+  ctx.clearRect(0,0,W,H);
+  ctx.fillStyle="#F8F5F0";ctx.fillRect(0,0,W,H);
+  // Notebook lines
+  ctx.strokeStyle="rgba(26,16,6,0.05)";ctx.lineWidth=1;
+  for(let y=40;y<H;y+=40){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}
+  // RTL baseline guide — center horizontal (Urdu sits on a baseline)
+  ctx.strokeStyle="rgba(26,82,118,0.18)";ctx.lineWidth=1.5;ctx.setLineDash([]);
+  ctx.beginPath();ctx.moveTo(0,H*0.55);ctx.lineTo(W,H*0.55);ctx.stroke();
+  // RTL start indicator — right side arrow hint
+  ctx.strokeStyle="rgba(26,82,118,0.15)";ctx.lineWidth=1;ctx.setLineDash([3,5]);
+  ctx.beginPath();ctx.moveTo(W-12,H*0.2);ctx.lineTo(W-12,H*0.85);ctx.stroke();
+  ctx.setLineDash([]);
+  // Ghost character
+  if(ghostChar){
+    const isWord=currentDeck&&!currentDeck.isScript;
+    const fs=isWord?Math.round(H*0.36):Math.round(W*0.52);
+    ctx.font=`${fs}px ${getUrduFont()}`;
+    ctx.fillStyle="rgba(26,82,118,0.09)";
+    ctx.textAlign="center";ctx.textBaseline="middle";
+    ctx.direction="rtl";
+    ctx.fillText(ghostChar,W/2,H/2+H*0.05);
+    ctx.direction="ltr";
+  }
+}
+function clearCanvas(){ghostChar=currentCard&&isRevealed?currentCard.h:null;drawGrid()}
+cv.addEventListener("mousedown",e=>{drawing=true;[lx,ly]=xy(e)});
+cv.addEventListener("mousemove",e=>{
+  if(!drawing)return;const[x,y]=xy(e);
+  ctx.beginPath();ctx.moveTo(lx,ly);ctx.lineTo(x,y);
+  ctx.strokeStyle="#1A1006";ctx.lineWidth=3.5;ctx.lineCap=ctx.lineJoin="round";ctx.stroke();
+  [lx,ly]=[x,y];
+});
+cv.addEventListener("mouseup",()=>drawing=false);cv.addEventListener("mouseleave",()=>drawing=false);
+cv.addEventListener("touchstart",e=>{e.preventDefault();drawing=true;[lx,ly]=xy(e)},{passive:false});
+cv.addEventListener("touchmove",e=>{
+  e.preventDefault();if(!drawing)return;const[x,y]=xy(e);
+  ctx.beginPath();ctx.moveTo(lx,ly);ctx.lineTo(x,y);
+  ctx.strokeStyle="#1A1006";ctx.lineWidth=3.5;ctx.lineCap=ctx.lineJoin="round";ctx.stroke();
+  [lx,ly]=[x,y];
+},{passive:false});
+cv.addEventListener("touchend",()=>drawing=false);
+
+// ── STATE ─────────────────────────────────────────────────────────────────────
+let currentDeck=null,queue=[],qIdx=0,currentCard=null,isRevealed=false,sessionGrades=[];
+let reviewDeck=null,reviewCards=[],flipIdx=0,flipShown=false;
+let ghostChar=null; // declared here so setFont can safely reference it
+initFontPref(); // restore font after state vars exist
+
+// ── HOME ─────────────────────────────────────────────────────────────────────
+
+function toggleTrace(e,ghostChar){
+  if(e)e.stopPropagation();
+  const wrap=document.getElementById("trace-wrap");
+  const btn=document.getElementById("btn-trace-toggle");
+  if(!wrap||!btn)return;
+  const showing=wrap.style.display==="flex";
+  if(showing){wrap.style.display="none";btn.textContent="✍️ trace";}
+  else{wrap.style.display="flex";btn.textContent="✕ hide";drawTraceGrid(ghostChar);initTrace(ghostChar);}
+}
+function clearTrace(e,ghostChar){if(e)e.stopPropagation();drawTraceGrid(ghostChar);}
+function drawTraceGrid(ghost){
+  const cv=document.getElementById("trace-canvas");if(!cv)return;
+  const ctx=cv.getContext("2d"),W=cv.width,H=cv.height;
+  ctx.clearRect(0,0,W,H);
+  ctx.fillStyle="#F8F5F0";ctx.fillRect(0,0,W,H);
+  ctx.strokeStyle="rgba(26,82,118,0.12)";ctx.lineWidth=1;ctx.setLineDash([3,5]);
+  ctx.beginPath();ctx.moveTo(W/2,0);ctx.lineTo(W/2,H);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(0,H/2);ctx.lineTo(W,H/2);ctx.stroke();
+  ctx.setLineDash([]);
+  if(ghost){ctx.font=Math.round(W*0.62)+"px serif";ctx.fillStyle="rgba(26,82,118,0.13)";ctx.textAlign="center";ctx.textBaseline="middle";ctx.direction="rtl";ctx.fillText(ghost,W/2,H/2+W*0.04);ctx.direction="ltr";}
+}
+function initTrace(ghost){
+  const cv=document.getElementById("trace-canvas");if(!cv)return;
+  const fresh=cv.cloneNode(true);cv.parentNode.replaceChild(fresh,cv);
+  drawTraceGrid(ghost);
+  const ctx=fresh.getContext("2d");
+  let drawing=false,lx=0,ly=0;
+  function getP(e){const r=fresh.getBoundingClientRect(),sx=fresh.width/r.width,sy=fresh.height/r.height,s=e.touches?e.touches[0]:e;return[(s.clientX-r.left)*sx,(s.clientY-r.top)*sy];}
+  fresh.addEventListener("mousedown",e=>{e.stopPropagation();drawing=true;[lx,ly]=getP(e)});
+  fresh.addEventListener("mousemove",e=>{if(!drawing)return;const[x,y]=getP(e);ctx.beginPath();ctx.moveTo(lx,ly);ctx.lineTo(x,y);ctx.strokeStyle="#1A1006";ctx.lineWidth=3;ctx.lineCap=ctx.lineJoin="round";ctx.stroke();lx=x;ly=y;});
+  fresh.addEventListener("mouseup",()=>drawing=false);fresh.addEventListener("mouseleave",()=>drawing=false);
+  fresh.addEventListener("touchstart",e=>{e.stopPropagation();e.preventDefault();drawing=true;[lx,ly]=getP(e);},{passive:false});
+  fresh.addEventListener("touchmove",e=>{e.stopPropagation();e.preventDefault();if(!drawing)return;const[x,y]=getP(e);ctx.beginPath();ctx.moveTo(lx,ly);ctx.lineTo(x,y);ctx.strokeStyle="#1A1006";ctx.lineWidth=3;ctx.lineCap=ctx.lineJoin="round";ctx.stroke();lx=x;ly=y;},{passive:false});
+  fresh.addEventListener("touchend",e=>{e.stopPropagation();drawing=false;},{passive:false});
+}
+function renderHome(){
+  const totalCards=ALL_CARDS.length;
+  const seen=ALL_CARDS.filter(c=>(SRS[c.id]?.reps??0)>0).length;
+  const due=ALL_DECKS.reduce((n,d)=>n+dueCards(d.cards).length,0);
+  const pct=totalCards>0?Math.round((seen/totalCards)*100):0;
+  document.getElementById("stat-seen").textContent=seen;
+  document.getElementById("stat-due").textContent=due;
+  document.getElementById("stat-total").textContent=totalCards;
+  document.getElementById("overall-bar").style.width=pct+"%";
+  document.getElementById("bar-pct").textContent=pct+"%";
+  ["script","words"].forEach(type=>{
+    const el=document.getElementById(`deck-list-${type}`);
+    const decks=type==="script"?ALL_DECKS.filter(d=>d.isScript):ALL_DECKS.filter(d=>!d.isScript);
+    el.innerHTML=decks.map(deck=>{
+      const dueN=dueCards(deck.cards).length,done=dueN===0,total=deck.cards.length;
+      const seenN=deck.cards.filter(c=>(SRS[c.id]?.reps??0)>0).length;
+      return`<div class="deck-row">
+        <div class="deck-info">
+          <div class="deck-name">${deck.label}</div>
+          <div class="deck-meta">
+            <span class="deck-sub">${deck.sub}</span>
+            ${seenN>0?`<span class="deck-seen">${seenN}/${total} seen</span>`:""}
+            <span class="deck-due ${done?"due-off":"due-on"}">${done?"✓ caught up":`${dueN} due`}</span>
+          </div>
+        </div>
+        <div class="prog-track"><div class="prog-fill" style="width:${(seenN/total)*100}%"></div></div>
+        <div class="deck-btns">
+          <button class="btn-review-deck" onclick="startReview('${deck.id}')">browse</button>
+          <button class="btn-study ${done?"btn-outline":"btn-filled"}" onclick="startStudy('${deck.id}')">${done?"review":"study"}</button>
+        </div>
+      </div>`;
+    }).join("");
+  });
+  buildRef();
+}
+
+// ── REVIEW ────────────────────────────────────────────────────────────────────
+function startReview(id){
+  reviewDeck=ALL_DECKS.find(d=>d.id===id);
+  reviewCards=reviewDeck.cards;flipIdx=0;flipShown=false;
+  document.getElementById("review-title").textContent=reviewDeck.label+" — Browse";
+  document.getElementById("review-sub").textContent=reviewCards.length+" cards";
+  document.getElementById("review-grid").innerHTML=reviewCards.map((c,i)=>{
+    const charLen=c.h.length;
+    const fs=charLen<=2?32:charLen<=4?24:charLen<=6?18:14;
+    return`<div class="review-grid-card" id="rgc-${i}" onclick="highlightGrid(${i})">
+      <div class="review-grid-char" style="font-size:${fs}px">${c.h}</div>
+      <div class="review-grid-rom">${c.r}</div>
+      <div class="review-grid-eng">${c.e}</div>
+    </div>`;
+  }).join("");
+  document.getElementById("review-grid-phase").style.display="block";
+  document.getElementById("review-flip-phase").style.display="none";
+  showScreen("review");
+}
+function backToGrid(){
+  document.getElementById("review-grid-phase").style.display="block";
+  document.getElementById("review-flip-phase").style.display="none";
+}
+function highlightGrid(i){
+  document.querySelectorAll(".review-grid-card").forEach(el=>el.classList.remove("active"));
+  document.getElementById("rgc-"+i)?.classList.add("active");
+  flipIdx=i;
+  document.getElementById("review-grid-phase").style.display="none";
+  document.getElementById("review-flip-phase").style.display="flex";
+  renderFlip();
+}
+function startFlip(){
+  flipIdx=0;flipShown=false;
+  document.getElementById("review-grid-phase").style.display="none";
+  document.getElementById("review-flip-phase").style.display="flex";
+  renderFlip();
+}
+function renderFlip(){
+  const c=reviewCards[flipIdx];
+  const charLen=c.h.length;
+  const fs=charLen<=2?96:charLen<=4?64:charLen<=6?48:32;
+  document.getElementById("flip-card").classList.remove("flipped");
+  document.getElementById("flip-front-label").style.display="block";
+  document.getElementById("flip-char").textContent=c.h;
+  document.getElementById("flip-char").style.fontSize=fs+"px";
+  document.getElementById("flip-char").style.display="block";
+  document.getElementById("flip-rom").style.display="none";
+  document.getElementById("flip-eng").style.display="none";
+  document.getElementById("flip-forms").style.display="none";
+  document.getElementById("flip-count").textContent=`${flipIdx+1} / ${reviewCards.length}`;
+  const _ta=document.getElementById("trace-area");if(_ta)_ta.innerHTML="";
+  flipShown=false;
+}
+function flipCard(){
+  if(flipShown){flipNav(1);return;}
+  const c=reviewCards[flipIdx];
+  document.getElementById("flip-card").classList.add("flipped");
+  document.getElementById("flip-front-label").style.display="none";
+  document.getElementById("flip-rom").textContent=`${c.r} · ${c.rom||c.r}`;
+  document.getElementById("flip-rom").style.display="block";
+  document.getElementById("flip-eng").textContent=c.e;
+  document.getElementById("flip-eng").style.display="block";
+  if(c.forms){
+    document.getElementById("flip-forms").textContent=c.forms;
+    document.getElementById("flip-forms").style.display="block";
+  }
+  const ta=document.getElementById("trace-area");
+  if(ta){
+    const ghost=c.h;
+    ta.innerHTML=`<div style="margin-top:10px;display:flex;flex-direction:column;align-items:center;gap:6px"><button id="btn-trace-toggle" style="background:transparent;border:1.5px solid var(--accent);border-radius:3px;padding:5px 16px;font-family:inherit;font-size:12px;color:var(--accent);cursor:pointer;letter-spacing:0.08em" onclick="toggleTrace(event,'${ghost}')">✍️ trace</button><div id="trace-wrap" style="display:none;flex-direction:column;align-items:center;gap:6px"><canvas id="trace-canvas" width="220" height="220" style="width:220px;height:220px;display:block;touch-action:none;cursor:crosshair;border-radius:6px;border:1.5px solid var(--rule)"></canvas><button onclick="clearTrace(event,'${ghost}')" style="background:transparent;border:1.5px solid var(--rule);border-radius:3px;padding:4px 14px;font-family:inherit;font-size:11px;color:var(--inkfader);cursor:pointer">↺ clear</button></div></div>`;
+  }
+  flipShown=true;
+}
+function flipNav(dir){
+  flipIdx=Math.max(0,Math.min(reviewCards.length-1,flipIdx+dir));
+  renderFlip();
+}
+function startStudyFromReview(){startStudy(reviewDeck.id)}
+
+// ── STUDY ─────────────────────────────────────────────────────────────────────
+function startStudy(id){
+  currentDeck=ALL_DECKS.find(d=>d.id===id);
+  const due=dueCards(currentDeck.cards);
+  queue=(due.length>0?[...due]:[...currentDeck.cards]).sort(()=>Math.random()-.5);
+  qIdx=0;sessionGrades=[];isRevealed=false;ghostChar=null;
+  showScreen("study");loadCard();
+}
+function resizeCanvas(){
+  const isWord=!currentDeck.isScript;
+  const W=isWord?580:320,H=320;
+  cv.width=W;cv.height=H;cv.style.width=W+"px";cv.style.height=H+"px";
+}
+function loadCard(){
+  if(qIdx>=queue.length){showDone();return}
+  currentCard=queue[qIdx];isRevealed=false;ghostChar=null;
+  resizeCanvas();drawGrid();
+  document.getElementById("progress-bar").style.width=(qIdx/queue.length*50)+"vw";
+  document.getElementById("study-count").textContent=`${qIdx+1} / ${queue.length}`;
+  const isWord=!currentDeck.isScript;
+  document.getElementById("prompt-label").textContent=currentDeck.isScript?"WRITE THIS LETTER":"WRITE IN URDU";
+  document.getElementById("prompt-main").innerHTML=currentDeck.isScript
+    ?`<div class="prompt-rom-script">${currentCard.r}</div><div class="prompt-eng-script">${currentCard.e}</div>`
+    :`<div class="prompt-word">${currentCard.e}</div><div class="prompt-rom">${currentCard.r}</div>`;
+  document.getElementById("reveal-area").innerHTML=`
+    <div class="reveal-row">
+      <button class="btn-reveal" onclick="reveal()">reveal</button>
+      <button class="btn-dontknow" onclick="dontKnow()">don't know</button>
+    </div>`;
+}
+function dontKnow(){
+  SRS[currentCard.id]=stepSRS(SRS[currentCard.id]??initCard(),0);
+  saveSRS(SRS);sessionGrades.push(0);
+  isRevealed=true;ghostChar=currentCard.h;drawGrid();showAnswer();
+}
+function reveal(){isRevealed=true;ghostChar=currentCard.h;drawGrid();showAnswer()}
+function showAnswer(){
+  const isWord=!currentDeck.isScript;
+  const charLen=currentCard.h.length;
+  const fs=charLen<=2?86:charLen<=4?64:charLen<=6?48:36;
+  const formsHtml=(!isWord&&currentCard.forms)
+    ?`<div class="answer-forms-label" style="margin-top:10px;font-size:10px;color:var(--inkfader);letter-spacing:0.1em">LETTER FORMS (isolated · initial · medial · final)</div>
+      <div class="answer-forms">${currentCard.forms}</div>`:"";
+  document.getElementById("reveal-area").innerHTML=`
+    <div style="text-align:center">
+      <div class="answer-char${isWord?" word":""}" style="font-size:${fs}px">${currentCard.h}</div>
+      <div class="answer-rom">${currentCard.r}${currentCard.rom&&currentCard.rom!==currentCard.r?" · "+currentCard.rom:""}</div>
+      <div class="answer-eng">${currentCard.e}</div>
+      ${formsHtml}
+    </div>
+    <div>
+      <div class="grade-label">HOW DID YOU DO?</div>
+      <div class="grade-bar">
+        <button class="btn-grade g-again" onclick="grade(0)">Again<span>[1]</span></button>
+        <button class="btn-grade g-hard"  onclick="grade(1)">Hard<span>[2]</span></button>
+        <button class="btn-grade g-good"  onclick="grade(2)">Good<span>[3]</span></button>
+        <button class="btn-grade g-easy"  onclick="grade(3)">Easy<span>[4]</span></button>
+      </div>
+    </div>`;
+}
+function grade(q){
+  SRS[currentCard.id]=stepSRS(SRS[currentCard.id]??initCard(),q);
+  saveSRS(SRS);sessionGrades.push(q);qIdx++;loadCard();
+}
+function showDone(){
+  const c=[0,1,2,3].map(q=>sessionGrades.filter(g=>g===q).length);
+  const pct=Math.round(((c[2]+c[3])/sessionGrades.length)*100);
+  const[w,s]=pct>=80?["شاباش","well done"]:pct>=50?["اچھا","good effort"]:["پھر سے","keep practicing"];
+  document.getElementById("done-word").textContent=w;
+  document.getElementById("done-sub").textContent=s;
+  const cols=["var(--again)","var(--hard)","var(--good)","var(--easy)"],lbs=["again","hard","good","easy"];
+  document.getElementById("done-grades").innerHTML=c.map((n,i)=>
+    `<div class="done-box"><div class="done-num" style="color:${cols[i]}">${n}</div><div class="done-lbl" style="color:${cols[i]}">${lbs[i]}</div></div>`
+  ).join("");
+  showScreen("done");
+}
+
+// ── REFERENCE ─────────────────────────────────────────────────────────────────
+function buildRef(){
+  document.getElementById("ref-letters").innerHTML=LETTERS.map(c=>`
+    <div class="ref-card">
+      <div class="ref-char">${c.h}</div>
+      <div class="ref-rom">${c.r}</div>
+      <div class="ref-name">${c.rom}</div>
+    </div>`).join("");
+}
+function openRef(){document.getElementById("ref-overlay").classList.add("open")}
+function closeRef(){document.getElementById("ref-overlay").classList.remove("open")}
+function closeRefOverlay(e){if(e.target===document.getElementById("ref-overlay"))closeRef()}
+function confirmReset(){document.getElementById("confirm-overlay").classList.add("open")}
+function closeConfirm(){document.getElementById("confirm-overlay").classList.remove("open")}
+function closeConfirmOverlay(e){if(e.target===document.getElementById("confirm-overlay"))closeConfirm()}
+function doReset(){localStorage.removeItem(SRS_KEY);SRS={};closeConfirm();renderHome()}
+function showScreen(n){
+  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
+  document.getElementById(`${n}-screen`).classList.add("active");
+}
+function goHome(){showScreen("home");renderHome()}
+
+document.addEventListener("keydown",e=>{
+  if(document.getElementById("review-screen").classList.contains("active")){
+    if(e.key==="ArrowRight")flipNav(1);
+    if(e.key==="ArrowLeft")flipNav(-1);
+    if(e.key===" "){e.preventDefault();flipCard();}
+    return;
+  }
+  if(!document.getElementById("study-screen").classList.contains("active"))return;
+  if(e.key===" "&&!isRevealed){e.preventDefault();reveal();return}
+  if(e.key==="?"&&!isRevealed){dontKnow();return}
+  if(e.key==="1"&&isRevealed)grade(0);
+  if(e.key==="2"&&isRevealed)grade(1);
+  if(e.key==="3"&&isRevealed)grade(2);
+  if(e.key==="4"&&isRevealed)grade(3);
+});
+
+renderHome();drawGrid();
+
+// Flip card click — only advance if trace is NOT open
+document.getElementById("flip-card").addEventListener("click", function(e){
+  // Don't advance if clicking inside trace area or trace is visible
+  if(document.getElementById("trace-wrap") &&
+     document.getElementById("trace-wrap").style.display === "flex"){
+    return; // trace is open, ignore card click
+  }
+  flipCard();
+});
+
+</script>
+</body>
+</html>

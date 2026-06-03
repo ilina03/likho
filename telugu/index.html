@@ -59,17 +59,25 @@
   .answer-mark{font-size:52px;font-family:serif;color:var(--accent);line-height:1}
   .answer-mark-arrow{font-size:20px;color:var(--inkfader)}
   .answer-with-base{font-size:86px;font-family:serif;color:var(--ink);line-height:1}
+
+  /* TRACE IN BROWSE */
+  .trace-wrap{margin-top:12px;display:flex;flex-direction:column;align-items:center;gap:6px}
+  .trace-canvas{display:block;touch-action:none;cursor:crosshair;border-radius:6px;border:1.5px solid var(--rule);box-shadow:inset 0 1px 4px rgba(0,0,0,0.05)}
+  .trace-btns{display:flex;gap:8px}
+  .btn-trace-clear{background:transparent;border:1.5px solid var(--rule);border-radius:3px;padding:4px 14px;font-family:'Crimson Pro',Georgia,serif;font-size:11px;color:var(--inkfader);cursor:pointer;letter-spacing:0.08em}.btn-trace-clear:hover{border-color:var(--ink);color:var(--ink)}
+  .btn-trace-toggle{background:transparent;border:1.5px solid var(--accent);border-radius:3px;padding:4px 14px;font-family:'Crimson Pro',Georgia,serif;font-size:11px;color:var(--accent);cursor:pointer;letter-spacing:0.08em;transition:all .15s}.btn-trace-toggle:hover{background:var(--accent);color:var(--paper)}
+  .btn-trace-toggle.active{background:var(--accent);color:var(--paper)}
   /* REVIEW */
   .review-header{padding:20px 64px;border-bottom:1px solid var(--rule);display:flex;align-items:center;gap:16px}
   .review-title{font-size:16px;font-weight:600;color:var(--ink)}
   .review-sub{font-size:12px;color:var(--inkfader);margin-left:auto}
   #review-grid-phase{padding:40px 64px}
-  .review-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:12px;max-width:900px}
-  .review-grid-card{background:var(--paperdark);border:1.5px solid var(--rule);border-radius:6px;padding:16px 8px;text-align:center;cursor:pointer;transition:all .15s}
+  .review-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;max-width:960px}
+  .review-grid-card{background:var(--paperdark);border:1.5px solid var(--rule);border-radius:6px;padding:12px 8px;text-align:center;cursor:pointer;transition:all .15s;overflow:hidden;min-height:90px;display:flex;flex-direction:column;align-items:center;justify-content:center}
   .review-grid-card:hover,.review-grid-card.active{border-color:var(--accent);background:var(--paper)}
-  .review-grid-char{font-size:38px;font-family:serif;color:var(--ink);line-height:1.1}
-  .review-grid-rom{font-size:11px;color:var(--accent);margin-top:4px}
-  .review-grid-eng{font-size:9px;color:var(--inkfader);margin-top:2px;line-height:1.3}
+  .review-grid-char{font-size:28px;font-family:serif;color:var(--ink);line-height:1.2;word-break:break-all;overflow-wrap:break-word;width:100%}
+  .review-grid-rom{font-size:10px;color:var(--accent);margin-top:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%}
+  .review-grid-eng{font-size:9px;color:var(--inkfader);margin-top:2px;line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%}
   .review-start-btn{margin-top:32px}
   #review-flip-phase{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;padding:60px 48px}
   .flip-card{width:420px;max-width:90vw;min-height:260px;background:var(--paperdark);border:1.5px solid var(--rule);border-radius:12px;padding:40px 36px;text-align:center;cursor:pointer;transition:all .2s;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px}
@@ -203,14 +211,16 @@
     </div>
   </div>
   <div id="review-flip-phase" style="display:none">
-    <div class="flip-card" id="flip-card" onclick="flipCard()">
+    <div class="flip-card" id="flip-card">
       <div class="flip-front-label" id="flip-front-label">TAP TO REVEAL</div>
       <div class="flip-char" id="flip-char"></div>
       <div class="flip-rom" id="flip-rom" style="display:none"></div>
       <div class="flip-eng" id="flip-eng" style="display:none"></div>
       <div class="flip-example" id="flip-example" style="display:none"></div>
+      <div id="trace-area"></div>
     </div>
     <div class="flip-nav">
+      <button class="btn-flip-nav" onclick="backToGrid()">⊞ grid</button>
       <button class="btn-flip-nav" onclick="flipNav(-1)">← prev</button>
       <div class="flip-count" id="flip-count"></div>
       <button class="btn-flip-nav" onclick="flipNav(1)">next →</button>
@@ -271,11 +281,12 @@ const CONSONANTS=[{id:"c1",h:"క",r:"ka",e:"k sound",ex:"కన్ను — ka
 const WORD_DECKS=[{id:"greetings",label:"Greetings",cards:[{id:"w1",h:"నమస్కారం",r:"namaskaram",e:"Hello / Greetings",ex:""},{id:"w2",h:"ధన్యవాదాలు",r:"dhanyavaadaalu",e:"Thank you",ex:""},{id:"w3",h:"అవును",r:"avunu",e:"Yes",ex:""},{id:"w4",h:"కాదు",r:"kaadu",e:"No",ex:""},{id:"w5",h:"క్షమించండి",r:"kshamincandi",e:"Sorry / Excuse me",ex:""},{id:"w6",h:"ఎలా ఉన్నారు",r:"elaa unnaaru",e:"How are you?",ex:""},{id:"w7",h:"బాగున్నాను",r:"baagunnaanu",e:"I am well",ex:""},{id:"w8",h:"వెళ్ళొస్తాను",r:"vellostaanu",e:"Goodbye",ex:""}]},{id:"family",label:"Family",cards:[{id:"fa1",h:"అమ్మ",r:"amma",e:"Mother",ex:""},{id:"fa2",h:"నాన్న",r:"naanna",e:"Father",ex:""},{id:"fa3",h:"అన్న",r:"anna",e:"Elder brother",ex:""},{id:"fa4",h:"అక్క",r:"akka",e:"Elder sister",ex:""},{id:"fa5",h:"తమ్ముడు",r:"tammudu",e:"Younger brother",ex:""},{id:"fa6",h:"చెల్లి",r:"chelli",e:"Younger sister",ex:""},{id:"fa7",h:"తాత",r:"taata",e:"Grandfather",ex:""},{id:"fa8",h:"నాన్నమ్మ",r:"naanamma",e:"Grandmother",ex:""}]},{id:"body",label:"Body",cards:[{id:"b1",h:"చెయ్యి",r:"cheyyi",e:"Hand",ex:""},{id:"b2",h:"కాలు",r:"kaalu",e:"Foot / Leg",ex:""},{id:"b3",h:"కన్ను",r:"kannu",e:"Eye",ex:""},{id:"b4",h:"చెవి",r:"chevi",e:"Ear",ex:""},{id:"b5",h:"ముక్కు",r:"mukku",e:"Nose",ex:""},{id:"b6",h:"నోరు",r:"noru",e:"Mouth",ex:""},{id:"b7",h:"తల",r:"thala",e:"Head",ex:""},{id:"b8",h:"హృదయం",r:"hridayam",e:"Heart",ex:""}]},{id:"food",label:"Food",cards:[{id:"fo1",h:"నీళ్ళు",r:"neellu",e:"Water",ex:""},{id:"fo2",h:"భోజనం",r:"bhojanam",e:"Food / Meal",ex:""},{id:"fo3",h:"పాలు",r:"paalu",e:"Milk",ex:""},{id:"fo4",h:"టీ",r:"tee",e:"Tea",ex:""},{id:"fo5",h:"అన్నం",r:"annam",e:"Rice (cooked)",ex:""},{id:"fo6",h:"రొట్టె",r:"rotte",e:"Flatbread",ex:""},{id:"fo7",h:"కూర",r:"koora",e:"Curry",ex:""},{id:"fo8",h:"మిఠాయి",r:"mithayi",e:"Sweets",ex:""}]},{id:"numbers",label:"Numbers",cards:[{id:"n1",h:"ఒకటి",r:"okati",e:"One",ex:""},{id:"n2",h:"రెండు",r:"rendu",e:"Two",ex:""},{id:"n3",h:"మూడు",r:"moodu",e:"Three",ex:""},{id:"n4",h:"నాలుగు",r:"naalugu",e:"Four",ex:""},{id:"n5",h:"అయిదు",r:"ayidu",e:"Five",ex:""},{id:"n6",h:"ఆరు",r:"aaru",e:"Six",ex:""},{id:"n7",h:"ఏడు",r:"edu",e:"Seven",ex:""},{id:"n8",h:"ఎనిమిది",r:"enimidi",e:"Eight",ex:""},{id:"n9",h:"తొమ్మిది",r:"tommidi",e:"Nine",ex:""},{id:"n10",h:"పది",r:"padi",e:"Ten",ex:""}]},{id:"colors",label:"Colors",cards:[{id:"col1",h:"ఎరుపు",r:"erupu",e:"Red",ex:""},{id:"col2",h:"నీలం",r:"neelam",e:"Blue",ex:""},{id:"col3",h:"పచ్చ",r:"pachcha",e:"Green",ex:""},{id:"col4",h:"పసుపు",r:"pasapu",e:"Yellow",ex:""},{id:"col5",h:"తెలుపు",r:"telupu",e:"White",ex:""},{id:"col6",h:"నలుపు",r:"nalupu",e:"Black",ex:""},{id:"col7",h:"నారింజ",r:"naarinja",e:"Orange",ex:""},{id:"col8",h:"గులాబి",r:"gulaabi",e:"Pink",ex:""}]}];
 const ALL_DECKS=[
   {id:"vowels",label:"Vowels",sub:"14 characters",cards:VOWELS,isScript:true},
-  {id:"diacritics",label:"Vowel Signs · గుర్తులు",sub:"13 diacritics",cards:[{id:"teld1",mark:"ా",h:"కా",base:"క",r:"k+kaa=kaa",baseRom:"k",vowelRom:"kaa",e:"long a — ఆ sound",ex:""},{id:"teld2",mark:"ి",h:"కి",base:"క",r:"k+ki=ki",baseRom:"k",vowelRom:"ki",e:"short i — ఇ sound",ex:""},{id:"teld3",mark:"ీ",h:"కీ",base:"క",r:"k+kee=kee",baseRom:"k",vowelRom:"kee",e:"long i — ఈ sound",ex:""},{id:"teld4",mark:"ు",h:"కు",base:"క",r:"k+ku=ku",baseRom:"k",vowelRom:"ku",e:"short u — ఉ sound",ex:""},{id:"teld5",mark:"ూ",h:"కూ",base:"క",r:"k+koo=koo",baseRom:"k",vowelRom:"koo",e:"long u — ఊ sound",ex:""},{id:"teld6",mark:"ె",h:"కె",base:"క",r:"k+ke=ke",baseRom:"k",vowelRom:"ke",e:"short e — ఎ sound",ex:""},{id:"teld7",mark:"ే",h:"కే",base:"క",r:"k+kee=kee",baseRom:"k",vowelRom:"kee",e:"long e — ఏ sound",ex:""},{id:"teld8",mark:"ై",h:"కై",base:"క",r:"k+kai=kai",baseRom:"k",vowelRom:"kai",e:"ai — ఐ sound",ex:""},{id:"teld9",mark:"ొ",h:"కొ",base:"క",r:"k+ko=ko",baseRom:"k",vowelRom:"ko",e:"short o — ఒ sound",ex:""},{id:"teld10",mark:"ో",h:"కో",base:"క",r:"k+koo=koo",baseRom:"k",vowelRom:"koo",e:"long o — ఓ sound",ex:""},{id:"teld11",mark:"ౌ",h:"కౌ",base:"క",r:"k+kau=kau",baseRom:"k",vowelRom:"kau",e:"au — ఔ sound",ex:""},{id:"teld12",mark:"ం",h:"కం",base:"క",r:"k+kam=kam",baseRom:"k",vowelRom:"kam",e:"anusvara — nasal ending",ex:""},{id:"teld13",mark:"్",h:"క్",base:"క",r:"k+k=k",baseRom:"k",vowelRom:"k",e:"halant — removes inherent vowel",ex:""}],isScript:true,isDiacritic:true},
   {id:"consonants",label:"Consonants",sub:"34 characters",cards:CONSONANTS,isScript:true},
+  {id:"diacritics",label:"Vowel Signs · గుర్తులు",sub:"13 diacritics",cards:[{id:"teld1",mark:"ా",h:"కా",base:"క",r:"k+kaa=kaa",baseRom:"k",vowelRom:"kaa",e:"long a — ఆ sound",ex:""},{id:"teld2",mark:"ి",h:"కి",base:"క",r:"k+ki=ki",baseRom:"k",vowelRom:"ki",e:"short i — ఇ sound",ex:""},{id:"teld3",mark:"ీ",h:"కీ",base:"క",r:"k+kee=kee",baseRom:"k",vowelRom:"kee",e:"long i — ఈ sound",ex:""},{id:"teld4",mark:"ు",h:"కు",base:"క",r:"k+ku=ku",baseRom:"k",vowelRom:"ku",e:"short u — ఉ sound",ex:""},{id:"teld5",mark:"ూ",h:"కూ",base:"క",r:"k+koo=koo",baseRom:"k",vowelRom:"koo",e:"long u — ఊ sound",ex:""},{id:"teld6",mark:"ె",h:"కె",base:"క",r:"k+ke=ke",baseRom:"k",vowelRom:"ke",e:"short e — ఎ sound",ex:""},{id:"teld7",mark:"ే",h:"కే",base:"క",r:"k+kee=kee",baseRom:"k",vowelRom:"kee",e:"long e — ఏ sound",ex:""},{id:"teld8",mark:"ై",h:"కై",base:"క",r:"k+kai=kai",baseRom:"k",vowelRom:"kai",e:"ai — ఐ sound",ex:""},{id:"teld9",mark:"ొ",h:"కొ",base:"క",r:"k+ko=ko",baseRom:"k",vowelRom:"ko",e:"short o — ఒ sound",ex:""},{id:"teld10",mark:"ో",h:"కో",base:"క",r:"k+koo=koo",baseRom:"k",vowelRom:"koo",e:"long o — ఓ sound",ex:""},{id:"teld11",mark:"ౌ",h:"కౌ",base:"క",r:"k+kau=kau",baseRom:"k",vowelRom:"kau",e:"au — ఔ sound",ex:""},{id:"teld12",mark:"ం",h:"కం",base:"క",r:"k+kam=kam",baseRom:"k",vowelRom:"kam",e:"anusvara — nasal ending",ex:""},{id:"teld13",mark:"్",h:"క్",base:"క",r:"k+k=k",baseRom:"k",vowelRom:"k",e:"halant — removes inherent vowel",ex:""}],isScript:true,isDiacritic:true},
   ...WORD_DECKS.map(d=>({...d,sub:`${d.cards.length} words`,isScript:false})),
 ];
 const ALL_CARDS=ALL_DECKS.flatMap(d=>d.cards);
+
 
 const SRS_KEY="likho_telugu_srs";
 function loadSRS(){try{return JSON.parse(localStorage.getItem(SRS_KEY)||"{}")}catch{return{}}}
@@ -318,6 +329,42 @@ cv.addEventListener("touchend",()=>drawing=false);
 let currentDeck=null,queue=[],qIdx=0,currentCard=null,isRevealed=false,sessionGrades=[];
 let reviewDeck=null,reviewCards=[],flipIdx=0,flipShown=false;
 
+
+function toggleTrace(e,ghostChar){
+  if(e)e.stopPropagation();
+  const wrap=document.getElementById("trace-wrap");
+  const btn=document.getElementById("btn-trace-toggle");
+  if(!wrap||!btn)return;
+  const showing=wrap.style.display==="flex";
+  if(showing){wrap.style.display="none";btn.textContent="✍️ trace";}
+  else{wrap.style.display="flex";btn.textContent="✕ hide";drawTraceGrid(ghostChar);initTrace(ghostChar);}
+}
+function clearTrace(e,ghostChar){if(e)e.stopPropagation();drawTraceGrid(ghostChar);}
+function drawTraceGrid(ghost){
+  const cv=document.getElementById("trace-canvas");if(!cv)return;
+  const ctx=cv.getContext("2d"),W=cv.width,H=cv.height;
+  ctx.clearRect(0,0,W,H);
+  ctx.fillStyle="#F6F4F9";ctx.fillRect(0,0,W,H);
+  ctx.strokeStyle="rgba(107,58,138,0.12)";ctx.lineWidth=1;ctx.setLineDash([3,5]);
+  ctx.beginPath();ctx.moveTo(W/2,0);ctx.lineTo(W/2,H);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(0,H/2);ctx.lineTo(W,H/2);ctx.stroke();
+  ctx.setLineDash([]);
+  if(ghost){ctx.font=Math.round(W*0.62)+"px serif";ctx.fillStyle="rgba(107,58,138,0.13)";ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillText(ghost,W/2,H/2+W*0.04);}
+}
+function initTrace(ghost){
+  const cv=document.getElementById("trace-canvas");if(!cv)return;
+  const fresh=cv.cloneNode(true);cv.parentNode.replaceChild(fresh,cv);
+  drawTraceGrid(ghost);
+  const ctx=fresh.getContext("2d");
+  let drawing=false,lx=0,ly=0;
+  function getP(e){const r=fresh.getBoundingClientRect(),sx=fresh.width/r.width,sy=fresh.height/r.height,s=e.touches?e.touches[0]:e;return[(s.clientX-r.left)*sx,(s.clientY-r.top)*sy];}
+  fresh.addEventListener("mousedown",e=>{e.stopPropagation();drawing=true;[lx,ly]=getP(e)});
+  fresh.addEventListener("mousemove",e=>{if(!drawing)return;const[x,y]=getP(e);ctx.beginPath();ctx.moveTo(lx,ly);ctx.lineTo(x,y);ctx.strokeStyle="#160D24";ctx.lineWidth=3;ctx.lineCap=ctx.lineJoin="round";ctx.stroke();lx=x;ly=y;});
+  fresh.addEventListener("mouseup",()=>drawing=false);fresh.addEventListener("mouseleave",()=>drawing=false);
+  fresh.addEventListener("touchstart",e=>{e.stopPropagation();e.preventDefault();drawing=true;[lx,ly]=getP(e);},{passive:false});
+  fresh.addEventListener("touchmove",e=>{e.stopPropagation();e.preventDefault();if(!drawing)return;const[x,y]=getP(e);ctx.beginPath();ctx.moveTo(lx,ly);ctx.lineTo(x,y);ctx.strokeStyle="#160D24";ctx.lineWidth=3;ctx.lineCap=ctx.lineJoin="round";ctx.stroke();lx=x;ly=y;},{passive:false});
+  fresh.addEventListener("touchend",e=>{e.stopPropagation();drawing=false;},{passive:false});
+}
 function renderHome(){
   const totalCards=ALL_CARDS.length;
   const seen=ALL_CARDS.filter(c=>(SRS[c.id]?.reps??0)>0).length;
@@ -347,19 +394,30 @@ function startReview(id){
   document.getElementById("review-sub").textContent=reviewCards.length+" characters";
   document.getElementById("review-grid").innerHTML=reviewCards.map((c,i)=>{
     const isDiac=reviewDeck.isDiacritic;
-    const charDisplay=isDiac?`${c.mark}<span style="font-size:18px;color:var(--inkfade);margin-left:6px">→ ${c.h}</span>`:c.h;
+    const charDisplay=isDiac?`${c.mark}<span style="font-size:16px;color:var(--inkfade);margin-left:4px">→ ${c.h}</span>`:c.h;
     const romDisplay=isDiac?c.vowelRom:c.r;
-    return`<div class="review-grid-card" id="rgc-${i}" onclick="highlightGrid(${i})"><div class="review-grid-char">${charDisplay}</div><div class="review-grid-rom">${romDisplay}</div><div class="review-grid-eng">${c.e}</div></div>`;
+    const charLen=(isDiac?c.mark:c.h).length;
+    const fontSize=charLen<=2?28:charLen<=4?22:charLen<=6?18:14;
+    return`<div class="review-grid-card" id="rgc-${i}" onclick="highlightGrid(${i})"><div class="review-grid-char" style="font-size:${fontSize}px">${charDisplay}</div><div class="review-grid-rom">${romDisplay}</div><div class="review-grid-eng">${c.e}</div></div>`;
   }).join("");
   document.getElementById("review-grid-phase").style.display="block";
   document.getElementById("review-flip-phase").style.display="none";
   showScreen("review");
 }
-function highlightGrid(i){document.querySelectorAll(".review-grid-card").forEach(el=>el.classList.remove("active"));document.getElementById("rgc-"+i)?.classList.add("active")}
+function backToGrid(){document.getElementById("review-grid-phase").style.display="block";document.getElementById("review-flip-phase").style.display="none";}
+function highlightGrid(i){
+  document.querySelectorAll(".review-grid-card").forEach(el=>el.classList.remove("active"));
+  document.getElementById("rgc-"+i)?.classList.add("active");
+  // Jump to this card in flip mode
+  flipIdx=i;
+  document.getElementById("review-grid-phase").style.display="none";
+  document.getElementById("review-flip-phase").style.display="flex";
+  renderFlip();
+}
 function startFlip(){flipIdx=0;flipShown=false;document.getElementById("review-grid-phase").style.display="none";document.getElementById("review-flip-phase").style.display="flex";renderFlip()}
 function renderFlip(){
   const c=reviewCards[flipIdx];
-  const isDiac=reviewDeck.isDiacritic;
+  const isDiac=!!reviewDeck.isDiacritic;
   document.getElementById("flip-card").classList.remove("flipped");
   document.getElementById("flip-front-label").style.display="block";
   // Front: show the mark for diacritics, script word for others
@@ -369,16 +427,17 @@ function renderFlip(){
   document.getElementById("flip-eng").style.display="none";
   document.getElementById("flip-example").style.display="none";
   document.getElementById("flip-count").textContent=`${flipIdx+1} / ${reviewCards.length}`;
+  const ta=document.getElementById("trace-area");if(ta)ta.innerHTML="";
   flipShown=false;
 }
 function flipCard(){
   if(flipShown){flipNav(1);return;}
   const c=reviewCards[flipIdx];
-  const isDiac=reviewDeck.isDiacritic;
+  const isDiac=!!reviewDeck.isDiacritic;
   document.getElementById("flip-card").classList.add("flipped");
   document.getElementById("flip-front-label").style.display="none";
   if(isDiac){
-    document.getElementById("flip-rom").textContent=`${c.mark} + ${c.base} = ${c.h} · ${c.vowelRom}`;
+    document.getElementById("flip-rom").textContent=c.mark+" + "+c.base+" = "+c.h+" · "+c.vowelRom;
     document.getElementById("flip-eng").textContent=c.e;
   }else{
     document.getElementById("flip-rom").textContent=c.r;
@@ -387,6 +446,12 @@ function flipCard(){
   document.getElementById("flip-rom").style.display="block";
   document.getElementById("flip-eng").style.display="block";
   if(c.ex&&!isDiac){document.getElementById("flip-example").textContent=c.ex;document.getElementById("flip-example").style.display="block";}
+  // inject trace UI
+  const ta=document.getElementById("trace-area");
+  if(ta){
+    const ghost=isDiac?c.mark:c.h;
+    ta.innerHTML='<div style="margin-top:10px;display:flex;flex-direction:column;align-items:center;gap:6px"><button id="btn-trace-toggle" style="background:transparent;border:1.5px solid var(--accent);border-radius:3px;padding:5px 16px;font-family:inherit;font-size:12px;color:var(--accent);cursor:pointer;letter-spacing:0.08em" onclick="toggleTrace(event,\''+ghost+'\')">✍️ trace</button><div id="trace-wrap" style="display:none;flex-direction:column;align-items:center;gap:6px"><canvas id="trace-canvas" width="220" height="220" style="width:220px;height:220px;display:block;touch-action:none;cursor:crosshair;border-radius:6px;border:1.5px solid var(--rule);box-shadow:inset 0 1px 4px rgba(0,0,0,0.05)"></canvas><button onclick="clearTrace(event,\''+ghost+'\')" style="background:transparent;border:1.5px solid var(--rule);border-radius:3px;padding:4px 14px;font-family:inherit;font-size:11px;color:var(--inkfader);cursor:pointer">↺ clear</button></div></div>';
+  }
   flipShown=true;
 }
 function flipNav(dir){flipIdx=Math.max(0,Math.min(reviewCards.length-1,flipIdx+dir));renderFlip()}
@@ -473,6 +538,17 @@ document.addEventListener("keydown",e=>{
   if(e.key==="3"&&isRevealed)grade(2);if(e.key==="4"&&isRevealed)grade(3);
 });
 renderHome();drawGrid();
+
+// Flip card click — only advance if trace is NOT open
+document.getElementById("flip-card").addEventListener("click", function(e){
+  // Don't advance if clicking inside trace area or trace is visible
+  if(document.getElementById("trace-wrap") &&
+     document.getElementById("trace-wrap").style.display === "flex"){
+    return; // trace is open, ignore card click
+  }
+  flipCard();
+});
+
 </script>
 </body>
 </html>
