@@ -9,7 +9,7 @@
 <meta property="og:title" content="Likho · Write Your Mother Tongue">
 <meta property="og:description" content="You already speak it. Likho helps you write it — drawing characters by hand, one at a time, until it sticks. Free, no account needed.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://yourusername.github.io/likho">
+<meta property="og:url" content="https://ilina03.github.io/likho">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
 <style>
@@ -82,14 +82,43 @@
   .ur .lang-arrow { color:#1A5276; }
   .c-ur { color:#1A5276; }
 
+  /* iOS waitlist strip */
+  .waitlist-strip {
+    padding:28px 64px;
+    border-top:1px solid var(--rule);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:16px;
+    background:var(--paperdark);
+  }
+  .waitlist-text { font-size:14px; color:var(--inkfade); line-height:1.5; }
+  .waitlist-text strong { color:var(--ink); font-weight:600; }
+  .btn-waitlist {
+    display:inline-block;
+    border:1.5px solid var(--ink);
+    border-radius:3px;
+    padding:10px 24px;
+    font-family:'Crimson Pro',Georgia,serif;
+    font-size:13px;
+    letter-spacing:0.08em;
+    color:var(--ink);
+    text-decoration:none;
+    white-space:nowrap;
+    transition:all .15s;
+  }
+  .btn-waitlist:hover { background:var(--ink); color:var(--paper); }
+
   footer { padding:36px 64px; border-top:1px solid var(--rule); display:flex; justify-content:space-between; font-size:12px; color:var(--inkfader); letter-spacing:0.06em; flex-wrap:wrap; gap:8px; margin-top:auto; }
 
   @media(max-width:800px){
-    header,.hero,.how,.languages,footer{padding-left:28px;padding-right:28px}
+    header,.hero,.how,.languages,.waitlist-strip,footer{padding-left:28px;padding-right:28px}
     .hero-title{font-size:44px} .hero-chars{display:none}
     .how{flex-direction:column;gap:28px}
     .how-step{border-right:none;border-bottom:1px solid var(--rule);padding:0 0 28px;margin:0}
     .how-step:last-child{border-bottom:none;padding-bottom:0}
+    .waitlist-strip{flex-direction:column;align-items:flex-start}
   }
 </style>
 </head>
@@ -206,18 +235,13 @@
   </div>
 </div>
 
-
-  <!-- Buy Me a Coffee -->
-  <div style="text-align:center;padding:32px 64px;border-top:1px solid var(--rule)">
-    <a href="https://buymeacoffee.com/ilina03" target="_blank" rel="noopener"
-       style="display:inline-flex;align-items:center;gap:10px;background:#FFDD00;color:#000;text-decoration:none;border-radius:8px;padding:12px 24px;font-family:'Crimson Pro',Georgia,serif;font-size:15px;font-weight:600;letter-spacing:0.04em;transition:opacity .15s"
-       onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
-      ☕ Buy me a coffee
-    </a>
-    <div style="margin-top:10px;font-size:12px;color:var(--inkfader);font-family:'Crimson Pro',Georgia,serif;letter-spacing:0.06em">
-      Likho is free and always will be. Tips help cover app store fees.
-    </div>
+<div class="waitlist-strip">
+  <div class="waitlist-text">
+    <strong>Want Likho on iOS?</strong> It's free on the web — an app is planned if there's enough interest. Leave your email and you'll be the first to know.
   </div>
+  <a class="btn-waitlist" href="https://tally.so/r/1A6eXL" target="_blank" rel="noopener">Notify me →</a>
+</div>
+
 <footer>
   <span>लिखो · likho · write your mother tongue</span>
   <span>free · no account · works in any browser</span>
