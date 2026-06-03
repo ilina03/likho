@@ -12,21 +12,6 @@ Free, open source, no account needed. Works in any browser.
 
 ---
 
-## Languages
-
-| Language | Script | Status |
-|---|---|---|
-| Hindi | Devanagari | ✅ Live |
-| Malayalam | Malayalam | ✅ Live |
-| Telugu | Telugu | ✅ Live |
-| Tamil | Tamil | ✅ Live |
-| Urdu | Nastaliq / Naskh | ✅ Live |
-| Gujarati | Gujarati | 🔜 Planned |
-| Punjabi | Gurmukhi | 🔜 Planned |
-| Bengali | Bengali | 🔜 Planned |
-
----
-
 ## Features
 
 - **Drawing canvas** — draw characters with mouse or finger
