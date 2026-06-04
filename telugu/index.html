@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Likho · Telugu · తెలుగు Writing Practice</title>
-<meta name="description" content="Free Indian script writing practice for heritage speakers.">
+<meta name="description" content="Free Hindi Devanagari writing practice for heritage speakers.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
 <style>
@@ -17,307 +17,163 @@
   #review-screen{display:none;flex-direction:column;min-height:100vh}#review-screen.active{display:flex}
   #done-screen{display:none;align-items:center;justify-content:center;flex-direction:column;gap:36px;min-height:100vh}#done-screen.active{display:flex}
   header{border-bottom:1px solid var(--rule);padding:0 64px;display:flex;align-items:center;justify-content:space-between;height:64px}
-  .logo{display:flex;align-items:baseline;gap:12px;text-decoration:none;color:var(--ink)}
-  .logo-script{font-size:24px;font-weight:600;letter-spacing:-0.02em}
-  .logo-en{font-size:13px;color:var(--inkfader);letter-spacing:0.12em}
+  .logo{display:flex;align-items:baseline;gap:12px;text-decoration:none;color:var(--ink)}.logo-script{font-size:24px;font-weight:600;letter-spacing:-0.02em}.logo-en{font-size:13px;color:var(--inkfader);letter-spacing:0.12em}
   .header-right{display:flex;align-items:center;gap:28px}
   .btn-ghost{background:transparent;border:none;color:var(--inkfader);cursor:pointer;font-size:13px;letter-spacing:0.1em;font-family:inherit;padding:0}.btn-ghost:hover{color:var(--ink)}
   .btn-back-home{background:transparent;border:none;color:var(--inkfader);cursor:pointer;font-size:13px;letter-spacing:0.08em;font-family:inherit;padding:0;text-decoration:none}.btn-back-home:hover{color:var(--ink)}
   .hero{padding:56px 64px 40px;border-bottom:1px solid var(--rule);display:flex;align-items:flex-end;justify-content:space-between}
-  .hero-title{font-size:60px;font-weight:300;letter-spacing:-0.03em;line-height:1.05;margin-bottom:12px}
-  .hero-sub{font-size:15px;color:var(--inkfade);max-width:440px;line-height:1.6}
-  .hero-char{font-size:140px;color:var(--accent);opacity:0.1;font-family:serif;line-height:1;user-select:none;margin-bottom:-12px}
+  .hero-title{font-size:60px;font-weight:300;letter-spacing:-0.03em;line-height:1.05;margin-bottom:12px}.hero-sub{font-size:15px;color:var(--inkfade);max-width:440px;line-height:1.6}.hero-char{font-size:140px;color:var(--accent);opacity:0.1;font-family:serif;line-height:1;user-select:none;margin-bottom:-12px}
   .overall-progress{padding:24px 64px;border-bottom:1px solid var(--rule);display:flex;align-items:center;gap:32px;flex-wrap:wrap}
-  .overall-stat{text-align:center}
-  .overall-num{font-size:28px;font-weight:300;color:var(--ink);letter-spacing:-0.02em}
-  .overall-lbl{font-size:10px;color:var(--inkfader);letter-spacing:0.14em;margin-top:2px}
-  .overall-bar-wrap{flex:1;max-width:320px}
-  .overall-bar-label{font-size:11px;color:var(--inkfader);letter-spacing:0.1em;margin-bottom:6px;display:flex;justify-content:space-between}
-  .overall-bar-track{height:4px;background:var(--paperdark);border-radius:99px;overflow:hidden}
-  .overall-bar-fill{height:100%;background:var(--accent);border-radius:99px;transition:width .6s}
+  .overall-stat{text-align:center}.overall-num{font-size:28px;font-weight:300;color:var(--ink);letter-spacing:-0.02em}.overall-lbl{font-size:10px;color:var(--inkfader);letter-spacing:0.14em;margin-top:2px}
+  .overall-bar-wrap{flex:1;max-width:320px}.overall-bar-label{font-size:11px;color:var(--inkfader);letter-spacing:0.1em;margin-bottom:6px;display:flex;justify-content:space-between}.overall-bar-track{height:4px;background:var(--paperdark);border-radius:99px;overflow:hidden}.overall-bar-fill{height:100%;background:var(--accent);border-radius:99px;transition:width .6s}
   .btn-reset{background:transparent;border:none;color:var(--inkfader);font-size:11px;cursor:pointer;font-family:inherit;letter-spacing:0.1em;padding:0;margin-left:auto}.btn-reset:hover{color:var(--again)}
-  .decks{padding:0 64px;max-width:860px}
-  .section-label{padding:28px 0 8px;font-size:11px;color:var(--inkfader);letter-spacing:0.18em}
-  .deck-row{display:flex;align-items:center;padding:16px 0;border-bottom:1px solid var(--rule)}
-  .deck-info{flex:1}.deck-name{font-size:17px;font-weight:600;letter-spacing:-0.01em}
-  .deck-meta{display:flex;align-items:center;gap:14px;margin-top:3px}
-  .deck-sub,.deck-seen{font-size:12px;color:var(--inkfader)}
-  .deck-due{font-size:11px;font-weight:600;letter-spacing:0.06em}.due-on{color:var(--accent)}.due-off{color:var(--good)}
-  .prog-track{width:72px;height:3px;background:var(--paperdark);border-radius:99px;margin:0 20px;overflow:hidden}
-  .prog-fill{height:100%;background:var(--accent);border-radius:99px;transition:width .6s}
+  .decks{padding:0 64px;max-width:860px}.section-label{padding:28px 0 8px;font-size:11px;color:var(--inkfader);letter-spacing:0.18em}
+  .deck-row{display:flex;align-items:center;padding:16px 0;border-bottom:1px solid var(--rule)}.deck-info{flex:1}.deck-name{font-size:17px;font-weight:600;letter-spacing:-0.01em}.deck-meta{display:flex;align-items:center;gap:14px;margin-top:3px}.deck-sub,.deck-seen{font-size:12px;color:var(--inkfader)}.deck-due{font-size:11px;font-weight:600;letter-spacing:0.06em}.due-on{color:var(--accent)}.due-off{color:var(--good)}
+  .prog-track{width:72px;height:3px;background:var(--paperdark);border-radius:99px;margin:0 20px;overflow:hidden}.prog-fill{height:100%;background:var(--accent);border-radius:99px;transition:width .6s}
   .deck-btns{display:flex;gap:8px}
   .btn-review-deck{border:1.5px solid var(--accent);border-radius:3px;padding:7px 14px;text-align:center;font-family:inherit;font-size:12px;letter-spacing:0.08em;cursor:pointer;transition:all .15s;background:transparent;color:var(--accent)}.btn-review-deck:hover{background:var(--accent);color:var(--paper)}
   .btn-study{border:1.5px solid var(--ink);border-radius:3px;padding:7px 22px;min-width:84px;text-align:center;font-family:inherit;font-size:13px;letter-spacing:0.1em;cursor:pointer;transition:all .15s}
-  .btn-filled{background:var(--ink);color:var(--paper)}.btn-outline{background:transparent;color:var(--ink)}
-  .btn-filled:hover{background:var(--paper);color:var(--ink)}.btn-outline:hover{background:var(--ink);color:var(--paper)}
+  .btn-filled{background:var(--ink);color:var(--paper)}.btn-outline{background:transparent;color:var(--ink)}.btn-filled:hover{background:var(--paper);color:var(--ink)}.btn-outline:hover{background:var(--ink);color:var(--paper)}
   footer{padding:36px 64px;margin-top:24px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;font-size:12px;color:var(--inkfader);letter-spacing:0.06em}
-
-  /* DIACRITICS */
-  .prompt-mark{font-size:88px;font-family:serif;color:var(--accent);line-height:1.2;text-align:center}
-  .prompt-mark-label{font-size:11px;color:var(--inkfader);letter-spacing:0.12em;text-align:center;margin-top:4px}
-  .answer-mark-row{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap}
-  .answer-mark{font-size:52px;font-family:serif;color:var(--accent);line-height:1}
-  .answer-mark-arrow{font-size:20px;color:var(--inkfader)}
-  .answer-with-base{font-size:86px;font-family:serif;color:var(--ink);line-height:1}
-
-  /* TRACE IN BROWSE */
-  .trace-wrap{margin-top:12px;display:flex;flex-direction:column;align-items:center;gap:6px}
-  .trace-canvas{display:block;touch-action:none;cursor:crosshair;border-radius:6px;border:1.5px solid var(--rule);box-shadow:inset 0 1px 4px rgba(0,0,0,0.05)}
-  .trace-btns{display:flex;gap:8px}
-  .btn-trace-clear{background:transparent;border:1.5px solid var(--rule);border-radius:3px;padding:4px 14px;font-family:'Crimson Pro',Georgia,serif;font-size:11px;color:var(--inkfader);cursor:pointer;letter-spacing:0.08em}.btn-trace-clear:hover{border-color:var(--ink);color:var(--ink)}
-  .btn-trace-toggle{background:transparent;border:1.5px solid var(--accent);border-radius:3px;padding:4px 14px;font-family:'Crimson Pro',Georgia,serif;font-size:11px;color:var(--accent);cursor:pointer;letter-spacing:0.08em;transition:all .15s}.btn-trace-toggle:hover{background:var(--accent);color:var(--paper)}
-  .btn-trace-toggle.active{background:var(--accent);color:var(--paper)}
-  /* REVIEW */
-  .review-header{padding:20px 64px;border-bottom:1px solid var(--rule);display:flex;align-items:center;gap:16px}
-  .review-title{font-size:16px;font-weight:600;color:var(--ink)}
-  .review-sub{font-size:12px;color:var(--inkfader);margin-left:auto}
+  .prompt-mark{font-size:88px;font-family:serif;color:var(--accent);line-height:1.2;text-align:center}.prompt-mark-label{font-size:11px;color:var(--inkfader);letter-spacing:0.12em;text-align:center;margin-top:4px}
+  .answer-mark-row{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap}.answer-mark{font-size:52px;font-family:serif;color:var(--accent);line-height:1}.answer-mark-arrow{font-size:20px;color:var(--inkfader)}.answer-with-base{font-size:86px;font-family:serif;color:var(--ink);line-height:1}
+  .review-header{padding:20px 64px;border-bottom:1px solid var(--rule);display:flex;align-items:center;gap:16px}.review-title{font-size:16px;font-weight:600;color:var(--ink)}.review-sub{font-size:12px;color:var(--inkfader);margin-left:auto}
   #review-grid-phase{padding:40px 64px}
   .review-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;max-width:960px}
-  .review-grid-card{background:var(--paperdark);border:1.5px solid var(--rule);border-radius:6px;padding:12px 8px;text-align:center;cursor:pointer;transition:all .15s;overflow:hidden;min-height:90px;display:flex;flex-direction:column;align-items:center;justify-content:center}
-  .review-grid-card:hover,.review-grid-card.active{border-color:var(--accent);background:var(--paper)}
-  .review-grid-char{font-size:28px;font-family:serif;color:var(--ink);line-height:1.2;word-break:break-all;overflow-wrap:break-word;width:100%}
-  .review-grid-rom{font-size:10px;color:var(--accent);margin-top:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%}
-  .review-grid-eng{font-size:9px;color:var(--inkfader);margin-top:2px;line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%}
+  .review-grid-card{background:var(--paperdark);border:1.5px solid var(--rule);border-radius:6px;padding:12px 8px;text-align:center;cursor:pointer;transition:all .15s;overflow:hidden;min-height:90px;display:flex;flex-direction:column;align-items:center;justify-content:center}.review-grid-card:hover,.review-grid-card.active{border-color:var(--accent);background:var(--paper)}
+  .review-grid-char{font-size:28px;font-family:serif;color:var(--ink);line-height:1.2;word-break:break-all;overflow-wrap:break-word;width:100%}.review-grid-rom{font-size:10px;color:var(--accent);margin-top:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%}.review-grid-eng{font-size:9px;color:var(--inkfader);margin-top:2px;line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%}
   .review-start-btn{margin-top:32px}
   #review-flip-phase{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;padding:60px 48px}
-  .flip-card{width:420px;max-width:90vw;min-height:260px;background:var(--paperdark);border:1.5px solid var(--rule);border-radius:12px;padding:40px 36px;text-align:center;cursor:pointer;transition:all .2s;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px}
-  .flip-card.flipped{background:var(--paper);border-color:var(--accent)}
-  .flip-front-label{font-size:10px;color:var(--inkfader);letter-spacing:0.16em}
-  .flip-char{font-size:96px;font-family:serif;color:var(--ink);line-height:1}
-  .flip-rom{font-size:24px;color:var(--accent);font-style:italic}
-  .flip-eng{font-size:15px;color:var(--inkfade)}
-  .flip-example{font-size:13px;color:var(--inkfader);margin-top:4px;font-style:italic}
-  .flip-nav{display:flex;gap:12px;align-items:center}
-  .btn-flip-nav{background:transparent;border:1.5px solid var(--rule);border-radius:3px;padding:8px 20px;font-family:inherit;font-size:13px;color:var(--inkfade);cursor:pointer;letter-spacing:0.06em;transition:all .15s}.btn-flip-nav:hover{border-color:var(--ink);color:var(--ink)}
-  .flip-count{font-size:12px;color:var(--inkfader);min-width:60px;text-align:center}
+  .flip-card{width:420px;max-width:90vw;min-height:260px;background:var(--paperdark);border:1.5px solid var(--rule);border-radius:12px;padding:40px 36px;text-align:center;cursor:pointer;transition:all .2s;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px}.flip-card.flipped{background:var(--paper);border-color:var(--accent)}
+  .flip-front-label{font-size:10px;color:var(--inkfader);letter-spacing:0.16em}.flip-char{font-size:96px;font-family:serif;color:var(--ink);line-height:1}.flip-rom{font-size:24px;color:var(--accent);font-style:italic}.flip-eng{font-size:15px;color:var(--inkfade)}.flip-example{font-size:13px;color:var(--inkfader);margin-top:4px;font-style:italic}
+  .flip-nav{display:flex;gap:12px;align-items:center}.btn-flip-nav{background:transparent;border:1.5px solid var(--rule);border-radius:3px;padding:8px 20px;font-family:inherit;font-size:13px;color:var(--inkfade);cursor:pointer;letter-spacing:0.06em;transition:all .15s}.btn-flip-nav:hover{border-color:var(--ink);color:var(--ink)}.flip-count{font-size:12px;color:var(--inkfader);min-width:60px;text-align:center}
   .btn-start-study{background:var(--ink);color:var(--paper);border:none;border-radius:3px;padding:10px 28px;font-family:inherit;font-size:13px;letter-spacing:0.08em;cursor:pointer}.btn-start-study:hover{opacity:.85}
-  /* STUDY */
   #progress-bar{position:fixed;top:0;left:0;height:2px;background:var(--accent);transition:width .4s;z-index:10}
   .study-nav{position:fixed;top:20px;left:24px;display:flex;align-items:center;gap:16px;z-index:10}
-  .btn-back{background:transparent;border:none;color:var(--inkfader);cursor:pointer;font-size:13px;letter-spacing:0.08em;font-family:inherit;padding:0}.btn-back:hover{color:var(--ink)}
-  .study-count{font-size:12px;color:var(--inkfader);letter-spacing:0.1em}
-  .study-left,.study-right{width:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 48px;gap:28px;min-height:100vh}
-  .study-left{border-right:1px solid var(--rule)}
-  .prompt-label{font-size:11px;color:var(--accent);letter-spacing:0.18em;text-align:center}
-  .prompt-word{font-size:44px;color:var(--ink);line-height:1.1;margin-bottom:8px;text-align:center}
-  .prompt-rom{font-size:21px;color:var(--inkfade);font-style:italic;text-align:center}
-  .prompt-rom-script{font-size:62px;color:var(--accent);font-style:italic;margin-bottom:6px;text-align:center}
-  .prompt-eng-script{font-size:15px;color:var(--inkfade);text-align:center}
-  .hint{font-size:11px;color:var(--inkfader);letter-spacing:0.1em}
+  .btn-back{background:transparent;border:none;color:var(--inkfader);cursor:pointer;font-size:13px;letter-spacing:0.08em;font-family:inherit;padding:0}.btn-back:hover{color:var(--ink)}.study-count{font-size:12px;color:var(--inkfader);letter-spacing:0.1em}
+  .study-left,.study-right{width:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 48px;gap:28px;min-height:100vh}.study-left{border-right:1px solid var(--rule)}
+  .prompt-label{font-size:11px;color:var(--accent);letter-spacing:0.18em;text-align:center}.prompt-word{font-size:44px;color:var(--ink);line-height:1.1;margin-bottom:8px;text-align:center}.prompt-rom{font-size:21px;color:var(--inkfade);font-style:italic;text-align:center}.prompt-rom-script{font-size:62px;color:var(--accent);font-style:italic;margin-bottom:6px;text-align:center}.prompt-eng-script{font-size:15px;color:var(--inkfade);text-align:center}.hint{font-size:11px;color:var(--inkfader);letter-spacing:0.1em}
   .canvas-wrap{display:flex;flex-direction:column;align-items:center;gap:8px}
   #draw-canvas{display:block;touch-action:none;cursor:crosshair;border-radius:4px;border:1.5px solid var(--rule);box-shadow:inset 0 1px 4px rgba(22,13,36,0.05),0 2px 14px rgba(22,13,36,0.07)}
   .btn-clear{background:transparent;border:none;color:var(--inkfader);font-size:12px;cursor:pointer;letter-spacing:0.1em;font-family:inherit;padding:2px 0}.btn-clear:hover{color:var(--ink)}
-  .reveal-row{display:flex;gap:10px;align-items:center}
-  .btn-reveal{background:var(--ink);color:var(--paper);border:none;border-radius:3px;padding:12px 40px;font-family:inherit;font-size:15px;letter-spacing:0.1em;cursor:pointer}.btn-reveal:hover{opacity:.85}
-  .btn-dontknow{background:transparent;border:1.5px solid var(--again);color:var(--again);border-radius:3px;padding:12px 16px;font-family:inherit;font-size:13px;letter-spacing:0.06em;cursor:pointer}.btn-dontknow:hover{background:var(--again);color:#fff}
-  .answer-char{font-size:86px;color:var(--ink);font-family:serif;line-height:1;text-align:center}
-  .answer-char.word{font-size:52px}
-  .answer-rom{font-size:21px;color:var(--accent);margin-top:4px;text-align:center}
-  .answer-eng{font-size:14px;color:var(--inkfade);margin-top:3px;text-align:center}
-  .answer-example{font-size:13px;color:var(--inkfader);margin-top:6px;text-align:center;font-style:italic}
-  .grade-label{font-size:11px;color:var(--inkfader);letter-spacing:0.1em;text-align:center;margin-bottom:8px}
-  .grade-bar{display:flex;gap:8px;justify-content:center}
-  .btn-grade{width:84px;padding:9px 0;border-radius:3px;font-family:inherit;font-size:13px;font-weight:600;letter-spacing:0.04em;cursor:pointer;background:var(--paper);transition:background .15s}
-  .btn-grade span{display:block;font-size:10px;opacity:.5;font-weight:400;margin-top:2px}
-  .g-again{border:1.5px solid var(--again);color:var(--again)}.g-again:hover{background:rgba(181,58,42,0.08)}
-  .g-hard{border:1.5px solid var(--hard);color:var(--hard)}.g-hard:hover{background:rgba(176,112,32,0.08)}
-  .g-good{border:1.5px solid var(--good);color:var(--good)}.g-good:hover{background:rgba(58,122,74,0.08)}
-  .g-easy{border:1.5px solid var(--easy);color:var(--easy)}.g-easy:hover{background:rgba(42,90,138,0.08)}
-  .done-word{font-size:52px;font-weight:300;letter-spacing:-0.02em}
-  .done-sub{font-size:14px;color:var(--inkfade);letter-spacing:0.1em}
-  .done-grades{display:flex;gap:20px}
-  .done-box{text-align:center;width:68px}
-  .done-num{font-size:30px;font-weight:600}
-  .done-lbl{font-size:11px;letter-spacing:0.08em;margin-top:2px}
+  .reveal-row{display:flex;gap:10px;align-items:center}.btn-reveal{background:var(--ink);color:var(--paper);border:none;border-radius:3px;padding:12px 40px;font-family:inherit;font-size:15px;letter-spacing:0.1em;cursor:pointer}.btn-reveal:hover{opacity:.85}.btn-dontknow{background:transparent;border:1.5px solid var(--again);color:var(--again);border-radius:3px;padding:12px 16px;font-family:inherit;font-size:13px;letter-spacing:0.06em;cursor:pointer}.btn-dontknow:hover{background:var(--again);color:#fff}
+  .answer-char{font-size:86px;color:var(--ink);font-family:serif;line-height:1;text-align:center}.answer-char.word{font-size:52px}.answer-rom{font-size:21px;color:var(--accent);margin-top:4px;text-align:center}.answer-eng{font-size:14px;color:var(--inkfade);margin-top:3px;text-align:center}.answer-example{font-size:13px;color:var(--inkfader);margin-top:6px;text-align:center;font-style:italic}
+  .grade-label{font-size:11px;color:var(--inkfader);letter-spacing:0.1em;text-align:center;margin-bottom:8px}.grade-bar{display:flex;gap:8px;justify-content:center}
+  .btn-grade{width:84px;padding:9px 0;border-radius:3px;font-family:inherit;font-size:13px;font-weight:600;letter-spacing:0.04em;cursor:pointer;background:var(--paper);transition:background .15s}.btn-grade span{display:block;font-size:10px;opacity:.5;font-weight:400;margin-top:2px}
+  .g-again{border:1.5px solid var(--again);color:var(--again)}.g-again:hover{background:rgba(181,58,42,0.08)}.g-hard{border:1.5px solid var(--hard);color:var(--hard)}.g-hard:hover{background:rgba(176,112,32,0.08)}.g-good{border:1.5px solid var(--good);color:var(--good)}.g-good:hover{background:rgba(58,122,74,0.08)}.g-easy{border:1.5px solid var(--easy);color:var(--easy)}.g-easy:hover{background:rgba(42,90,138,0.08)}
+  .done-word{font-size:52px;font-weight:300;letter-spacing:-0.02em}.done-sub{font-size:14px;color:var(--inkfade);letter-spacing:0.1em}.done-grades{display:flex;gap:20px}.done-box{text-align:center;width:68px}.done-num{font-size:30px;font-weight:600}.done-lbl{font-size:11px;letter-spacing:0.08em;margin-top:2px}
   .btn-home{background:transparent;border:1.5px solid var(--ink);border-radius:3px;padding:10px 32px;font-family:inherit;font-size:14px;color:var(--ink);letter-spacing:0.08em;cursor:pointer}.btn-home:hover{background:var(--ink);color:var(--paper)}
-  #ref-overlay{display:none;position:fixed;inset:0;background:rgba(22,13,36,0.5);z-index:200;align-items:center;justify-content:center;backdrop-filter:blur(2px)}
-  #ref-overlay.open{display:flex}
-  .ref-modal{background:var(--paper);border-radius:4px;padding:40px 48px;width:860px;max-width:92vw;max-height:86vh;overflow-y:auto;box-shadow:0 24px 80px rgba(22,13,36,0.25)}
-  .ref-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:28px}
-  .ref-title{font-size:20px;font-weight:600;letter-spacing:-0.01em}
-  .btn-close{background:transparent;border:none;color:var(--inkfader);cursor:pointer;font-size:20px;line-height:1}
-  .ref-sec{margin-bottom:28px}.ref-sec-label{font-size:11px;color:var(--accent);letter-spacing:0.16em;margin-bottom:12px}
-  .ref-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
-  .ref-card{background:var(--paperdark);border:1px solid var(--rule);border-radius:3px;padding:10px 6px;text-align:center}
-  .ref-char{font-size:24px;color:var(--ink);font-family:serif;line-height:1.2}
-  .ref-rom{font-size:11px;color:var(--accent);margin-top:3px}
-  .ref-eng{font-size:9px;color:var(--inkfader);margin-top:2px;line-height:1.3}
-  #confirm-overlay{display:none;position:fixed;inset:0;background:rgba(22,13,36,0.4);z-index:300;align-items:center;justify-content:center;backdrop-filter:blur(2px)}
-  #confirm-overlay.open{display:flex}
-  .confirm-box{background:var(--paper);border-radius:4px;padding:36px 40px;width:360px;max-width:90vw;box-shadow:0 12px 48px rgba(22,13,36,0.2);text-align:center}
-  .confirm-title{font-size:18px;font-weight:600;margin-bottom:8px}
-  .confirm-sub{font-size:14px;color:var(--inkfade);margin-bottom:24px;line-height:1.5}
-  .confirm-btns{display:flex;gap:10px;justify-content:center}
-  .btn-cancel{background:transparent;border:1.5px solid var(--rule);border-radius:3px;padding:8px 24px;font-family:inherit;font-size:13px;color:var(--inkfade);cursor:pointer;letter-spacing:0.06em}.btn-cancel:hover{border-color:var(--ink);color:var(--ink)}
-  .btn-confirm-reset{background:var(--again);color:#fff;border:none;border-radius:3px;padding:8px 24px;font-family:inherit;font-size:13px;cursor:pointer;letter-spacing:0.06em;font-weight:600}.btn-confirm-reset:hover{opacity:.85}
-  @media(max-width:900px){
-    header,.hero,.overall-progress,.decks,footer{padding-left:28px;padding-right:28px}
-    .hero-title{font-size:40px}.hero-char{display:none}
-    #study-screen.active{flex-direction:column}
-    .study-left,.study-right{width:100%;min-height:auto;padding:48px 28px;border-right:none;border-bottom:1px solid var(--rule)}
-    .study-right{border-bottom:none}
-    .ref-grid{grid-template-columns:repeat(4,1fr)}.ref-modal{padding:28px 24px}
-    .review-header,#review-grid-phase{padding-left:28px;padding-right:28px}
-    .flip-card{width:90vw}
-  }
+  #ref-overlay{display:none;position:fixed;inset:0;background:rgba(22,13,36,0.05,0.5);z-index:200;align-items:center;justify-content:center;backdrop-filter:blur(2px)}#ref-overlay.open{display:flex}
+  .ref-modal{background:var(--paper);border-radius:4px;padding:40px 48px;width:820px;max-width:92vw;max-height:86vh;overflow-y:auto;box-shadow:0 24px 80px rgba(22,13,36,0.05,0.25)}.ref-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:28px}.ref-title{font-size:20px;font-weight:600;letter-spacing:-0.01em}.btn-close{background:transparent;border:none;color:var(--inkfader);cursor:pointer;font-size:20px;line-height:1}
+  .ref-sec{margin-bottom:28px}.ref-sec-label{font-size:11px;color:var(--accent);letter-spacing:0.16em;margin-bottom:12px}.ref-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}.ref-card{background:var(--paperdark);border:1px solid var(--rule);border-radius:3px;padding:10px 6px;text-align:center}.ref-char{font-size:26px;color:var(--ink);font-family:serif;line-height:1.2}.ref-rom{font-size:11px;color:var(--accent);margin-top:3px}.ref-eng{font-size:9px;color:var(--inkfader);margin-top:2px;line-height:1.3}
+  #confirm-overlay{display:none;position:fixed;inset:0;background:rgba(22,13,36,0.05,0.4);z-index:300;align-items:center;justify-content:center;backdrop-filter:blur(2px)}#confirm-overlay.open{display:flex}
+  .confirm-box{background:var(--paper);border-radius:4px;padding:36px 40px;width:360px;max-width:90vw;box-shadow:0 12px 48px rgba(22,13,36,0.05,0.2);text-align:center}.confirm-title{font-size:18px;font-weight:600;margin-bottom:8px}.confirm-sub{font-size:14px;color:var(--inkfade);margin-bottom:24px;line-height:1.5}.confirm-btns{display:flex;gap:10px;justify-content:center}.btn-cancel{background:transparent;border:1.5px solid var(--rule);border-radius:3px;padding:8px 24px;font-family:inherit;font-size:13px;color:var(--inkfade);cursor:pointer;letter-spacing:0.06em}.btn-cancel:hover{border-color:var(--ink);color:var(--ink)}.btn-confirm-reset{background:var(--again);color:#fff;border:none;border-radius:3px;padding:8px 24px;font-family:inherit;font-size:13px;cursor:pointer;letter-spacing:0.06em;font-weight:600}.btn-confirm-reset:hover{opacity:.85}
+  @media(max-width:900px){header,.hero,.overall-progress,.decks,footer{padding-left:28px;padding-right:28px}.hero-title{font-size:40px}.hero-char{display:none}#study-screen.active{flex-direction:column}.study-left,.study-right{width:100%;min-height:auto;padding:48px 28px;border-right:none;border-bottom:1px solid var(--rule)}.study-right{border-bottom:none}.ref-grid{grid-template-columns:repeat(4,1fr)}.ref-modal{padding:28px 24px}.overall-progress{flex-wrap:wrap;gap:20px}.review-header,#review-grid-phase{padding-left:28px;padding-right:28px}.flip-card{width:90vw}}
 </style>
 </head>
 <body>
-
 <div id="home-screen" class="screen active">
   <header>
     <a class="logo" href="../index.html"><span class="logo-script">లిఖో</span><span class="logo-en">LIKHO</span></a>
-    <div class="header-right">
-      <button class="btn-ghost" onclick="openRef()">reference</button>
-      <a class="btn-back-home" href="../index.html">← all languages</a>
-    </div>
+    <div class="header-right"><button class="btn-ghost" onclick="openRef()">reference</button><a class="btn-back-home" href="../index.html">← all languages</a></div>
   </header>
-  <div class="hero">
-    <div>
-      <div class="hero-title">Telugu writing<br>practice.</div>
-      <div class="hero-sub">Draw on the canvas. Reveal the answer.<br>Grade yourself honestly. The algorithm handles the rest.</div>
-    </div>
-    <div class="hero-char">క</div>
-  </div>
+  <div class="hero"><div><div class="hero-title">Telugu writing<br>practice.</div><div class="hero-sub">Draw on the canvas. Reveal the answer.<br>Grade yourself honestly. The algorithm handles the rest.</div></div><div class="hero-char">క</div></div>
   <div class="overall-progress">
     <div class="overall-stat"><div class="overall-num" id="stat-seen">0</div><div class="overall-lbl">CARDS SEEN</div></div>
     <div class="overall-stat"><div class="overall-num" id="stat-due">0</div><div class="overall-lbl">DUE TODAY</div></div>
     <div class="overall-stat"><div class="overall-num" id="stat-total">0</div><div class="overall-lbl">TOTAL CARDS</div></div>
-    <div class="overall-bar-wrap">
-      <div class="overall-bar-label"><span>overall progress</span><span id="bar-pct">0%</span></div>
-      <div class="overall-bar-track"><div class="overall-bar-fill" id="overall-bar" style="width:0%"></div></div>
-    </div>
+    <div class="overall-bar-wrap"><div class="overall-bar-label"><span>overall progress</span><span id="bar-pct">0%</span></div><div class="overall-bar-track"><div class="overall-bar-fill" id="overall-bar" style="width:0%"></div></div></div>
     <button class="btn-reset" onclick="confirmReset()">reset progress</button>
   </div>
-  <div class="decks">
-    <div class="section-label">ALPHABET · అక్షరమాల</div>
-    <div id="deck-list-script"></div>
-    <div class="section-label">WORDS · పదాలు</div>
-    <div id="deck-list-words"></div>
-  </div>
+  <div class="decks"><div class="section-label">ALPHABET · అక్షరమాల</div><div id="deck-list-script"></div><div class="section-label">WORDS · పదాలు</div><div id="deck-list-words"></div></div>
   <footer><span>లిఖో · telugu · తెలుగు script</span><span>draw · reveal · grade · repeat</span></footer>
 </div>
-
 <div id="review-screen" class="screen">
-  <div class="review-header">
-    <button class="btn-back" onclick="goHome()">← decks</button>
-    <div class="review-title" id="review-title"></div>
-    <div class="review-sub" id="review-sub"></div>
-  </div>
-  <div id="review-grid-phase">
-    <div class="review-grid" id="review-grid"></div>
-    <div class="review-start-btn">
-      <button class="btn-filled btn-study" onclick="startFlip()">Flip through →</button>
-    </div>
-  </div>
+  <div class="review-header"><button class="btn-back" onclick="goHome()">← decks</button><div class="review-title" id="review-title"></div><div class="review-sub" id="review-sub"></div></div>
+  <div id="review-grid-phase"><div class="review-grid" id="review-grid"></div><div class="review-start-btn"><button class="btn-filled btn-study" onclick="startFlip()">Flip through →</button></div></div>
   <div id="review-flip-phase" style="display:none">
-    <div class="flip-card" id="flip-card">
-      <div class="flip-front-label" id="flip-front-label">TAP TO REVEAL</div>
-      <div class="flip-char" id="flip-char"></div>
-      <div class="flip-rom" id="flip-rom" style="display:none"></div>
-      <div class="flip-eng" id="flip-eng" style="display:none"></div>
-      <div class="flip-example" id="flip-example" style="display:none"></div>
-      <div id="trace-area"></div>
-    </div>
-    <div class="flip-nav">
-      <button class="btn-flip-nav" onclick="backToGrid()">⊞ grid</button>
-      <button class="btn-flip-nav" onclick="flipNav(-1)">← prev</button>
-      <div class="flip-count" id="flip-count"></div>
-      <button class="btn-flip-nav" onclick="flipNav(1)">next →</button>
-    </div>
+    <div class="flip-card" id="flip-card"><div class="flip-front-label" id="flip-front-label">TAP TO REVEAL</div><div class="flip-char" id="flip-char"></div><div class="flip-rom" id="flip-rom" style="display:none"></div><div class="flip-eng" id="flip-eng" style="display:none"></div><div class="flip-example" id="flip-example" style="display:none"></div><div id="trace-area"></div></div>
+    <div class="flip-nav"><button class="btn-flip-nav" onclick="backToGrid()">⊞ grid</button><button class="btn-flip-nav" onclick="flipNav(-1)">← prev</button><div class="flip-count" id="flip-count"></div><button class="btn-flip-nav" onclick="flipNav(1)">next →</button></div>
     <button class="btn-start-study" onclick="startStudyFromReview()">Start writing practice →</button>
   </div>
 </div>
-
 <div id="study-screen" class="screen">
   <div id="progress-bar"></div>
-  <div class="study-nav">
-    <button class="btn-back" onclick="goHome()">← decks</button>
-    <span class="study-count" id="study-count"></span>
-  </div>
-  <div class="study-left">
-    <div class="prompt-label" id="prompt-label"></div>
-    <div id="prompt-main"></div>
-    <div class="hint">space to reveal · ? to skip</div>
-  </div>
-  <div class="study-right">
-    <div class="canvas-wrap">
-      <canvas id="draw-canvas" width="320" height="320" style="width:320px;height:320px;transition:all 0.2s"></canvas>
-      <button class="btn-clear" onclick="clearCanvas()">↺ clear</button>
-    </div>
-    <div id="reveal-area"></div>
-  </div>
+  <div class="study-nav"><button class="btn-back" onclick="goHome()">← decks</button><span class="study-count" id="study-count"></span></div>
+  <div class="study-left"><div class="prompt-label" id="prompt-label"></div><div id="prompt-main"></div><div class="hint">space to reveal · ? to skip</div></div>
+  <div class="study-right"><div class="canvas-wrap"><canvas id="draw-canvas" width="320" height="320" style="width:320px;height:320px;transition:all 0.2s"></canvas><button class="btn-clear" onclick="clearCanvas()">↺ clear</button></div><div id="reveal-area"></div></div>
 </div>
-
-<div id="done-screen" class="screen">
-  <div class="done-word" id="done-word"></div>
-  <div class="done-sub" id="done-sub"></div>
-  <div class="done-grades" id="done-grades"></div>
-  <button class="btn-home" onclick="goHome()">back to decks</button>
-</div>
-
-<div id="ref-overlay" onclick="closeRefOverlay(event)">
-  <div class="ref-modal">
-    <div class="ref-header"><div class="ref-title">Telugu Script Reference · అక్షరమాల</div><button class="btn-close" onclick="closeRef()">✕</button></div>
-    <div class="ref-sec"><div class="ref-sec-label">VOWELS · అచ్చులు</div><div class="ref-grid" id="ref-vowels"></div></div>
-    <div class="ref-sec"><div class="ref-sec-label">CONSONANTS · హల్లులు</div><div class="ref-grid" id="ref-consonants"></div></div>
-  </div>
-</div>
-
-<div id="confirm-overlay" onclick="closeConfirmOverlay(event)">
-  <div class="confirm-box">
-    <div class="confirm-title">Reset all progress?</div>
-    <div class="confirm-sub">This will clear your SRS history for all decks. This cannot be undone.</div>
-    <div class="confirm-btns">
-      <button class="btn-cancel" onclick="closeConfirm()">Cancel</button>
-      <button class="btn-confirm-reset" onclick="doReset()">Reset</button>
-    </div>
-  </div>
-</div>
-
+<div id="done-screen" class="screen"><div class="done-word" id="done-word"></div><div class="done-sub" id="done-sub"></div><div class="done-grades" id="done-grades"></div><button class="btn-home" onclick="goHome()">back to decks</button></div>
+<div id="ref-overlay" onclick="closeRefOverlay(event)"><div class="ref-modal"><div class="ref-header"><div class="ref-title">Telugu Script Reference · అక్షరమాల</div><button class="btn-close" onclick="closeRef()">✕</button></div><div class="ref-sec"><div class="ref-sec-label">VOWELS · అచ్చులు</div><div class="ref-grid" id="ref-vowels"></div></div><div class="ref-sec"><div class="ref-sec-label">CONSONANTS · హల్లులు</div><div class="ref-grid" id="ref-consonants"></div></div></div></div>
+<div id="confirm-overlay" onclick="closeConfirmOverlay(event)"><div class="confirm-box"><div class="confirm-title">Reset all progress?</div><div class="confirm-sub">This will clear your SRS history for all decks. This cannot be undone. This cannot be undone.</div><div class="confirm-btns"><button class="btn-cancel" onclick="closeConfirm()">Cancel</button><button class="btn-confirm-reset" onclick="doReset()">Reset</button></div></div></div>
 <script>
 const VOWELS=[{id:"v1",h:"అ",r:"a",e:"short a",ex:"అమ్మ — amma (mother)"},{id:"v2",h:"ఆ",r:"aa",e:"long a",ex:"ఆకాశం — aakaasham (sky)"},{id:"v3",h:"ఇ",r:"i",e:"short i",ex:"ఇల్లు — illu (house)"},{id:"v4",h:"ఈ",r:"ee",e:"long i",ex:"ఈగ — eega (fly)"},{id:"v5",h:"ఉ",r:"u",e:"short u",ex:"ఉప్పు — uppu (salt)"},{id:"v6",h:"ఊ",r:"oo",e:"long u",ex:"ఊరు — ooru (village)"},{id:"v7",h:"ఎ",r:"e",e:"short e — like e in bed",ex:"ఎలుక — eluka (rat)"},{id:"v8",h:"ఏ",r:"ee",e:"long e — like a in gate",ex:"ఏడు — edu (seven)"},{id:"v9",h:"ఐ",r:"ai",e:"ai — like ai in aisle",ex:"ఐదు — aidu (five)"},{id:"v10",h:"ఒ",r:"o",e:"short o",ex:"ఒంట — onta (body)"},{id:"v11",h:"ఓ",r:"oo",e:"long o — like o in go",ex:"ఓడ — oda (ship)"},{id:"v12",h:"ఔ",r:"au",e:"au — like ow in how",ex:"ఔషధం — aushadham (medicine)"},{id:"v13",h:"అం",r:"am",e:"anusvara — nasal",ex:""},{id:"v14",h:"అః",r:"ah",e:"visarga — aspirate",ex:""}];
 const CONSONANTS=[{id:"c1",h:"క",r:"ka",e:"k sound",ex:"కన్ను — kannu (eye)"},{id:"c2",h:"ఖ",r:"kha",e:"kh aspirated",ex:"ఖర్చు — kharchu (expense)"},{id:"c3",h:"గ",r:"ga",e:"g sound",ex:"గడ్డి — gaddi (grass)"},{id:"c4",h:"ఘ",r:"gha",e:"gh aspirated",ex:"ఘంట — ghanta (bell)"},{id:"c5",h:"చ",r:"cha",e:"ch sound",ex:"చేయి — cheyyi (hand)"},{id:"c6",h:"ఛ",r:"chha",e:"chh aspirated",ex:"ఛాయ — chaaya (shadow)"},{id:"c7",h:"జ",r:"ja",e:"j sound",ex:"జలం — jalam (water)"},{id:"c8",h:"ఝ",r:"jha",e:"jh aspirated",ex:"ఝ — rare"},{id:"c9",h:"ట",r:"ṭa",e:"hard t retroflex",ex:"టమాట — tamaata (tomato)"},{id:"c10",h:"ఠ",r:"ṭha",e:"hard th retroflex",ex:"ఠ — rare"},{id:"c11",h:"డ",r:"ḍa",e:"hard d retroflex",ex:"డబ్బు — dabbu (money)"},{id:"c12",h:"ఢ",r:"ḍha",e:"hard dh retroflex",ex:"ఢ — rare"},{id:"c13",h:"ణ",r:"ṇa",e:"retroflex n",ex:"బాణం — baanam (arrow)"},{id:"c14",h:"త",r:"ta",e:"soft t dental",ex:"తల — thala (head)"},{id:"c15",h:"థ",r:"tha",e:"soft th dental",ex:"థ — rare"},{id:"c16",h:"ద",r:"da",e:"soft d dental",ex:"దయ — daya (mercy)"},{id:"c17",h:"ధ",r:"dha",e:"soft dh dental",ex:"ధైర్యం — dhairyam (courage)"},{id:"c18",h:"న",r:"na",e:"n sound",ex:"నీళ్ళు — neellu (water)"},{id:"c19",h:"ప",r:"pa",e:"p sound",ex:"పాలు — paalu (milk)"},{id:"c20",h:"ఫ",r:"pha",e:"ph/f aspirated",ex:"ఫలం — phalam (fruit)"},{id:"c21",h:"బ",r:"ba",e:"b sound",ex:"బంగారు — bangaaru (gold)"},{id:"c22",h:"భ",r:"bha",e:"bh aspirated",ex:"భోజనం — bhojanam (food)"},{id:"c23",h:"మ",r:"ma",e:"m sound",ex:"మాట — maata (word)"},{id:"c24",h:"య",r:"ya",e:"y sound",ex:"యువత — yuvata (youth)"},{id:"c25",h:"ర",r:"ra",e:"r sound",ex:"రాత్రి — raatri (night)"},{id:"c26",h:"ల",r:"la",e:"l sound",ex:"లోకం — lokam (world)"},{id:"c27",h:"వ",r:"va",e:"v / w sound",ex:"వాన — vaana (rain)"},{id:"c28",h:"శ",r:"sha",e:"sh palatal",ex:"శబ్దం — shabdam (sound)"},{id:"c29",h:"ష",r:"ṣha",e:"sh retroflex",ex:"షర్ట్ — shirt"},{id:"c30",h:"స",r:"sa",e:"s sound",ex:"సూర్యుడు — sooryudu (sun)"},{id:"c31",h:"హ",r:"ha",e:"h sound",ex:"హృదయం — hridayam (heart)"},{id:"c32",h:"ళ",r:"ḷa",e:"retroflex l",ex:"ళ — in words like బళ్ళు"},{id:"c33",h:"క్ష",r:"ksha",e:"ksh combined",ex:"క్షమ — kshama (forgiveness)"},{id:"c34",h:"ఱ",r:"ṟa",e:"hard r alveolar",ex:"ఱాయి — raavi (stone, archaic)"}];
 const WORD_DECKS=[{id:"greetings",label:"Greetings",cards:[{id:"w1",h:"నమస్కారం",r:"namaskaram",e:"Hello / Greetings",ex:""},{id:"w2",h:"ధన్యవాదాలు",r:"dhanyavaadaalu",e:"Thank you",ex:""},{id:"w3",h:"అవును",r:"avunu",e:"Yes",ex:""},{id:"w4",h:"కాదు",r:"kaadu",e:"No",ex:""},{id:"w5",h:"క్షమించండి",r:"kshamincandi",e:"Sorry / Excuse me",ex:""},{id:"w6",h:"ఎలా ఉన్నారు",r:"elaa unnaaru",e:"How are you?",ex:""},{id:"w7",h:"బాగున్నాను",r:"baagunnaanu",e:"I am well",ex:""},{id:"w8",h:"వెళ్ళొస్తాను",r:"vellostaanu",e:"Goodbye",ex:""}]},{id:"family",label:"Family",cards:[{id:"fa1",h:"అమ్మ",r:"amma",e:"Mother",ex:""},{id:"fa2",h:"నాన్న",r:"naanna",e:"Father",ex:""},{id:"fa3",h:"అన్న",r:"anna",e:"Elder brother",ex:""},{id:"fa4",h:"అక్క",r:"akka",e:"Elder sister",ex:""},{id:"fa5",h:"తమ్ముడు",r:"tammudu",e:"Younger brother",ex:""},{id:"fa6",h:"చెల్లి",r:"chelli",e:"Younger sister",ex:""},{id:"fa7",h:"తాత",r:"taata",e:"Grandfather",ex:""},{id:"fa8",h:"నాన్నమ్మ",r:"naanamma",e:"Grandmother",ex:""}]},{id:"body",label:"Body",cards:[{id:"b1",h:"చెయ్యి",r:"cheyyi",e:"Hand",ex:""},{id:"b2",h:"కాలు",r:"kaalu",e:"Foot / Leg",ex:""},{id:"b3",h:"కన్ను",r:"kannu",e:"Eye",ex:""},{id:"b4",h:"చెవి",r:"chevi",e:"Ear",ex:""},{id:"b5",h:"ముక్కు",r:"mukku",e:"Nose",ex:""},{id:"b6",h:"నోరు",r:"noru",e:"Mouth",ex:""},{id:"b7",h:"తల",r:"thala",e:"Head",ex:""},{id:"b8",h:"హృదయం",r:"hridayam",e:"Heart",ex:""}]},{id:"food",label:"Food",cards:[{id:"fo1",h:"నీళ్ళు",r:"neellu",e:"Water",ex:""},{id:"fo2",h:"భోజనం",r:"bhojanam",e:"Food / Meal",ex:""},{id:"fo3",h:"పాలు",r:"paalu",e:"Milk",ex:""},{id:"fo4",h:"టీ",r:"tee",e:"Tea",ex:""},{id:"fo5",h:"అన్నం",r:"annam",e:"Rice (cooked)",ex:""},{id:"fo6",h:"రొట్టె",r:"rotte",e:"Flatbread",ex:""},{id:"fo7",h:"కూర",r:"koora",e:"Curry",ex:""},{id:"fo8",h:"మిఠాయి",r:"mithayi",e:"Sweets",ex:""}]},{id:"numbers",label:"Numbers",cards:[{id:"n1",h:"ఒకటి",r:"okati",e:"One",ex:""},{id:"n2",h:"రెండు",r:"rendu",e:"Two",ex:""},{id:"n3",h:"మూడు",r:"moodu",e:"Three",ex:""},{id:"n4",h:"నాలుగు",r:"naalugu",e:"Four",ex:""},{id:"n5",h:"అయిదు",r:"ayidu",e:"Five",ex:""},{id:"n6",h:"ఆరు",r:"aaru",e:"Six",ex:""},{id:"n7",h:"ఏడు",r:"edu",e:"Seven",ex:""},{id:"n8",h:"ఎనిమిది",r:"enimidi",e:"Eight",ex:""},{id:"n9",h:"తొమ్మిది",r:"tommidi",e:"Nine",ex:""},{id:"n10",h:"పది",r:"padi",e:"Ten",ex:""}]},{id:"colors",label:"Colors",cards:[{id:"col1",h:"ఎరుపు",r:"erupu",e:"Red",ex:""},{id:"col2",h:"నీలం",r:"neelam",e:"Blue",ex:""},{id:"col3",h:"పచ్చ",r:"pachcha",e:"Green",ex:""},{id:"col4",h:"పసుపు",r:"pasapu",e:"Yellow",ex:""},{id:"col5",h:"తెలుపు",r:"telupu",e:"White",ex:""},{id:"col6",h:"నలుపు",r:"nalupu",e:"Black",ex:""},{id:"col7",h:"నారింజ",r:"naarinja",e:"Orange",ex:""},{id:"col8",h:"గులాబి",r:"gulaabi",e:"Pink",ex:""}]}];
-const ALL_DECKS=[
-  {id:"vowels",label:"Vowels",sub:"14 characters",cards:VOWELS,isScript:true},
-  {id:"consonants",label:"Consonants",sub:"34 characters",cards:CONSONANTS,isScript:true},
-  {id:"diacritics",label:"Vowel Signs · గుర్తులు",sub:"13 diacritics",cards:[{id:"teld1",mark:"ా",h:"కా",base:"క",r:"k+kaa=kaa",baseRom:"k",vowelRom:"kaa",e:"long a — ఆ sound",ex:""},{id:"teld2",mark:"ి",h:"కి",base:"క",r:"k+ki=ki",baseRom:"k",vowelRom:"ki",e:"short i — ఇ sound",ex:""},{id:"teld3",mark:"ీ",h:"కీ",base:"క",r:"k+kee=kee",baseRom:"k",vowelRom:"kee",e:"long i — ఈ sound",ex:""},{id:"teld4",mark:"ు",h:"కు",base:"క",r:"k+ku=ku",baseRom:"k",vowelRom:"ku",e:"short u — ఉ sound",ex:""},{id:"teld5",mark:"ూ",h:"కూ",base:"క",r:"k+koo=koo",baseRom:"k",vowelRom:"koo",e:"long u — ఊ sound",ex:""},{id:"teld6",mark:"ె",h:"కె",base:"క",r:"k+ke=ke",baseRom:"k",vowelRom:"ke",e:"short e — ఎ sound",ex:""},{id:"teld7",mark:"ే",h:"కే",base:"క",r:"k+kee=kee",baseRom:"k",vowelRom:"kee",e:"long e — ఏ sound",ex:""},{id:"teld8",mark:"ై",h:"కై",base:"క",r:"k+kai=kai",baseRom:"k",vowelRom:"kai",e:"ai — ఐ sound",ex:""},{id:"teld9",mark:"ొ",h:"కొ",base:"క",r:"k+ko=ko",baseRom:"k",vowelRom:"ko",e:"short o — ఒ sound",ex:""},{id:"teld10",mark:"ో",h:"కో",base:"క",r:"k+koo=koo",baseRom:"k",vowelRom:"koo",e:"long o — ఓ sound",ex:""},{id:"teld11",mark:"ౌ",h:"కౌ",base:"క",r:"k+kau=kau",baseRom:"k",vowelRom:"kau",e:"au — ఔ sound",ex:""},{id:"teld12",mark:"ం",h:"కం",base:"క",r:"k+kam=kam",baseRom:"k",vowelRom:"kam",e:"anusvara — nasal ending",ex:""},{id:"teld13",mark:"్",h:"క్",base:"క",r:"k+k=k",baseRom:"k",vowelRom:"k",e:"halant — removes inherent vowel",ex:""}],isScript:true,isDiacritic:true},
-  ...WORD_DECKS.map(d=>({...d,sub:`${d.cards.length} words`,isScript:false})),
-];
+const ALL_DECKS=[{id:"vowels",label:"Vowels",sub:"14 characters",cards:VOWELS,isScript:true},{id:"consonants",label:"Consonants",sub:"34 characters",cards:CONSONANTS,isScript:true},{id:"diacritics",label:"Vowel Signs · గుర్తులు",sub:"13 diacritics",cards:[{id:"teld1",mark:"ా",h:"కా",base:"క",r:"k+kaa=kaa",baseRom:"k",vowelRom:"kaa",e:"long a — ఆ sound",ex:""},{id:"teld2",mark:"ి",h:"కి",base:"క",r:"k+ki=ki",baseRom:"k",vowelRom:"ki",e:"short i — ఇ sound",ex:""},{id:"teld3",mark:"ీ",h:"కీ",base:"క",r:"k+kee=kee",baseRom:"k",vowelRom:"kee",e:"long i — ఈ sound",ex:""},{id:"teld4",mark:"ు",h:"కు",base:"క",r:"k+ku=ku",baseRom:"k",vowelRom:"ku",e:"short u — ఉ sound",ex:""},{id:"teld5",mark:"ూ",h:"కూ",base:"క",r:"k+koo=koo",baseRom:"k",vowelRom:"koo",e:"long u — ఊ sound",ex:""},{id:"teld6",mark:"ె",h:"కె",base:"క",r:"k+ke=ke",baseRom:"k",vowelRom:"ke",e:"short e — ఎ sound",ex:""},{id:"teld7",mark:"ే",h:"కే",base:"క",r:"k+kee=kee",baseRom:"k",vowelRom:"kee",e:"long e — ఏ sound",ex:""},{id:"teld8",mark:"ై",h:"కై",base:"క",r:"k+kai=kai",baseRom:"k",vowelRom:"kai",e:"ai — ఐ sound",ex:""},{id:"teld9",mark:"ొ",h:"కొ",base:"క",r:"k+ko=ko",baseRom:"k",vowelRom:"ko",e:"short o — ఒ sound",ex:""},{id:"teld10",mark:"ో",h:"కో",base:"క",r:"k+koo=koo",baseRom:"k",vowelRom:"koo",e:"long o — ఓ sound",ex:""},{id:"teld11",mark:"ౌ",h:"కౌ",base:"క",r:"k+kau=kau",baseRom:"k",vowelRom:"kau",e:"au — ఔ sound",ex:""},{id:"teld12",mark:"ం",h:"కం",base:"క",r:"k+kam=kam",baseRom:"k",vowelRom:"kam",e:"anusvara — nasal ending",ex:""},{id:"teld13",mark:"్",h:"క్",base:"క",r:"k+k=k",baseRom:"k",vowelRom:"k",e:"halant — removes inherent vowel",ex:""}],isScript:true,isDiacritic:true},...WORD_DECKS.map(d=>({...d,sub:`${d.cards.length} words`,isScript:false}))];
 const ALL_CARDS=ALL_DECKS.flatMap(d=>d.cards);
-
-
 const SRS_KEY="likho_telugu_srs";
 function loadSRS(){try{return JSON.parse(localStorage.getItem(SRS_KEY)||"{}")}catch{return{}}}
 function saveSRS(s){try{localStorage.setItem(SRS_KEY,JSON.stringify(s))}catch{}}
 function initCard(){return{interval:1,ease:2.5,due:0,reps:0}}
-function stepSRS(s,q){const ease=Math.max(1.3,s.ease+[-0.3,-0.15,0,0.15][q]);const interval=q===0?1:s.reps===0?1:s.reps===1?3:Math.round(s.interval*ease);return{interval,ease,due:Date.now()+interval*86400000,reps:q===0?0:s.reps+1}}
+// FIX 1: SRS — reps always increments; reset to 0 only on Again
+function stepSRS(s,q){
+  const ease=Math.max(1.3,s.ease+[-0.3,-0.15,0,0.15][q]);
+  const reps=q===0?0:s.reps+1;
+  const interval=q===0?1:reps===1?1:reps===2?3:Math.round(s.interval*ease);
+  return{interval,ease,due:Date.now()+interval*86400000,reps};
+}
 function dueCards(cards){return cards.filter(c=>(SRS[c.id]?.due??0)<=Date.now())}
 let SRS=loadSRS();
 
-// CANVAS — DRAVIDIAN CENTER-MASS
+// FIX 5: Fisher-Yates shuffle
+function shuffle(arr){
+  const a=[...arr];
+  for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+  return a;
+}
+
 const cv=document.getElementById("draw-canvas"),ctx=cv.getContext("2d");
 let drawing=false,lx=0,ly=0,ghostChar=null;
 function xy(e){const r=cv.getBoundingClientRect(),sx=cv.width/r.width,sy=cv.height/r.height,s=e.touches?e.touches[0]:e;return[(s.clientX-r.left)*sx,(s.clientY-r.top)*sy]}
+
 function drawGrid(){
   const W=cv.width,H=cv.height;
-  ctx.clearRect(0,0,W,H);
-  ctx.fillStyle="#F6F4F9";ctx.fillRect(0,0,W,H);
+  ctx.clearRect(0,0,W,H);ctx.fillStyle="#F6F4F9";ctx.fillRect(0,0,W,H);
   ctx.strokeStyle="rgba(22,13,36,0.05)";ctx.lineWidth=1;
   for(let y=40;y<H;y+=40){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}
-  ctx.strokeStyle="rgba(107,58,138,0.18)";ctx.lineWidth=1.5;ctx.setLineDash([]);
-  ctx.beginPath();ctx.moveTo(0,H/2);ctx.lineTo(W,H/2);ctx.stroke();
-  ctx.strokeStyle="rgba(107,58,138,0.10)";ctx.lineWidth=1;
+  // baseline — characters rest on this line
+  const baseline=Math.round(H*0.65);
+  ctx.strokeStyle="rgba(107,58,138,0.22)";ctx.lineWidth=1.5;ctx.setLineDash([]);
+  ctx.beginPath();ctx.moveTo(0,baseline);ctx.lineTo(W,baseline);ctx.stroke();
+  // geometric circle guide for rounded letterforms
+  const cr=Math.round(W*0.30);
+  ctx.strokeStyle="rgba(107,58,138,0.07)";ctx.lineWidth=1;ctx.setLineDash([3,5]);
+  ctx.beginPath();ctx.arc(W/2,baseline-cr,cr,0,Math.PI*2);ctx.stroke();
+  // center cross
+  ctx.strokeStyle="rgba(107,58,138,0.06)";ctx.lineWidth=1;ctx.setLineDash([4,6]);
   ctx.beginPath();ctx.moveTo(W/2,0);ctx.lineTo(W/2,H);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(0,baseline-cr);ctx.lineTo(W,baseline-cr);ctx.stroke();
+  ctx.setLineDash([]);
+  // FIX 2: dynamic font sizing for ghost character
   if(ghostChar){
     const isWord=currentDeck&&!currentDeck.isScript;
-    ctx.font=`${isWord?Math.round(H*0.42):Math.round(W*0.58)}px serif`;
+    const maxW=W*0.88,maxH=H*0.55;
+    let fs=isWord?Math.round(H*0.42):Math.round(W*0.58);
+    ctx.textBaseline="middle";ctx.textAlign="center";
+    for(let i=0;i<8;i++){
+      ctx.font=`${fs}px serif`;
+      const m=ctx.measureText(ghostChar);
+      const tw=m.width;
+      const th=(m.actualBoundingBoxAscent||fs*0.75)+(m.actualBoundingBoxDescent||fs*0.2);
+      if(tw<=maxW&&th<=maxH)break;
+      fs=Math.round(fs*0.82);
+    }
     ctx.fillStyle="rgba(107,58,138,0.08)";
-    ctx.textAlign="center";ctx.textBaseline="middle";
-    ctx.fillText(ghostChar,W/2,H/2+(isWord?H*0.02:W*0.04));
+    ctx.fillText(ghostChar,W/2,H/2+W*0.04);
   }
 }
+
 function clearCanvas(){ghostChar=currentCard&&isRevealed?currentCard.h:null;drawGrid()}
 cv.addEventListener("mousedown",e=>{drawing=true;[lx,ly]=xy(e)});
 cv.addEventListener("mousemove",e=>{if(!drawing)return;const[x,y]=xy(e);ctx.beginPath();ctx.moveTo(lx,ly);ctx.lineTo(x,y);ctx.strokeStyle="#160D24";ctx.lineWidth=3.5;ctx.lineCap=ctx.lineJoin="round";ctx.stroke();[lx,ly]=[x,y]});
@@ -328,139 +184,82 @@ cv.addEventListener("touchend",()=>drawing=false);
 
 let currentDeck=null,queue=[],qIdx=0,currentCard=null,isRevealed=false,sessionGrades=[];
 let reviewDeck=null,reviewCards=[],flipIdx=0,flipShown=false;
+// FIX 3: undo state
+let lastGradeSnapshot=null;
 
-
-function toggleTrace(e,ghostChar){
-  if(e)e.stopPropagation();
-  const wrap=document.getElementById("trace-wrap");
-  const btn=document.getElementById("btn-trace-toggle");
-  if(!wrap||!btn)return;
-  const showing=wrap.style.display==="flex";
-  if(showing){wrap.style.display="none";btn.textContent="✍️ trace";}
-  else{wrap.style.display="flex";btn.textContent="✕ hide";drawTraceGrid(ghostChar);initTrace(ghostChar);}
-}
-function clearTrace(e,ghostChar){if(e)e.stopPropagation();drawTraceGrid(ghostChar);}
+function toggleTrace(e,ghost){if(e)e.stopPropagation();const wrap=document.getElementById("trace-wrap"),btn=document.getElementById("btn-trace-toggle");if(!wrap||!btn)return;const showing=wrap.style.display==="flex";if(showing){wrap.style.display="none";btn.textContent="✍️ trace";}else{wrap.style.display="flex";btn.textContent="✕ hide";drawTraceGrid(ghost);initTrace(ghost);}}
+function clearTrace(e,ghost){if(e)e.stopPropagation();drawTraceGrid(ghost);}
 function drawTraceGrid(ghost){
-  const cv=document.getElementById("trace-canvas");if(!cv)return;
-  const ctx=cv.getContext("2d"),W=cv.width,H=cv.height;
-  ctx.clearRect(0,0,W,H);
-  ctx.fillStyle="#F6F4F9";ctx.fillRect(0,0,W,H);
-  ctx.strokeStyle="rgba(107,58,138,0.12)";ctx.lineWidth=1;ctx.setLineDash([3,5]);
-  ctx.beginPath();ctx.moveTo(W/2,0);ctx.lineTo(W/2,H);ctx.stroke();
-  ctx.beginPath();ctx.moveTo(0,H/2);ctx.lineTo(W,H/2);ctx.stroke();
-  ctx.setLineDash([]);
-  if(ghost){ctx.font=Math.round(W*0.62)+"px serif";ctx.fillStyle="rgba(107,58,138,0.13)";ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillText(ghost,W/2,H/2+W*0.04);}
+  const tc=document.getElementById("trace-canvas");if(!tc)return;
+  const ctx=tc.getContext("2d"),W=tc.width,H=tc.height;
+  ctx.clearRect(0,0,W,H);ctx.fillStyle="#F6F4F9";ctx.fillRect(0,0,W,H);
+  // baseline + circle to match study canvas
+  const baseline=Math.round(H*0.65);
+  const cr=Math.round(W*0.28);
+  ctx.strokeStyle="rgba(107,58,138,0.20)";ctx.lineWidth=1.5;ctx.setLineDash([]);
+  ctx.beginPath();ctx.moveTo(0,baseline);ctx.lineTo(W,baseline);ctx.stroke();
+  ctx.strokeStyle="rgba(107,58,138,0.08)";ctx.lineWidth=1;ctx.setLineDash([3,5]);
+  ctx.beginPath();ctx.arc(W/2,baseline-cr,cr,0,Math.PI*2);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(W/2,0);ctx.lineTo(W/2,H);ctx.stroke();ctx.setLineDash([]);
+  if(ghost){
+    let fs=Math.round(W*0.40);
+    ctx.textAlign="center";ctx.textBaseline="alphabetic";
+    for(let i=0;i<6;i++){
+      ctx.font=fs+"px serif";
+      const m=ctx.measureText(ghost);
+      if(m.width<=W*0.82)break;
+      fs=Math.round(fs*0.84);
+    }
+    ctx.fillStyle="rgba(107,58,138,0.13)";
+    ctx.fillText(ghost,W/2,baseline-(fs*0.05));
+  }
 }
 function initTrace(ghost){
-  const cv=document.getElementById("trace-canvas");if(!cv)return;
-  const fresh=cv.cloneNode(true);cv.parentNode.replaceChild(fresh,cv);
+  const tc=document.getElementById("trace-canvas");if(!tc)return;
   drawTraceGrid(ghost);
-  const ctx=fresh.getContext("2d");
-  let drawing=false,lx=0,ly=0;
-  function getP(e){const r=fresh.getBoundingClientRect(),sx=fresh.width/r.width,sy=fresh.height/r.height,s=e.touches?e.touches[0]:e;return[(s.clientX-r.left)*sx,(s.clientY-r.top)*sy];}
-  fresh.addEventListener("mousedown",e=>{e.stopPropagation();drawing=true;[lx,ly]=getP(e)});
-  fresh.addEventListener("mousemove",e=>{if(!drawing)return;const[x,y]=getP(e);ctx.beginPath();ctx.moveTo(lx,ly);ctx.lineTo(x,y);ctx.strokeStyle="#160D24";ctx.lineWidth=3;ctx.lineCap=ctx.lineJoin="round";ctx.stroke();lx=x;ly=y;});
-  fresh.addEventListener("mouseup",()=>drawing=false);fresh.addEventListener("mouseleave",()=>drawing=false);
-  fresh.addEventListener("touchstart",e=>{e.stopPropagation();e.preventDefault();drawing=true;[lx,ly]=getP(e);},{passive:false});
-  fresh.addEventListener("touchmove",e=>{e.stopPropagation();e.preventDefault();if(!drawing)return;const[x,y]=getP(e);ctx.beginPath();ctx.moveTo(lx,ly);ctx.lineTo(x,y);ctx.strokeStyle="#160D24";ctx.lineWidth=3;ctx.lineCap=ctx.lineJoin="round";ctx.stroke();lx=x;ly=y;},{passive:false});
-  fresh.addEventListener("touchend",e=>{e.stopPropagation();drawing=false;},{passive:false});
+  const tctx=tc.getContext("2d");let tdrawing=false,tlx=0,tly=0;
+  function getP(e){const r=tc.getBoundingClientRect(),sx=tc.width/r.width,sy=tc.height/r.height,s=e.touches?e.touches[0]:e;return[(s.clientX-r.left)*sx,(s.clientY-r.top)*sy];}
+  tc.addEventListener("mousedown",e=>{e.stopPropagation();tdrawing=true;[tlx,tly]=getP(e)});
+  tc.addEventListener("mousemove",e=>{if(!tdrawing)return;const[x,y]=getP(e);tctx.beginPath();tctx.moveTo(tlx,tly);tctx.lineTo(x,y);tctx.strokeStyle="#160D24";tctx.lineWidth=3;tctx.lineCap=tctx.lineJoin="round";tctx.stroke();tlx=x;tly=y;});
+  tc.addEventListener("mouseup",()=>tdrawing=false);tc.addEventListener("mouseleave",()=>tdrawing=false);
+  tc.addEventListener("touchstart",e=>{e.stopPropagation();e.preventDefault();tdrawing=true;[tlx,tly]=getP(e);},{passive:false});
+  tc.addEventListener("touchmove",e=>{e.stopPropagation();e.preventDefault();if(!tdrawing)return;const[x,y]=getP(e);tctx.beginPath();tctx.moveTo(tlx,tly);tctx.lineTo(x,y);tctx.strokeStyle="#160D24";tctx.lineWidth=3;tctx.lineCap=tctx.lineJoin="round";tctx.stroke();tlx=x;tly=y;},{passive:false});
+  tc.addEventListener("touchend",e=>{e.stopPropagation();tdrawing=false;},{passive:false});
 }
+
 function renderHome(){
-  const totalCards=ALL_CARDS.length;
-  const seen=ALL_CARDS.filter(c=>(SRS[c.id]?.reps??0)>0).length;
-  const due=ALL_DECKS.reduce((n,d)=>n+dueCards(d.cards).length,0);
-  const pct=totalCards>0?Math.round((seen/totalCards)*100):0;
-  document.getElementById("stat-seen").textContent=seen;
-  document.getElementById("stat-due").textContent=due;
-  document.getElementById("stat-total").textContent=totalCards;
-  document.getElementById("overall-bar").style.width=pct+"%";
-  document.getElementById("bar-pct").textContent=pct+"%";
+  const totalCards=ALL_CARDS.length,seen=ALL_CARDS.filter(c=>(SRS[c.id]?.reps??0)>0).length,due=ALL_DECKS.reduce((n,d)=>n+dueCards(d.cards).length,0),pct=totalCards>0?Math.round((seen/totalCards)*100):0;
+  document.getElementById("stat-seen").textContent=seen;document.getElementById("stat-due").textContent=due;document.getElementById("stat-total").textContent=totalCards;
+  document.getElementById("overall-bar").style.width=pct+"%";document.getElementById("bar-pct").textContent=pct+"%";
   ["script","words"].forEach(type=>{
-    const el=document.getElementById(`deck-list-${type}`);
-    const decks=type==="script"?ALL_DECKS.filter(d=>d.isScript):ALL_DECKS.filter(d=>!d.isScript);
-    el.innerHTML=decks.map(deck=>{
-      const dueN=dueCards(deck.cards).length,done=dueN===0,total=deck.cards.length;
-      const seenN=deck.cards.filter(c=>(SRS[c.id]?.reps??0)>0).length;
-      const reviewBtn=`<button class="btn-review-deck" onclick="startReview('${deck.id}')">browse</button>`;
-      return`<div class="deck-row"><div class="deck-info"><div class="deck-name">${deck.label}</div><div class="deck-meta"><span class="deck-sub">${deck.sub}</span>${seenN>0?`<span class="deck-seen">${seenN}/${total} seen</span>`:""}<span class="deck-due ${done?"due-off":"due-on"}">${done?"✓ caught up":`${dueN} due`}</span></div></div><div class="prog-track"><div class="prog-fill" style="width:${(seenN/total)*100}%"></div></div><div class="deck-btns">${reviewBtn}<button class="btn-study ${done?"btn-outline":"btn-filled"}" onclick="startStudy('${deck.id}')">${done?"review":"study"}</button></div></div>`;
-    }).join("");
-  });
-  buildRef();
+    const el=document.getElementById(`deck-list-${type}`),decks=type==="script"?ALL_DECKS.filter(d=>d.isScript):ALL_DECKS.filter(d=>!d.isScript);
+    el.innerHTML=decks.map(deck=>{const dueN=dueCards(deck.cards).length,done=dueN===0,total=deck.cards.length,seenN=deck.cards.filter(c=>(SRS[c.id]?.reps??0)>0).length;return`<div class="deck-row"><div class="deck-info"><div class="deck-name">${deck.label}</div><div class="deck-meta"><span class="deck-sub">${deck.sub}</span>${seenN>0?`<span class="deck-seen">${seenN}/${total} seen</span>`:""}<span class="deck-due ${done?"due-off":"due-on"}">${done?"✓ caught up":`${dueN} due`}</span></div></div><div class="prog-track"><div class="prog-fill" style="width:${(seenN/total)*100}%"></div></div><div class="deck-btns"><button class="btn-review-deck" onclick="startReview('${deck.id}')">browse</button><button class="btn-study ${done?"btn-outline":"btn-filled"}" onclick="startStudy('${deck.id}')">${done?"review":"study"}</button></div></div>`;}).join("");
+  });buildRef();
 }
-function startReview(id){
-  reviewDeck=ALL_DECKS.find(d=>d.id===id);
-  reviewCards=reviewDeck.cards;flipIdx=0;flipShown=false;
-  document.getElementById("review-title").textContent=reviewDeck.label+" — Browse";
-  document.getElementById("review-sub").textContent=reviewCards.length+" characters";
-  document.getElementById("review-grid").innerHTML=reviewCards.map((c,i)=>{
-    const isDiac=reviewDeck.isDiacritic;
-    const charDisplay=isDiac?`${c.mark}<span style="font-size:16px;color:var(--inkfade);margin-left:4px">→ ${c.h}</span>`:c.h;
-    const romDisplay=isDiac?c.vowelRom:c.r;
-    const charLen=(isDiac?c.mark:c.h).length;
-    const fontSize=charLen<=2?28:charLen<=4?22:charLen<=6?18:14;
-    return`<div class="review-grid-card" id="rgc-${i}" onclick="highlightGrid(${i})"><div class="review-grid-char" style="font-size:${fontSize}px">${charDisplay}</div><div class="review-grid-rom">${romDisplay}</div><div class="review-grid-eng">${c.e}</div></div>`;
-  }).join("");
-  document.getElementById("review-grid-phase").style.display="block";
-  document.getElementById("review-flip-phase").style.display="none";
-  showScreen("review");
-}
+function startReview(id){reviewDeck=ALL_DECKS.find(d=>d.id===id);reviewCards=reviewDeck.cards;flipIdx=0;flipShown=false;document.getElementById("review-title").textContent=reviewDeck.label+" — Browse";document.getElementById("review-sub").textContent=reviewCards.length+" characters";const isDiac=!!reviewDeck.isDiacritic;document.getElementById("review-grid").innerHTML=reviewCards.map((c,i)=>{const charDisplay=isDiac?`${c.mark} → ${c.h}`:c.h,romDisplay=isDiac?c.vowelRom:c.r,charLen=(isDiac?c.mark:c.h).length,fontSize=charLen<=2?28:charLen<=4?22:charLen<=6?18:14;return`<div class="review-grid-card" id="rgc-${i}" onclick="highlightGrid(${i})"><div class="review-grid-char" style="font-size:${fontSize}px">${charDisplay}</div><div class="review-grid-rom">${romDisplay}</div><div class="review-grid-eng">${c.e}</div></div>`;}).join("");document.getElementById("review-grid-phase").style.display="block";document.getElementById("review-flip-phase").style.display="none";showScreen("review");}
 function backToGrid(){document.getElementById("review-grid-phase").style.display="block";document.getElementById("review-flip-phase").style.display="none";}
-function highlightGrid(i){
-  document.querySelectorAll(".review-grid-card").forEach(el=>el.classList.remove("active"));
-  document.getElementById("rgc-"+i)?.classList.add("active");
-  // Jump to this card in flip mode
-  flipIdx=i;
-  document.getElementById("review-grid-phase").style.display="none";
-  document.getElementById("review-flip-phase").style.display="flex";
-  renderFlip();
-}
+function highlightGrid(i){document.querySelectorAll(".review-grid-card").forEach(el=>el.classList.remove("active"));document.getElementById("rgc-"+i)?.classList.add("active");flipIdx=i;document.getElementById("review-grid-phase").style.display="none";document.getElementById("review-flip-phase").style.display="flex";renderFlip();}
 function startFlip(){flipIdx=0;flipShown=false;document.getElementById("review-grid-phase").style.display="none";document.getElementById("review-flip-phase").style.display="flex";renderFlip()}
-function renderFlip(){
-  const c=reviewCards[flipIdx];
-  const isDiac=!!reviewDeck.isDiacritic;
-  document.getElementById("flip-card").classList.remove("flipped");
-  document.getElementById("flip-front-label").style.display="block";
-  // Front: show the mark for diacritics, script word for others
-  document.getElementById("flip-char").textContent=isDiac?c.mark:c.h;
-  document.getElementById("flip-char").style.display="block";
-  document.getElementById("flip-rom").style.display="none";
-  document.getElementById("flip-eng").style.display="none";
-  document.getElementById("flip-example").style.display="none";
-  document.getElementById("flip-count").textContent=`${flipIdx+1} / ${reviewCards.length}`;
-  const ta=document.getElementById("trace-area");if(ta)ta.innerHTML="";
-  flipShown=false;
-}
+function renderFlip(){const c=reviewCards[flipIdx];document.getElementById("flip-card").classList.remove("flipped");document.getElementById("flip-front-label").style.display="block";document.getElementById("flip-char").textContent=c.h;document.getElementById("flip-char").style.display="block";document.getElementById("flip-rom").style.display="none";document.getElementById("flip-eng").style.display="none";document.getElementById("flip-example").style.display="none";document.getElementById("flip-count").textContent=`${flipIdx+1} / ${reviewCards.length}`;const ta=document.getElementById("trace-area");if(ta)ta.innerHTML="";flipShown=false;}
 function flipCard(){
   if(flipShown){flipNav(1);return;}
-  const c=reviewCards[flipIdx];
-  const isDiac=!!reviewDeck.isDiacritic;
-  document.getElementById("flip-card").classList.add("flipped");
-  document.getElementById("flip-front-label").style.display="none";
-  if(isDiac){
-    document.getElementById("flip-rom").textContent=c.mark+" + "+c.base+" = "+c.h+" · "+c.vowelRom;
-    document.getElementById("flip-eng").textContent=c.e;
-  }else{
-    document.getElementById("flip-rom").textContent=c.r;
-    document.getElementById("flip-eng").textContent=c.e;
-  }
-  document.getElementById("flip-rom").style.display="block";
-  document.getElementById("flip-eng").style.display="block";
+  const c=reviewCards[flipIdx],isDiac=!!reviewDeck.isDiacritic;
+  document.getElementById("flip-card").classList.add("flipped");document.getElementById("flip-front-label").style.display="none";
+  if(isDiac){document.getElementById("flip-rom").textContent=c.mark+" + "+c.base+" = "+c.h+" · "+c.vowelRom;document.getElementById("flip-eng").textContent=c.e;}
+  else{document.getElementById("flip-rom").textContent=c.r;document.getElementById("flip-eng").textContent=c.e;}
+  document.getElementById("flip-rom").style.display="block";document.getElementById("flip-eng").style.display="block";
   if(c.ex&&!isDiac){document.getElementById("flip-example").textContent=c.ex;document.getElementById("flip-example").style.display="block";}
-  // inject trace UI
   const ta=document.getElementById("trace-area");
-  if(ta){
-    const ghost=isDiac?c.mark:c.h;
-    ta.innerHTML='<div style="margin-top:10px;display:flex;flex-direction:column;align-items:center;gap:6px"><button id="btn-trace-toggle" style="background:transparent;border:1.5px solid var(--accent);border-radius:3px;padding:5px 16px;font-family:inherit;font-size:12px;color:var(--accent);cursor:pointer;letter-spacing:0.08em" onclick="toggleTrace(event,\''+ghost+'\')">✍️ trace</button><div id="trace-wrap" style="display:none;flex-direction:column;align-items:center;gap:6px"><canvas id="trace-canvas" width="220" height="220" style="width:220px;height:220px;display:block;touch-action:none;cursor:crosshair;border-radius:6px;border:1.5px solid var(--rule);box-shadow:inset 0 1px 4px rgba(0,0,0,0.05)"></canvas><button onclick="clearTrace(event,\''+ghost+'\')" style="background:transparent;border:1.5px solid var(--rule);border-radius:3px;padding:4px 14px;font-family:inherit;font-size:11px;color:var(--inkfader);cursor:pointer">↺ clear</button></div></div>';
-  }
+  if(ta){const ghost=isDiac?c.mark:c.h;ta.innerHTML=`<div style="margin-top:10px;display:flex;flex-direction:column;align-items:center;gap:6px"><button id="btn-trace-toggle" style="background:transparent;border:1.5px solid var(--accent);border-radius:3px;padding:5px 16px;font-family:inherit;font-size:12px;color:var(--accent);cursor:pointer;letter-spacing:0.08em" onclick="toggleTrace(event,'${ghost}')">✍️ trace</button><div id="trace-wrap" style="display:none;flex-direction:column;align-items:center;gap:6px"><canvas id="trace-canvas" width="260" height="280" style="width:260px;height:280px;display:block;touch-action:none;cursor:crosshair;border-radius:6px;border:1.5px solid var(--rule);box-shadow:inset 0 1px 4px rgba(0,0,0,0.05)"></canvas><button onclick="clearTrace(event,'${ghost}')" style="background:transparent;border:1.5px solid var(--rule);border-radius:3px;padding:4px 14px;font-family:inherit;font-size:11px;color:var(--inkfader);cursor:pointer">↺ clear</button></div></div>`;}
   flipShown=true;
 }
 function flipNav(dir){flipIdx=Math.max(0,Math.min(reviewCards.length-1,flipIdx+dir));renderFlip()}
 function startStudyFromReview(){startStudy(reviewDeck.id)}
 function startStudy(id){
-  currentDeck=ALL_DECKS.find(d=>d.id===id);
-  const due=dueCards(currentDeck.cards);
-  queue=(due.length>0?[...due]:[...currentDeck.cards]).sort(()=>Math.random()-.5);
-  qIdx=0;sessionGrades=[];isRevealed=false;ghostChar=null;showScreen("study");loadCard();
+  currentDeck=ALL_DECKS.find(d=>d.id===id);const due=dueCards(currentDeck.cards);
+  // FIX 5: Fisher-Yates shuffle
+  queue=shuffle(due.length>0?due:currentDeck.cards);
+  qIdx=0;sessionGrades=[];isRevealed=false;ghostChar=null;lastGradeSnapshot=null;showScreen("study");loadCard();
 }
 function resizeCanvas(){const isWord=!currentDeck.isScript;const W=isWord?580:320,H=320;cv.width=W;cv.height=H;cv.style.width=W+"px";cv.style.height=H+"px"}
 function loadCard(){
@@ -468,55 +267,42 @@ function loadCard(){
   currentCard=queue[qIdx];isRevealed=false;ghostChar=null;resizeCanvas();drawGrid();
   document.getElementById("progress-bar").style.width=(qIdx/queue.length*50)+"vw";
   document.getElementById("study-count").textContent=`${qIdx+1} / ${queue.length}`;
-  if(currentDeck.isDiacritic){
-    document.getElementById("prompt-label").textContent="WHAT DOES THIS MARK DO?";
-    document.getElementById("prompt-main").innerHTML=`<div class="prompt-mark">${currentCard.mark}</div><div class="prompt-mark-label">${currentCard.e}</div>`;
-  }else{
-    document.getElementById("prompt-label").textContent=currentDeck.isScript?"WRITE THIS CHARACTER":"WRITE IN TELUGU";
-    document.getElementById("prompt-main").innerHTML=currentDeck.isScript?`<div class="prompt-rom-script">${currentCard.r}</div><div class="prompt-eng-script">${currentCard.e}</div>`:`<div class="prompt-word">${currentCard.e}</div><div class="prompt-rom">${currentCard.r}</div>`;
-  }
-  document.getElementById("reveal-area").innerHTML=`<div class="reveal-row"><button class="btn-reveal" onclick="reveal()">reveal</button><button class="btn-dontknow" onclick="dontKnow()">don't know</button></div>`;
+  if(currentDeck.isDiacritic){document.getElementById("prompt-label").textContent="WHAT DOES THIS MARK DO?";document.getElementById("prompt-main").innerHTML=`<div class="prompt-mark">${currentCard.mark}</div><div class="prompt-mark-label">${currentCard.e}</div>`;}
+  else{document.getElementById("prompt-label").textContent=currentDeck.isScript?"WRITE THIS CHARACTER":"WRITE IN TELUGU";document.getElementById("prompt-main").innerHTML=currentDeck.isScript?`<div class="prompt-rom-script">${currentCard.r}</div><div class="prompt-eng-script">${currentCard.e}</div>`:`<div class="prompt-word">${currentCard.e}</div><div class="prompt-rom">${currentCard.r}</div>`;}
+  // FIX 3: show undo button if snapshot exists
+  document.getElementById("reveal-area").innerHTML=`<div class="reveal-row"><button class="btn-reveal" onclick="reveal()">reveal</button><button class="btn-dontknow" onclick="dontKnow()">don't know</button></div>${lastGradeSnapshot?`<div style="text-align:center;margin-top:8px"><button onclick="undoGrade()" style="background:transparent;border:none;color:var(--inkfader);font-size:11px;cursor:pointer;font-family:inherit;letter-spacing:0.1em;text-decoration:underline">↩ undo last grade</button></div>`:''}`;
 }
-function dontKnow(){
-  SRS[currentCard.id]=stepSRS(SRS[currentCard.id]??initCard(),0);saveSRS(SRS);sessionGrades.push(0);
-  isRevealed=true;ghostChar=currentCard.h;drawGrid();showAnswer();
-}
+function dontKnow(){SRS[currentCard.id]=stepSRS(SRS[currentCard.id]??initCard(),0);saveSRS(SRS);sessionGrades.push(0);isRevealed=true;ghostChar=currentCard.h;drawGrid();showAnswer();}
 function reveal(){isRevealed=true;ghostChar=currentCard.h;drawGrid();showAnswer()}
 function showAnswer(){
   const isWord=!currentDeck.isScript;
-  if(currentDeck.isDiacritic){
-    document.getElementById("reveal-area").innerHTML=`<div style="text-align:center">
-      <div class="answer-mark-row">
-        <div class="answer-mark">${currentCard.mark}</div>
-        <div class="answer-mark-arrow">+</div>
-        <div class="answer-mark">${currentCard.base}</div>
-        <div class="answer-mark-arrow">=</div>
-        <div class="answer-with-base">${currentCard.h}</div>
-      </div>
-      <div class="answer-rom" style="margin-top:8px">${currentCard.h} · ${currentCard.vowelRom}</div>
-      <div class="answer-eng">${currentCard.e}</div>
-    </div><div><div class="grade-label">HOW DID YOU DO?</div><div class="grade-bar"><button class="btn-grade g-again" onclick="grade(0)">Again<span>[1]</span></button><button class="btn-grade g-hard" onclick="grade(1)">Hard<span>[2]</span></button><button class="btn-grade g-good" onclick="grade(2)">Good<span>[3]</span></button><button class="btn-grade g-easy" onclick="grade(3)">Easy<span>[4]</span></button></div></div>`;
-    return;
-  }
+  if(currentDeck.isDiacritic){document.getElementById("reveal-area").innerHTML=`<div style="text-align:center"><div class="answer-mark-row"><div class="answer-mark">${currentCard.mark}</div><div class="answer-mark-arrow">+</div><div class="answer-mark">${currentCard.base}</div><div class="answer-mark-arrow">=</div><div class="answer-with-base">${currentCard.h}</div></div><div class="answer-rom" style="margin-top:8px">${currentCard.h} · ${currentCard.vowelRom}</div><div class="answer-eng">${currentCard.e}</div></div><div><div class="grade-label">HOW DID YOU DO?</div><div class="grade-bar"><button class="btn-grade g-again" onclick="grade(0)">Again<span>[1]</span></button><button class="btn-grade g-hard" onclick="grade(1)">Hard<span>[2]</span></button><button class="btn-grade g-good" onclick="grade(2)">Good<span>[3]</span></button><button class="btn-grade g-easy" onclick="grade(3)">Easy<span>[4]</span></button></div></div>`;return;}
   const exHtml=(!isWord&&currentCard.ex)?`<div class="answer-example">${currentCard.ex}</div>`:"";
   document.getElementById("reveal-area").innerHTML=`<div style="text-align:center"><div class="answer-char${isWord?" word":""}">${currentCard.h}</div><div class="answer-rom">${currentCard.r}</div>${isWord?`<div class="answer-eng">${currentCard.e}</div>`:""}${exHtml}</div><div><div class="grade-label">HOW DID YOU DO?</div><div class="grade-bar"><button class="btn-grade g-again" onclick="grade(0)">Again<span>[1]</span></button><button class="btn-grade g-hard" onclick="grade(1)">Hard<span>[2]</span></button><button class="btn-grade g-good" onclick="grade(2)">Good<span>[3]</span></button><button class="btn-grade g-easy" onclick="grade(3)">Easy<span>[4]</span></button></div></div>`;
 }
-function grade(q){SRS[currentCard.id]=stepSRS(SRS[currentCard.id]??initCard(),q);saveSRS(SRS);sessionGrades.push(q);qIdx++;loadCard()}
+// FIX 3: grade saves snapshot, undoGrade restores it
+function grade(q){
+  lastGradeSnapshot={cardId:currentCard.id,srsState:{...SRS[currentCard.id]??initCard()},qIdx:qIdx,sessionGrades:[...sessionGrades]};
+  SRS[currentCard.id]=stepSRS(SRS[currentCard.id]??initCard(),q);
+  saveSRS(SRS);sessionGrades.push(q);qIdx++;loadCard();
+}
+function undoGrade(){
+  if(!lastGradeSnapshot)return;
+  const snap=lastGradeSnapshot;
+  SRS[snap.cardId]=snap.srsState;saveSRS(SRS);
+  qIdx=snap.qIdx;sessionGrades=snap.sessionGrades;lastGradeSnapshot=null;loadCard();
+}
+// FIX 4: guard against division by zero
 function showDone(){
-  const c=[0,1,2,3].map(q=>sessionGrades.filter(g=>g===q).length);
-  const pct=Math.round(((c[2]+c[3])/sessionGrades.length)*100);
+  if(sessionGrades.length===0){goHome();return;}
+  const c=[0,1,2,3].map(q=>sessionGrades.filter(g=>g===q).length),pct=Math.round(((c[2]+c[3])/sessionGrades.length)*100);
   const[w,s]=pct>=80?["చాలా బాగు","well done"]:pct>=50?["బాగుంది","good effort"]:["మళ్ళీ","keep practicing"];
   document.getElementById("done-word").textContent=w;document.getElementById("done-sub").textContent=s;
   const cols=["var(--again)","var(--hard)","var(--good)","var(--easy)"],lbs=["again","hard","good","easy"];
   document.getElementById("done-grades").innerHTML=c.map((n,i)=>`<div class="done-box"><div class="done-num" style="color:${cols[i]}">${n}</div><div class="done-lbl" style="color:${cols[i]}">${lbs[i]}</div></div>`).join("");
   showScreen("done");
 }
-function buildRef(){
-  ["vowels","consonants"].forEach(t=>{
-    const arr=t==="vowels"?VOWELS:CONSONANTS;
-    document.getElementById(`ref-${t}`).innerHTML=arr.map(c=>`<div class="ref-card"><div class="ref-char">${c.h}</div><div class="ref-rom">${c.r}</div><div class="ref-eng">${c.e}</div></div>`).join("");
-  });
-}
+function buildRef(){["vowels","consonants"].forEach(t=>{const arr=t==="vowels"?VOWELS:CONSONANTS;document.getElementById(`ref-${t}`).innerHTML=arr.map(c=>`<div class="ref-card"><div class="ref-char">${c.h}</div><div class="ref-rom">${c.r}</div><div class="ref-eng">${c.e}</div></div>`).join("");})}
 function openRef(){document.getElementById("ref-overlay").classList.add("open")}
 function closeRef(){document.getElementById("ref-overlay").classList.remove("open")}
 function closeRefOverlay(e){if(e.target===document.getElementById("ref-overlay"))closeRef()}
@@ -527,27 +313,13 @@ function doReset(){localStorage.removeItem(SRS_KEY);SRS={};closeConfirm();render
 function showScreen(n){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));document.getElementById(`${n}-screen`).classList.add("active")}
 function goHome(){showScreen("home");renderHome()}
 document.addEventListener("keydown",e=>{
-  if(document.getElementById("review-screen").classList.contains("active")){
-    if(e.key==="ArrowRight")flipNav(1);if(e.key==="ArrowLeft")flipNav(-1);
-    if(e.key===" "){e.preventDefault();flipCard();}return;
-  }
+  if(document.getElementById("review-screen").classList.contains("active")){if(e.key==="ArrowRight")flipNav(1);if(e.key==="ArrowLeft")flipNav(-1);if(e.key===" "){e.preventDefault();flipCard();}return;}
   if(!document.getElementById("study-screen").classList.contains("active"))return;
-  if(e.key===" "&&!isRevealed){e.preventDefault();reveal();return}
-  if(e.key==="?"&&!isRevealed){dontKnow();return}
-  if(e.key==="1"&&isRevealed)grade(0);if(e.key==="2"&&isRevealed)grade(1);
-  if(e.key==="3"&&isRevealed)grade(2);if(e.key==="4"&&isRevealed)grade(3);
+  if(e.key===" "&&!isRevealed){e.preventDefault();reveal();return}if(e.key==="?"&&!isRevealed){dontKnow();return}
+  if(e.key==="1"&&isRevealed)grade(0);if(e.key==="2"&&isRevealed)grade(1);if(e.key==="3"&&isRevealed)grade(2);if(e.key==="4"&&isRevealed)grade(3);
 });
 renderHome();drawGrid();
-
-// Flip card click — only advance if trace is NOT open
-document.getElementById("flip-card").addEventListener("click", function(e){
-  // Don't advance if clicking inside trace area or trace is visible
-  if(document.getElementById("trace-wrap") &&
-     document.getElementById("trace-wrap").style.display === "flex"){
-    return; // trace is open, ignore card click
-  }
-  flipCard();
-});
+document.getElementById("flip-card").addEventListener("click",function(e){if(document.getElementById("trace-wrap")&&document.getElementById("trace-wrap").style.display==="flex")return;flipCard();});
 
 </script>
 </body>
