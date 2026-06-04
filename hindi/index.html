@@ -154,7 +154,7 @@ function drawGrid(){
     const isWord=currentDeck&&!currentDeck.isScript;
     const maxW=W*0.88,maxH=H*0.55;
     let fs=isWord?Math.round(H*0.42):Math.round(W*0.58);
-    ctx.textBaseline="middle";ctx.textAlign="center";
+    ctx.textBaseline="top";ctx.textAlign="center";
     for(let i=0;i<8;i++){
       ctx.font=`${fs}px serif`;
       const m=ctx.measureText(ghostChar);
@@ -164,7 +164,14 @@ function drawGrid(){
       fs=Math.round(fs*0.82);
     }
     ctx.fillStyle="rgba(200,105,10,0.08)";
-    ctx.fillText(ghostChar,W/2,H/2+W*0.04);
+    ctx.textBaseline="alphabetic";
+    // measure ascent so we can place the shiro line at the right spot
+    const m2=ctx.measureText(ghostChar);
+    const asc=m2.actualBoundingBoxAscent||fs*0.78;
+    const shiroY=Math.round(H*0.28);
+    // for script: shiro is ~10% down from top of ascent
+    const ghostY=isWord?Math.round(H*0.68):shiroY+asc*0.88;
+    ctx.fillText(ghostChar,W/2,ghostY);
   }
 }
 
@@ -205,8 +212,10 @@ function drawTraceGrid(ghost){
       fs=Math.round(fs*0.84);
     }
     ctx.fillStyle="rgba(200,105,10,0.13)";
-    // hang from shiro line, same as study canvas
-    ctx.fillText(ghost,W/2,shiro+(fs*0.85));
+    ctx.textBaseline="alphabetic";
+    const mt=ctx.measureText(ghost);
+    const asct=mt.actualBoundingBoxAscent||fs*0.78;
+    ctx.fillText(ghost,W/2,shiro+asct*0.88);
   }
 }
 function initTrace(ghost){
