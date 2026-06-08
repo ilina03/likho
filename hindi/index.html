@@ -54,6 +54,7 @@
   .study-left,.study-right{width:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 48px;gap:28px;min-height:100vh}.study-left{border-right:1px solid var(--rule)}
   .prompt-label{font-size:11px;color:var(--accent);letter-spacing:0.18em;text-align:center}.prompt-word{font-size:44px;color:var(--ink);line-height:1.1;margin-bottom:8px;text-align:center}.prompt-rom{font-size:21px;color:var(--inkfade);font-style:italic;text-align:center}.prompt-rom-script{font-size:62px;color:var(--accent);font-style:italic;margin-bottom:6px;text-align:center}.prompt-eng-script{font-size:15px;color:var(--inkfade);text-align:center}.hint{font-size:11px;color:var(--inkfader);letter-spacing:0.1em}
   .canvas-wrap{display:flex;flex-direction:column;align-items:center;gap:8px}
+  /* FIX (iOS): canvas element has no inline width/height style — DPR scaling handles it */
   #draw-canvas{display:block;touch-action:none;cursor:crosshair;border-radius:4px;border:1.5px solid var(--rule);box-shadow:inset 0 1px 4px rgba(26,18,9,0.05),0 2px 14px rgba(26,18,9,0.07)}
   .btn-clear{background:transparent;border:none;color:var(--inkfader);font-size:12px;cursor:pointer;letter-spacing:0.1em;font-family:inherit;padding:2px 0}.btn-clear:hover{color:var(--ink)}
   .reveal-row{display:flex;gap:10px;align-items:center}.btn-reveal{background:var(--ink);color:var(--paper);border:none;border-radius:3px;padding:12px 40px;font-family:inherit;font-size:15px;letter-spacing:0.1em;cursor:pointer}.btn-reveal:hover{opacity:.85}.btn-dontknow{background:transparent;border:1.5px solid var(--again);color:var(--again);border-radius:3px;padding:12px 16px;font-family:inherit;font-size:13px;letter-spacing:0.06em;cursor:pointer}.btn-dontknow:hover{background:var(--again);color:#fff}
@@ -101,7 +102,8 @@
   <div id="progress-bar"></div>
   <div class="study-nav"><button class="btn-back" onclick="goHome()">← decks</button><span class="study-count" id="study-count"></span></div>
   <div class="study-left"><div class="prompt-label" id="prompt-label"></div><div id="prompt-main"></div><div class="hint">space to reveal · ? to skip</div></div>
-  <div class="study-right"><div class="canvas-wrap"><canvas id="draw-canvas" width="320" height="320" style="width:320px;height:320px;transition:all 0.2s"></canvas><button class="btn-clear" onclick="clearCanvas()">↺ clear</button></div><div id="reveal-area"></div></div>
+  <!-- FIX (iOS): no inline width/height style on canvas; DPR init handles CSS sizing -->
+  <div class="study-right"><div class="canvas-wrap"><canvas id="draw-canvas"></canvas><button class="btn-clear" onclick="clearCanvas()">↺ clear</button></div><div id="reveal-area"></div></div>
 </div>
 <div id="done-screen" class="screen"><div class="done-word" id="done-word"></div><div class="done-sub" id="done-sub"></div><div class="done-grades" id="done-grades"></div><button class="btn-home" onclick="goHome()">back to decks</button></div>
 <div id="ref-overlay" onclick="closeRefOverlay(event)"><div class="ref-modal"><div class="ref-header"><div class="ref-title">Devanagari Reference</div><button class="btn-close" onclick="closeRef()">✕</button></div><div class="ref-sec"><div class="ref-sec-label">VOWELS</div><div class="ref-grid" id="ref-vowels"></div></div><div class="ref-sec"><div class="ref-sec-label">CONSONANTS</div><div class="ref-grid" id="ref-consonants"></div></div></div></div>
@@ -117,8 +119,6 @@ const SRS_KEY="likho_hindi_srs";
 function loadSRS(){try{return JSON.parse(localStorage.getItem(SRS_KEY)||"{}")}catch{return{}}}
 function saveSRS(s){try{localStorage.setItem(SRS_KEY,JSON.stringify(s))}catch{}}
 function initCard(){return{interval:1,ease:2.5,due:0,reps:0}}
-
-// FIX 1: SRS — reps always increments; reset to 0 only on Again
 function stepSRS(s,q){
   const ease=Math.max(1.3,s.ease+[-0.3,-0.15,0,0.15][q]);
   const reps=q===0?0:s.reps+1;
@@ -128,54 +128,86 @@ function stepSRS(s,q){
 function dueCards(cards){return cards.filter(c=>(SRS[c.id]?.due??0)<=Date.now())}
 let SRS=loadSRS();
 
-// FIX 5: Fisher-Yates shuffle
 function shuffle(arr){
   const a=[...arr];
   for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
   return a;
 }
 
+// ─── Canvas setup ──────────────────────────────────────────────────────────────
+// FIX (iOS): Scale canvas backing store by devicePixelRatio so touch coordinates
+// and drawing are pixel-perfect on retina screens. CSS width/height set in px
+// matches the logical size; the canvas internal resolution is DPR× larger.
 const cv=document.getElementById("draw-canvas"),ctx=cv.getContext("2d");
 let drawing=false,lx=0,ly=0,ghostChar=null;
-function xy(e){const r=cv.getBoundingClientRect(),sx=cv.width/r.width,sy=cv.height/r.height,s=e.touches?e.touches[0]:e;return[(s.clientX-r.left)*sx,(s.clientY-r.top)*sy]}
+
+// Logical canvas dimensions (CSS px) — backing store = logicalW*DPR × logicalH*DPR
+let logicalW=320,logicalH=320;
+
+function initCanvas(lw,lh){
+  const dpr=window.devicePixelRatio||1;
+  logicalW=lw; logicalH=lh;
+  cv.width=Math.round(lw*dpr);
+  cv.height=Math.round(lh*dpr);
+  cv.style.width=lw+"px";
+  cv.style.height=lh+"px";
+  ctx.setTransform(dpr,0,0,dpr,0,0); // scale all drawing ops by DPR
+}
+
+// FIX (iOS): xy() converts client coordinates to logical canvas coordinates.
+// Because ctx is already scaled by DPR via setTransform, we work in CSS px space.
+function xy(e){
+  const r=cv.getBoundingClientRect();
+  const s=e.touches?e.touches[0]:e;
+  // r.width is the CSS display width (== logicalW); no extra scale factor needed
+  return[s.clientX-r.left, s.clientY-r.top];
+}
+
+// ─── Ghost character placement ─────────────────────────────────────────────────
+// FIX (shiro): In Devanagari, characters hang FROM the shiro (headline) —
+function drawGhost(context,W,H,ghost,isWord){
+  const shiroY=Math.round(H*0.28);
+  const maxW=W*0.88,maxH=H*0.55;
+  let fs=isWord?Math.round(H*0.42):Math.round(W*0.58);
+  context.textBaseline="alphabetic";context.textAlign="center";
+  for(let i=0;i<8;i++){
+    context.font=`${fs}px serif`;
+    const m=context.measureText(ghost);
+    const tw=m.width,th=(m.actualBoundingBoxAscent||fs*0.75)+(m.actualBoundingBoxDescent||fs*0.2);
+    if(tw<=maxW&&th<=maxH)break;
+    fs=Math.round(fs*0.82);
+  }
+  context.font=`${fs}px serif`;
+  const m2=context.measureText(ghost);
+  const asc=m2.actualBoundingBoxAscent||fs*0.78;
+  // Lookup table: factor = 130.8 / actualAscent so the TOP of the shiro bar lands on shiroY.
+  // Default 0.969 for asc=135 chars; exceptions for chars with marks above the shiro.
+  const shiroFactors={"अ": 0.966, "आ": 0.966, "ई": 0.668, "ऐ": 0.689, "ओ": 0.689, "औ": 0.658, "अं": 0.76, "अः": 0.966, "भ": 0.966};
+  const factor=shiroFactors[ghost]??0.98;
+  const ghostY=isWord?Math.round(H*0.68):shiroY+asc*factor;
+  context.fillStyle="rgba(200,105,10,0.08)";
+  context.fillText(ghost,W/2,ghostY);
+}
 
 function drawGrid(){
-  const W=cv.width,H=cv.height;
-  ctx.clearRect(0,0,W,H);ctx.fillStyle="#F7F3EC";ctx.fillRect(0,0,W,H);
+  const W=logicalW,H=logicalH;
+  ctx.clearRect(0,0,W,H);
+  ctx.fillStyle="#F7F3EC";ctx.fillRect(0,0,W,H);
   ctx.strokeStyle="rgba(26,18,9,0.05)";ctx.lineWidth=1;
   for(let y=40;y<H;y+=40){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}
-  const shiro=Math.round(H*0.28);
+  const shiroY=Math.round(H*0.28);
   ctx.strokeStyle="rgba(200,105,10,0.22)";ctx.lineWidth=1.5;ctx.setLineDash([]);
-  ctx.beginPath();ctx.moveTo(0,shiro);ctx.lineTo(W,shiro);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(0,shiroY);ctx.lineTo(W,shiroY);ctx.stroke();
   ctx.strokeStyle="rgba(200,105,10,0.08)";ctx.lineWidth=1;ctx.setLineDash([4,6]);
   ctx.beginPath();ctx.moveTo(W/2,0);ctx.lineTo(W/2,H);ctx.stroke();ctx.setLineDash([]);
-  // FIX 2: dynamic font sizing for ghost character
   if(ghostChar){
     const isWord=currentDeck&&!currentDeck.isScript;
-    const maxW=W*0.88,maxH=H*0.55;
-    let fs=isWord?Math.round(H*0.42):Math.round(W*0.58);
-    ctx.textBaseline="top";ctx.textAlign="center";
-    for(let i=0;i<8;i++){
-      ctx.font=`${fs}px serif`;
-      const m=ctx.measureText(ghostChar);
-      const tw=m.width;
-      const th=(m.actualBoundingBoxAscent||fs*0.75)+(m.actualBoundingBoxDescent||fs*0.2);
-      if(tw<=maxW&&th<=maxH)break;
-      fs=Math.round(fs*0.82);
-    }
-    ctx.fillStyle="rgba(200,105,10,0.08)";
-    ctx.textBaseline="alphabetic";
-    // measure ascent so we can place the shiro line at the right spot
-    const m2=ctx.measureText(ghostChar);
-    const asc=m2.actualBoundingBoxAscent||fs*0.78;
-    const shiroY=Math.round(H*0.28);
-    // for script: shiro is ~10% down from top of ascent
-    const ghostY=isWord?Math.round(H*0.68):shiroY+asc*0.88;
-    ctx.fillText(ghostChar,W/2,ghostY);
+    drawGhost(ctx,W,H,ghostChar,isWord);
   }
 }
 
 function clearCanvas(){ghostChar=currentCard&&isRevealed?currentCard.h:null;drawGrid()}
+
 cv.addEventListener("mousedown",e=>{drawing=true;[lx,ly]=xy(e)});
 cv.addEventListener("mousemove",e=>{if(!drawing)return;const[x,y]=xy(e);ctx.beginPath();ctx.moveTo(lx,ly);ctx.lineTo(x,y);ctx.strokeStyle="#1A1209";ctx.lineWidth=3.5;ctx.lineCap=ctx.lineJoin="round";ctx.stroke();[lx,ly]=[x,y]});
 cv.addEventListener("mouseup",()=>drawing=false);cv.addEventListener("mouseleave",()=>drawing=false);
@@ -185,44 +217,38 @@ cv.addEventListener("touchend",()=>drawing=false);
 
 let currentDeck=null,queue=[],qIdx=0,currentCard=null,isRevealed=false,sessionGrades=[];
 let reviewDeck=null,reviewCards=[],flipIdx=0,flipShown=false;
-// FIX 3: undo state
 let lastGradeSnapshot=null;
 
+// ─── Trace canvas ──────────────────────────────────────────────────────────────
 function toggleTrace(e,ghost){if(e)e.stopPropagation();const wrap=document.getElementById("trace-wrap"),btn=document.getElementById("btn-trace-toggle");if(!wrap||!btn)return;const showing=wrap.style.display==="flex";if(showing){wrap.style.display="none";btn.textContent="✍️ trace";}else{wrap.style.display="flex";btn.textContent="✕ hide";drawTraceGrid(ghost);initTrace(ghost);}}
 function clearTrace(e,ghost){if(e)e.stopPropagation();drawTraceGrid(ghost);}
+
 function drawTraceGrid(ghost){
   const tc=document.getElementById("trace-canvas");if(!tc)return;
-  const ctx=tc.getContext("2d"),W=tc.width,H=tc.height;
-  ctx.clearRect(0,0,W,H);ctx.fillStyle="#F7F3EC";ctx.fillRect(0,0,W,H);
-  // shiro line — Devanagari headline, characters hang from this
-  const shiro=Math.round(H*0.28);
-  ctx.strokeStyle="rgba(200,105,10,0.22)";ctx.lineWidth=1.5;ctx.setLineDash([]);
-  ctx.beginPath();ctx.moveTo(0,shiro);ctx.lineTo(W,shiro);ctx.stroke();
-  // center vertical guide
-  ctx.strokeStyle="rgba(200,105,10,0.10)";ctx.lineWidth=1;ctx.setLineDash([3,5]);
-  ctx.beginPath();ctx.moveTo(W/2,0);ctx.lineTo(W/2,H);ctx.stroke();ctx.setLineDash([]);
-  if(ghost){
-    // fit font size dynamically
-    let fs=Math.round(W*0.42);
-    ctx.textAlign="center";ctx.textBaseline="alphabetic";
-    for(let i=0;i<6;i++){
-      ctx.font=fs+"px serif";
-      const m=ctx.measureText(ghost);
-      if(m.width<=W*0.82)break;
-      fs=Math.round(fs*0.84);
-    }
-    ctx.fillStyle="rgba(200,105,10,0.13)";
-    ctx.textBaseline="alphabetic";
-    const mt=ctx.measureText(ghost);
-    const asct=mt.actualBoundingBoxAscent||fs*0.78;
-    ctx.fillText(ghost,W/2,shiro+asct*0.88);
-  }
+  const tctx=tc.getContext("2d");
+  const W=tc.width,H=tc.height;
+  tctx.setTransform(1,0,0,1,0,0);
+  tctx.clearRect(0,0,W,H);tctx.fillStyle="#F7F3EC";tctx.fillRect(0,0,W,H);
+  const shiroY=Math.round(H*0.28);
+  tctx.strokeStyle="rgba(200,105,10,0.22)";tctx.lineWidth=1.5;tctx.setLineDash([]);
+  tctx.beginPath();tctx.moveTo(0,shiroY);tctx.lineTo(W,shiroY);tctx.stroke();
+  tctx.strokeStyle="rgba(200,105,10,0.10)";tctx.lineWidth=1;tctx.setLineDash([3,5]);
+  tctx.beginPath();tctx.moveTo(W/2,0);tctx.lineTo(W/2,H);tctx.stroke();tctx.setLineDash([]);
+  if(ghost){drawGhost(tctx,W,H,ghost,false);}
 }
+
 function initTrace(ghost){
   const tc=document.getElementById("trace-canvas");if(!tc)return;
   drawTraceGrid(ghost);
   const tctx=tc.getContext("2d");let tdrawing=false,tlx=0,tly=0;
-  function getP(e){const r=tc.getBoundingClientRect(),sx=tc.width/r.width,sy=tc.height/r.height,s=e.touches?e.touches[0]:e;return[(s.clientX-r.left)*sx,(s.clientY-r.top)*sy];}
+  // FIX (iOS): use same coordinate helper pattern as main canvas
+  function getP(e){
+    const r=tc.getBoundingClientRect();
+    const s=e.touches?e.touches[0]:e;
+    // scale from CSS display size to canvas pixel size
+    const sx=tc.width/r.width, sy=tc.height/r.height;
+    return[(s.clientX-r.left)*sx,(s.clientY-r.top)*sy];
+  }
   tc.addEventListener("mousedown",e=>{e.stopPropagation();tdrawing=true;[tlx,tly]=getP(e)});
   tc.addEventListener("mousemove",e=>{if(!tdrawing)return;const[x,y]=getP(e);tctx.beginPath();tctx.moveTo(tlx,tly);tctx.lineTo(x,y);tctx.strokeStyle="#1A1209";tctx.lineWidth=3;tctx.lineCap=tctx.lineJoin="round";tctx.stroke();tlx=x;tly=y;});
   tc.addEventListener("mouseup",()=>tdrawing=false);tc.addEventListener("mouseleave",()=>tdrawing=false);
@@ -261,11 +287,15 @@ function flipNav(dir){flipIdx=Math.max(0,Math.min(reviewCards.length-1,flipIdx+d
 function startStudyFromReview(){startStudy(reviewDeck.id)}
 function startStudy(id){
   currentDeck=ALL_DECKS.find(d=>d.id===id);const due=dueCards(currentDeck.cards);
-  // FIX 5: Fisher-Yates shuffle
   queue=shuffle(due.length>0?due:currentDeck.cards);
   qIdx=0;sessionGrades=[];isRevealed=false;ghostChar=null;lastGradeSnapshot=null;showScreen("study");loadCard();
 }
-function resizeCanvas(){const isWord=!currentDeck.isScript;const W=isWord?580:320,H=320;cv.width=W;cv.height=H;cv.style.width=W+"px";cv.style.height=H+"px"}
+function resizeCanvas(){
+  const isWord=!currentDeck.isScript;
+  const lw=isWord?580:320,lh=320;
+  // FIX (iOS): use initCanvas so DPR scaling is re-applied on every resize
+  initCanvas(lw,lh);
+}
 function loadCard(){
   if(qIdx>=queue.length){showDone();return}
   currentCard=queue[qIdx];isRevealed=false;ghostChar=null;resizeCanvas();drawGrid();
@@ -273,7 +303,6 @@ function loadCard(){
   document.getElementById("study-count").textContent=`${qIdx+1} / ${queue.length}`;
   if(currentDeck.isDiacritic){document.getElementById("prompt-label").textContent="WHAT DOES THIS MARK DO?";document.getElementById("prompt-main").innerHTML=`<div class="prompt-mark">${currentCard.mark}</div><div class="prompt-mark-label">${currentCard.e}</div>`;}
   else{document.getElementById("prompt-label").textContent=currentDeck.isScript?"WRITE THIS CHARACTER":"WRITE IN DEVANAGARI";document.getElementById("prompt-main").innerHTML=currentDeck.isScript?`<div class="prompt-rom-script">${currentCard.r}</div><div class="prompt-eng-script">${currentCard.e}</div>`:`<div class="prompt-word">${currentCard.e}</div><div class="prompt-rom">${currentCard.r}</div>`;}
-  // FIX 3: show undo button if snapshot exists
   document.getElementById("reveal-area").innerHTML=`<div class="reveal-row"><button class="btn-reveal" onclick="reveal()">reveal</button><button class="btn-dontknow" onclick="dontKnow()">don't know</button></div>${lastGradeSnapshot?`<div style="text-align:center;margin-top:8px"><button onclick="undoGrade()" style="background:transparent;border:none;color:var(--inkfader);font-size:11px;cursor:pointer;font-family:inherit;letter-spacing:0.1em;text-decoration:underline">↩ undo last grade</button></div>`:''}`;
 }
 function dontKnow(){SRS[currentCard.id]=stepSRS(SRS[currentCard.id]??initCard(),0);saveSRS(SRS);sessionGrades.push(0);isRevealed=true;ghostChar=currentCard.h;drawGrid();showAnswer();}
@@ -284,7 +313,6 @@ function showAnswer(){
   const exHtml=(!isWord&&currentCard.ex)?`<div class="answer-example">${currentCard.ex}</div>`:"";
   document.getElementById("reveal-area").innerHTML=`<div style="text-align:center"><div class="answer-char${isWord?" word":""}">${currentCard.h}</div><div class="answer-rom">${currentCard.r}</div>${isWord?`<div class="answer-eng">${currentCard.e}</div>`:""}${exHtml}</div><div><div class="grade-label">HOW DID YOU DO?</div><div class="grade-bar"><button class="btn-grade g-again" onclick="grade(0)">Again<span>[1]</span></button><button class="btn-grade g-hard" onclick="grade(1)">Hard<span>[2]</span></button><button class="btn-grade g-good" onclick="grade(2)">Good<span>[3]</span></button><button class="btn-grade g-easy" onclick="grade(3)">Easy<span>[4]</span></button></div></div>`;
 }
-// FIX 3: grade saves snapshot, undoGrade restores it
 function grade(q){
   lastGradeSnapshot={cardId:currentCard.id,srsState:{...SRS[currentCard.id]??initCard()},qIdx:qIdx,sessionGrades:[...sessionGrades]};
   SRS[currentCard.id]=stepSRS(SRS[currentCard.id]??initCard(),q);
@@ -296,7 +324,6 @@ function undoGrade(){
   SRS[snap.cardId]=snap.srsState;saveSRS(SRS);
   qIdx=snap.qIdx;sessionGrades=snap.sessionGrades;lastGradeSnapshot=null;loadCard();
 }
-// FIX 4: guard against division by zero
 function showDone(){
   if(sessionGrades.length===0){goHome();return;}
   const c=[0,1,2,3].map(q=>sessionGrades.filter(g=>g===q).length),pct=Math.round(((c[2]+c[3])/sessionGrades.length)*100);
@@ -322,7 +349,11 @@ document.addEventListener("keydown",e=>{
   if(e.key===" "&&!isRevealed){e.preventDefault();reveal();return}if(e.key==="?"&&!isRevealed){dontKnow();return}
   if(e.key==="1"&&isRevealed)grade(0);if(e.key==="2"&&isRevealed)grade(1);if(e.key==="3"&&isRevealed)grade(2);if(e.key==="4"&&isRevealed)grade(3);
 });
-renderHome();drawGrid();
+
+// FIX (iOS): initialise canvas with DPR scaling on page load
+initCanvas(320,320);
+renderHome();
+drawGrid();
 document.getElementById("flip-card").addEventListener("click",function(e){if(document.getElementById("trace-wrap")&&document.getElementById("trace-wrap").style.display==="flex")return;flipCard();});
 </script>
 </body>
