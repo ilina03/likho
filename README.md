@@ -123,4 +123,6 @@ An iOS app is planned if there's enough interest. If you want to be notified whe
 
 GNU General Public License v3.0 — see [LICENSE](LICENSE) for details.
 
+© 2026 Ilina Jayal — designed and built by Ilina Jayal · [portfolio](https://ilina03.github.io/site/)
+
 You are free to use, modify, and distribute this software. If you distribute a modified version, you must also make the source code available under GPL-3.0.
