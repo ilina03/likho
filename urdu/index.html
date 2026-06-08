@@ -6,17 +6,17 @@
 <title>Likho · Urdu · اردو Writing Practice</title>
 <meta name="description" content="Free Urdu Nastaliq writing practice for heritage speakers.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Naskh+Arabic:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Naskh+Arabic:wght@400;600&family=Noto+Nastaliq+Urdu:wght@400;600&display=swap" rel="stylesheet">
 <style>
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
   :root{
     --paper:#F5F3F0;--paperdark:#EAE6E0;--ink:#1A1410;--inkfade:#6B5A48;--inkfader:#A89888;
     --rule:rgba(26,20,16,0.1);--accent:#7A3A10;
     --again:#B53A2A;--hard:#B07020;--good:#3A7A4A;--easy:#2A5A8A;
-    --ufont:'Noto Naskh Arabic',serif;
+    --ufont:'Noto Nastaliq Urdu',serif;
   }
   body{background:var(--paper);color:var(--ink);font-family:'Crimson Pro',Georgia,serif;min-height:100vh}
-  body.naskh-mode{--ufont:'Noto Naskh Arabic',serif}
+  body.naskh-mode{--ufont:'Noto Naskh Arabic',serif;line-height:1.8}
   ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--paperdark)}::-webkit-scrollbar-thumb{background:var(--inkfader);border-radius:3px}
   .screen{display:none;min-height:100vh}.screen.active{display:block}
   #study-screen{display:none;flex-direction:row}#study-screen.active{display:flex}
@@ -53,13 +53,13 @@
   .review-header{padding:20px 64px;border-bottom:1px solid var(--rule);display:flex;align-items:center;gap:16px;direction:ltr}.review-title{font-size:16px;font-weight:600;color:var(--ink)}.review-sub{font-size:12px;color:var(--inkfader);margin-left:auto}
   #review-grid-phase{padding:40px 64px;direction:ltr}
   .review-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;max-width:960px}
-  .review-grid-card{background:var(--paperdark);border:1.5px solid var(--rule);border-radius:6px;padding:12px 8px;text-align:center;cursor:pointer;transition:all .15s;overflow:hidden;min-height:90px;display:flex;flex-direction:column;align-items:center;justify-content:center}.review-grid-card:hover,.review-grid-card.active{border-color:var(--accent);background:var(--paper)}
-  .review-grid-char{font-size:32px;font-family:var(--ufont);color:var(--ink);line-height:1.8;word-break:break-all;overflow-wrap:break-word;width:100%;direction:rtl}.review-grid-rom{font-size:10px;color:var(--accent);margin-top:4px;direction:ltr}.review-grid-eng{font-size:9px;color:var(--inkfader);margin-top:2px;line-height:1.3;direction:ltr}
+  .review-grid-card{background:var(--paperdark);border:1.5px solid var(--rule);border-radius:6px;padding:12px 8px;text-align:center;cursor:pointer;transition:all .15s;overflow:hidden;min-height:100px;display:flex;flex-direction:column;align-items:center;justify-content:center}.review-grid-card:hover,.review-grid-card.active{border-color:var(--accent);background:var(--paper)}
+  .review-grid-char{font-size:24px;font-family:var(--ufont);color:var(--ink);line-height:2.2;word-break:break-all;overflow-wrap:break-word;width:100%;direction:rtl}.review-grid-rom{font-size:10px;color:var(--accent);margin-top:4px;direction:ltr}.review-grid-eng{font-size:9px;color:var(--inkfader);margin-top:2px;line-height:1.3;direction:ltr}
   .review-start-btn{margin-top:32px}
 
   #review-flip-phase{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;padding:60px 48px;direction:ltr}
-  .flip-card{width:420px;max-width:90vw;min-height:300px;background:var(--paperdark);border:1.5px solid var(--rule);border-radius:12px;padding:40px 36px;text-align:center;cursor:pointer;transition:all .2s;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px}.flip-card.flipped{background:var(--paper);border-color:var(--accent)}
-  .flip-front-label{font-size:10px;color:var(--inkfader);letter-spacing:0.16em}
+  .flip-card{width:420px;max-width:90vw;min-height:300px;background:var(--paperdark);border:1.5px solid var(--rule);border-radius:12px;padding:40px 36px;text-align:center;cursor:pointer;transition:all .2s;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;position:relative}.flip-card.flipped{background:var(--paper);border-color:var(--accent)}
+  .flip-front-label{font-size:10px;color:var(--inkfader);letter-spacing:0.16em;position:absolute;top:16px;left:50%;transform:translateX(-50%);white-space:nowrap}
   .flip-char{font-size:80px;font-family:var(--ufont);color:var(--ink);line-height:1.8;direction:rtl}
   .flip-forms{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;direction:rtl;margin-top:4px}
   .flip-form{text-align:center}.flip-form-char{font-size:28px;font-family:var(--ufont);color:var(--ink);line-height:1.8}.flip-form-label{font-size:9px;color:var(--inkfader);letter-spacing:0.08em}
@@ -114,6 +114,9 @@
   .confirm-box{background:var(--paper);border-radius:4px;padding:36px 40px;width:360px;max-width:90vw;box-shadow:0 12px 48px rgba(26,20,16,0.2);text-align:center;direction:ltr}.confirm-title{font-size:18px;font-weight:600;margin-bottom:8px}.confirm-sub{font-size:14px;color:var(--inkfade);margin-bottom:24px;line-height:1.5}.confirm-btns{display:flex;gap:10px;justify-content:center}.btn-cancel{background:transparent;border:1.5px solid var(--rule);border-radius:3px;padding:8px 24px;font-family:inherit;font-size:13px;color:var(--inkfade);cursor:pointer;letter-spacing:0.06em}.btn-cancel:hover{border-color:var(--ink);color:var(--ink)}.btn-confirm-reset{background:var(--again);color:#fff;border:none;border-radius:3px;padding:8px 24px;font-family:inherit;font-size:13px;cursor:pointer;letter-spacing:0.06em;font-weight:600}.btn-confirm-reset:hover{opacity:.85}
 
   @media(max-width:900px){header,.hero,.overall-progress,.decks,footer{padding-left:28px;padding-right:28px}.hero-title{font-size:40px}.hero-char{display:none}#study-screen.active{flex-direction:column}.study-left,.study-right{width:100%;min-height:auto;padding:48px 28px;border-right:none;border-bottom:1px solid var(--rule)}.study-right{border-bottom:none}.ref-grid{grid-template-columns:repeat(4,1fr)}.ref-modal{padding:28px 24px}.review-header,#review-grid-phase{padding-left:28px;padding-right:28px}.flip-card{width:90vw}}
+
+  .btn-speak{position:absolute;bottom:14px;right:16px;background:transparent;border:none;color:var(--inkfade);cursor:pointer;font-size:18px;padding:4px;line-height:1;opacity:0.5;transition:opacity .15s}.btn-speak:hover{opacity:1}
+  .btn-speak.speaking{color:var(--accent);opacity:1}
 </style>
 </head>
 <body>
@@ -148,7 +151,7 @@
   <div class="review-header"><button class="btn-back" onclick="goHome()">← decks</button><div class="review-title" id="review-title"></div><div class="review-sub" id="review-sub"></div></div>
   <div id="review-grid-phase"><div class="review-grid" id="review-grid"></div><div class="review-start-btn"><button class="btn-filled btn-study" onclick="startFlip()">Flip through →</button></div></div>
   <div id="review-flip-phase" style="display:none">
-    <div class="flip-card" id="flip-card"><div class="flip-front-label" id="flip-front-label">TAP TO REVEAL</div><div class="flip-char" id="flip-char"></div><div class="flip-forms" id="flip-forms" style="display:none"></div><div class="flip-rom" id="flip-rom" style="display:none"></div><div class="flip-eng" id="flip-eng" style="display:none"></div></div>
+    <div class="flip-card" id="flip-card"><div class="flip-front-label" id="flip-front-label">TAP TO REVEAL</div><button class="btn-speak" id="btn-speak" title="Listen" onclick="event.stopPropagation();const c=reviewCards[flipIdx];document.getElementById('btn-speak').classList.add('active-speak');speak(c.d||c.r);">🔊</button><div class="flip-char" id="flip-char"></div><div class="flip-forms" id="flip-forms" style="display:none"></div><div class="flip-rom" id="flip-rom" style="display:none"></div><div class="flip-eng" id="flip-eng" style="display:none"></div><div id="trace-area"></div></div>
     <div class="flip-nav"><button class="btn-flip-nav" onclick="backToGrid()">⊞ grid</button><button class="btn-flip-nav" onclick="flipNav(-1)">← prev</button><div class="flip-count" id="flip-count"></div><button class="btn-flip-nav" onclick="flipNav(1)">next →</button></div>
     <button class="btn-start-study" onclick="startStudyFromReview()">Start writing practice →</button>
   </div>
@@ -158,7 +161,7 @@
   <div id="progress-bar"></div>
   <div class="study-nav"><button class="btn-back" onclick="goHome()">← decks</button><span class="study-count" id="study-count"></span></div>
   <div class="study-left"><div class="prompt-label" id="prompt-label"></div><div id="prompt-main"></div><div class="hint">space to reveal · ? to skip</div></div>
-  <div class="study-right"><div class="canvas-wrap"><canvas id="draw-canvas" width="320" height="320" style="width:320px;height:320px;transition:all 0.2s"></canvas><button class="btn-clear" onclick="clearCanvas()">↺ clear</button></div><div id="reveal-area"></div></div>
+  <div class="study-right"><div class="canvas-wrap"><canvas id="draw-canvas"></canvas><button class="btn-clear" onclick="clearCanvas()">↺ clear</button></div><div id="reveal-area"></div></div>
 </div>
 
 <div id="done-screen" class="screen"><div class="done-word" id="done-word"></div><div class="done-sub" id="done-sub"></div><div class="done-grades" id="done-grades"></div><button class="btn-home" onclick="goHome()">back to decks</button></div>
@@ -169,83 +172,126 @@
 
 <script>
 const LETTERS=[
-  {id:"u1",h:"ا",r:"alif",e:"a / aa vowel carrier",iso:"ا",ini:"ا",med:"ـا",fin:"ـا"},
-  {id:"u2",h:"ب",r:"be",e:"b sound",iso:"ب",ini:"بـ",med:"ـبـ",fin:"ـب"},
-  {id:"u3",h:"پ",r:"pe",e:"p sound",iso:"پ",ini:"پـ",med:"ـپـ",fin:"ـپ"},
-  {id:"u4",h:"ت",r:"te",e:"t sound",iso:"ت",ini:"تـ",med:"ـتـ",fin:"ـت"},
-  {id:"u5",h:"ٹ",r:"ṭe",e:"retroflex t",iso:"ٹ",ini:"ٹـ",med:"ـٹـ",fin:"ـٹ"},
-  {id:"u6",h:"ث",r:"se",e:"s sound (Arabic origin)",iso:"ث",ini:"ثـ",med:"ـثـ",fin:"ـث"},
-  {id:"u7",h:"ج",r:"jeem",e:"j sound",iso:"ج",ini:"جـ",med:"ـجـ",fin:"ـج"},
-  {id:"u8",h:"چ",r:"che",e:"ch sound",iso:"چ",ini:"چـ",med:"ـچـ",fin:"ـچ"},
-  {id:"u9",h:"ح",r:"baṛī he",e:"h sound (Arabic)",iso:"ح",ini:"حـ",med:"ـحـ",fin:"ـح"},
-  {id:"u10",h:"خ",r:"khe",e:"kh guttural",iso:"خ",ini:"خـ",med:"ـخـ",fin:"ـخ"},
-  {id:"u11",h:"د",r:"daal",e:"d sound",iso:"د",ini:"د",med:"ـد",fin:"ـد"},
-  {id:"u12",h:"ڈ",r:"ḍaal",e:"retroflex d",iso:"ڈ",ini:"ڈ",med:"ـڈ",fin:"ـڈ"},
-  {id:"u13",h:"ذ",r:"zaal",e:"z sound (Arabic)",iso:"ذ",ini:"ذ",med:"ـذ",fin:"ـذ"},
-  {id:"u14",h:"ر",r:"re",e:"r sound",iso:"ر",ini:"ر",med:"ـر",fin:"ـر"},
-  {id:"u15",h:"ڑ",r:"ṛe",e:"retroflex r",iso:"ڑ",ini:"ڑ",med:"ـڑ",fin:"ـڑ"},
-  {id:"u16",h:"ز",r:"ze",e:"z sound",iso:"ز",ini:"ز",med:"ـز",fin:"ـز"},
-  {id:"u17",h:"ژ",r:"zhe",e:"zh sound (borrowed)",iso:"ژ",ini:"ژ",med:"ـژ",fin:"ـژ"},
-  {id:"u18",h:"س",r:"seen",e:"s sound",iso:"س",ini:"سـ",med:"ـسـ",fin:"ـس"},
-  {id:"u19",h:"ش",r:"sheen",e:"sh sound",iso:"ش",ini:"شـ",med:"ـشـ",fin:"ـش"},
-  {id:"u20",h:"ص",r:"suaad",e:"s (emphatic, Arabic)",iso:"ص",ini:"صـ",med:"ـصـ",fin:"ـص"},
-  {id:"u21",h:"ض",r:"zuaad",e:"z (emphatic, Arabic)",iso:"ض",ini:"ضـ",med:"ـضـ",fin:"ـض"},
-  {id:"u22",h:"ط",r:"toe",e:"t (emphatic, Arabic)",iso:"ط",ini:"طـ",med:"ـطـ",fin:"ـط"},
-  {id:"u23",h:"ظ",r:"zoe",e:"z (emphatic, Arabic)",iso:"ظ",ini:"ظـ",med:"ـظـ",fin:"ـظ"},
-  {id:"u24",h:"ع",r:"ain",e:"voiced pharyngeal",iso:"ع",ini:"عـ",med:"ـعـ",fin:"ـع"},
-  {id:"u25",h:"غ",r:"ghain",e:"gh guttural",iso:"غ",ini:"غـ",med:"ـغـ",fin:"ـغ"},
-  {id:"u26",h:"ف",r:"fe",e:"f sound",iso:"ف",ini:"فـ",med:"ـفـ",fin:"ـف"},
-  {id:"u27",h:"ق",r:"qaaf",e:"q deep guttural",iso:"ق",ini:"قـ",med:"ـقـ",fin:"ـق"},
-  {id:"u28",h:"ک",r:"kaaf",e:"k sound",iso:"ک",ini:"کـ",med:"ـکـ",fin:"ـک"},
-  {id:"u29",h:"گ",r:"gaaf",e:"g sound",iso:"گ",ini:"گـ",med:"ـگـ",fin:"ـگ"},
-  {id:"u30",h:"ل",r:"laam",e:"l sound",iso:"ل",ini:"لـ",med:"ـلـ",fin:"ـل"},
-  {id:"u31",h:"م",r:"meem",e:"m sound",iso:"م",ini:"مـ",med:"ـمـ",fin:"ـم"},
-  {id:"u32",h:"ن",r:"noon",e:"n sound",iso:"ن",ini:"نـ",med:"ـنـ",fin:"ـن"},
-  {id:"u33",h:"ں",r:"noon ghunna",e:"nasal n",iso:"ں",ini:"ں",med:"ـں",fin:"ـں"},
-  {id:"u34",h:"و",r:"wao",e:"w / oo / o",iso:"و",ini:"و",med:"ـو",fin:"ـو"},
-  {id:"u35",h:"ہ",r:"chhoti he",e:"h sound",iso:"ہ",ini:"ہـ",med:"ـہـ",fin:"ـہ"},
-  {id:"u36",h:"ھ",r:"do chashmi he",e:"h aspirator — bh, ph, kh",iso:"ھ",ini:"ھـ",med:"ـھـ",fin:"ـھ"},
-  {id:"u37",h:"ء",r:"hamza",e:"glottal stop",iso:"ء",ini:"ء",med:"ء",fin:"ء"},
-  {id:"u38",h:"ی",r:"ye",e:"y / ee sound",iso:"ی",ini:"یـ",med:"ـیـ",fin:"ـی"},
-  {id:"u39",h:"ے",r:"baṛī ye",e:"e / ay — end of words",iso:"ے",ini:"ے",med:"ـے",fin:"ـے"},
+  {id:"u1",h:"ا",r:"alif",e:"a / aa vowel carrier",d:"अलिफ़",iso:"ا",ini:"ا",med:"ـا",fin:"ـا"},
+  {id:"u2",h:"ب",r:"be",e:"b sound",d:"बे",iso:"ب",ini:"بـ",med:"ـبـ",fin:"ـب"},
+  {id:"u3",h:"پ",r:"pe",e:"p sound",d:"पे",iso:"پ",ini:"پـ",med:"ـپـ",fin:"ـپ"},
+  {id:"u4",h:"ت",r:"te",e:"t sound",d:"ते",iso:"ت",ini:"تـ",med:"ـتـ",fin:"ـت"},
+  {id:"u5",h:"ٹ",r:"ṭe",e:"retroflex t",d:"टे",iso:"ٹ",ini:"ٹـ",med:"ـٹـ",fin:"ـٹ"},
+  {id:"u6",h:"ث",r:"se",e:"s sound (Arabic origin)",d:"से",iso:"ث",ini:"ثـ",med:"ـثـ",fin:"ـث"},
+  {id:"u7",h:"ج",r:"jeem",e:"j sound",d:"जीम",iso:"ج",ini:"جـ",med:"ـجـ",fin:"ـج"},
+  {id:"u8",h:"چ",r:"che",e:"ch sound",d:"चे",iso:"چ",ini:"چـ",med:"ـچـ",fin:"ـچ"},
+  {id:"u9",h:"ح",r:"baṛī he",e:"h sound (Arabic)",d:"बड़ी हे",iso:"ح",ini:"حـ",med:"ـحـ",fin:"ـح"},
+  {id:"u10",h:"خ",r:"khe",e:"kh guttural",d:"ख़े",iso:"خ",ini:"خـ",med:"ـخـ",fin:"ـخ"},
+  {id:"u11",h:"د",r:"daal",e:"d sound",d:"दाल",iso:"د",ini:"د",med:"ـد",fin:"ـد"},
+  {id:"u12",h:"ڈ",r:"ḍaal",e:"retroflex d",d:"डाल",iso:"ڈ",ini:"ڈ",med:"ـڈ",fin:"ـڈ"},
+  {id:"u13",h:"ذ",r:"zaal",e:"z sound (Arabic)",d:"ज़ाल",iso:"ذ",ini:"ذ",med:"ـذ",fin:"ـذ"},
+  {id:"u14",h:"ر",r:"re",e:"r sound",d:"रे",iso:"ر",ini:"ر",med:"ـر",fin:"ـر"},
+  {id:"u15",h:"ڑ",r:"ṛe",e:"retroflex r",d:"ड़े",iso:"ڑ",ini:"ڑ",med:"ـڑ",fin:"ـڑ"},
+  {id:"u16",h:"ز",r:"ze",e:"z sound",d:"ज़े",iso:"ز",ini:"ز",med:"ـز",fin:"ـز"},
+  {id:"u17",h:"ژ",r:"zhe",e:"zh sound (borrowed)",d:"झे",iso:"ژ",ini:"ژ",med:"ـژ",fin:"ـژ"},
+  {id:"u18",h:"س",r:"seen",e:"s sound",d:"सीन",iso:"س",ini:"سـ",med:"ـسـ",fin:"ـس"},
+  {id:"u19",h:"ش",r:"sheen",e:"sh sound",d:"शीन",iso:"ش",ini:"شـ",med:"ـشـ",fin:"ـش"},
+  {id:"u20",h:"ص",r:"suaad",e:"s (emphatic, Arabic)",d:"सुआद",iso:"ص",ini:"صـ",med:"ـصـ",fin:"ـص"},
+  {id:"u21",h:"ض",r:"zuaad",e:"z (emphatic, Arabic)",d:"ज़ुआद",iso:"ض",ini:"ضـ",med:"ـضـ",fin:"ـض"},
+  {id:"u22",h:"ط",r:"toe",e:"t (emphatic, Arabic)",d:"तोए",iso:"ط",ini:"طـ",med:"ـطـ",fin:"ـط"},
+  {id:"u23",h:"ظ",r:"zoe",e:"z (emphatic, Arabic)",d:"ज़ोए",iso:"ظ",ini:"ظـ",med:"ـظـ",fin:"ـظ"},
+  {id:"u24",h:"ع",r:"ain",e:"voiced pharyngeal",d:"ऐन",iso:"ع",ini:"عـ",med:"ـعـ",fin:"ـع"},
+  {id:"u25",h:"غ",r:"ghain",e:"gh guttural",d:"ग़ैन",iso:"غ",ini:"غـ",med:"ـغـ",fin:"ـغ"},
+  {id:"u26",h:"ف",r:"fe",e:"f sound",d:"फ़े",iso:"ف",ini:"فـ",med:"ـفـ",fin:"ـف"},
+  {id:"u27",h:"ق",r:"qaaf",e:"q deep guttural",d:"क़ाफ़",iso:"ق",ini:"قـ",med:"ـقـ",fin:"ـق"},
+  {id:"u28",h:"ک",r:"kaaf",e:"k sound",d:"काफ़",iso:"ک",ini:"کـ",med:"ـکـ",fin:"ـک"},
+  {id:"u29",h:"گ",r:"gaaf",e:"g sound",d:"गाफ़",iso:"گ",ini:"گـ",med:"ـگـ",fin:"ـگ"},
+  {id:"u30",h:"ل",r:"laam",e:"l sound",d:"लाम",iso:"ل",ini:"لـ",med:"ـلـ",fin:"ـل"},
+  {id:"u31",h:"م",r:"meem",e:"m sound",d:"मीम",iso:"م",ini:"مـ",med:"ـمـ",fin:"ـم"},
+  {id:"u32",h:"ن",r:"noon",e:"n sound",d:"नून",iso:"ن",ini:"نـ",med:"ـنـ",fin:"ـن"},
+  {id:"u33",h:"ں",r:"noon ghunna",e:"nasal n",d:"नून ग़ुन्ना",iso:"ں",ini:"ں",med:"ـں",fin:"ـں"},
+  {id:"u34",h:"و",r:"wao",e:"w / oo / o",d:"वाव",iso:"و",ini:"و",med:"ـو",fin:"ـو"},
+  {id:"u35",h:"ہ",r:"chhoti he",e:"h sound",d:"छोटी हे",iso:"ہ",ini:"ہـ",med:"ـہـ",fin:"ـہ"},
+  {id:"u36",h:"ھ",r:"do chashmi he",e:"h aspirator — bh, ph, kh",d:"दो चश्मी हे",iso:"ھ",ini:"ھـ",med:"ـھـ",fin:"ـھ"},
+  {id:"u37",h:"ء",r:"hamza",e:"glottal stop",d:"हम्ज़ा",iso:"ء",ini:"ء",med:"ء",fin:"ء"},
+  {id:"u38",h:"ی",r:"ye",e:"y / ee sound",d:"ये",iso:"ی",ini:"یـ",med:"ـیـ",fin:"ـی"},
+  {id:"u39",h:"ے",r:"baṛī ye",e:"e / ay — end of words",d:"बड़ी ये",iso:"ے",ini:"ے",med:"ـے",fin:"ـے"},
 ];
 
 const WORD_DECKS=[
   {id:"greetings",label:"Greetings",cards:[
-    {id:"w1",h:"سلام",r:"salaam",e:"Hello / Peace"},{id:"w2",h:"شکریہ",r:"shukriya",e:"Thank you"},
-    {id:"w3",h:"ہاں",r:"haan",e:"Yes"},{id:"w4",h:"نہیں",r:"nahin",e:"No"},
-    {id:"w5",h:"معاف کریں",r:"maaf karein",e:"Sorry / Excuse me"},{id:"w6",h:"کیا حال ہے",r:"kya haal hai",e:"How are you?"},
-    {id:"w7",h:"ٹھیک ہوں",r:"theek hoon",e:"I am fine"},{id:"w8",h:"خدا حافظ",r:"khuda hafiz",e:"Goodbye"}
+    {id:"w1",h:"سلام",r:"salaam",e:"Hello / Peace",d:"सलाम"},{id:"w2",h:"شکریہ",r:"shukriya",e:"Thank you",d:"शुक्रिया"},
+    {id:"w3",h:"ہاں",r:"haan",e:"Yes",d:"हाँ"},{id:"w4",h:"نہیں",r:"nahin",e:"No",d:"नहीं"},
+    {id:"w5",h:"معاف کریں",r:"maaf karein",e:"Sorry / Excuse me",d:"माफ़ करें"},{id:"w6",h:"کیا حال ہے",r:"kya haal hai",e:"How are you?",d:"क्या हाल है"},
+    {id:"w7",h:"ٹھیک ہوں",r:"theek hoon",e:"I am fine",d:"ठीक हूँ"},{id:"w8",h:"خدا حافظ",r:"khuda hafiz",e:"Goodbye",d:"ख़ुदा हाफ़िज़"}
   ]},
   {id:"family",label:"Family",cards:[
-    {id:"fa1",h:"ماں",r:"maan",e:"Mother"},{id:"fa2",h:"ابو",r:"abbu",e:"Father"},
-    {id:"fa3",h:"بھائی",r:"bhai",e:"Brother"},{id:"fa4",h:"بہن",r:"behan",e:"Sister"},
-    {id:"fa5",h:"دادا",r:"daada",e:"Paternal grandfather"},{id:"fa6",h:"دادی",r:"daadi",e:"Paternal grandmother"},
-    {id:"fa7",h:"نانا",r:"naana",e:"Maternal grandfather"},{id:"fa8",h:"نانی",r:"naani",e:"Maternal grandmother"}
+    {id:"fa1",h:"ماں",r:"maan",e:"Mother",d:"माँ"},{id:"fa2",h:"ابو",r:"abbu",e:"Father",d:"अब्बू"},
+    {id:"fa3",h:"بھائی",r:"bhai",e:"Brother",d:"भाई"},{id:"fa4",h:"بہن",r:"behan",e:"Sister",d:"बहन"},
+    {id:"fa5",h:"دادا",r:"daada",e:"Paternal grandfather",d:"दादा"},{id:"fa6",h:"دادی",r:"daadi",e:"Paternal grandmother",d:"दादी"},
+    {id:"fa7",h:"نانا",r:"naana",e:"Maternal grandfather",d:"नाना"},{id:"fa8",h:"نانی",r:"naani",e:"Maternal grandmother",d:"नानी"}
   ]},
   {id:"body",label:"Body",cards:[
-    {id:"b1",h:"ہاتھ",r:"haath",e:"Hand"},{id:"b2",h:"پاؤں",r:"paaon",e:"Foot"},
-    {id:"b3",h:"آنکھ",r:"aankh",e:"Eye"},{id:"b4",h:"کان",r:"kaan",e:"Ear"},
-    {id:"b5",h:"ناک",r:"naak",e:"Nose"},{id:"b6",h:"منہ",r:"munh",e:"Mouth"},
-    {id:"b7",h:"سر",r:"sar",e:"Head"},{id:"b8",h:"دل",r:"dil",e:"Heart"}
+    {id:"b1",h:"ہاتھ",r:"haath",e:"Hand",d:"हाथ"},{id:"b2",h:"پاؤں",r:"paaon",e:"Foot",d:"पाँव"},
+    {id:"b3",h:"آنکھ",r:"aankh",e:"Eye",d:"आँख"},{id:"b4",h:"کان",r:"kaan",e:"Ear",d:"कान"},
+    {id:"b5",h:"ناک",r:"naak",e:"Nose",d:"नाक"},{id:"b6",h:"منہ",r:"munh",e:"Mouth",d:"मुँह"},
+    {id:"b7",h:"سر",r:"sar",e:"Head",d:"सर"},{id:"b8",h:"دل",r:"dil",e:"Heart",d:"दिल"}
   ]},
   {id:"food",label:"Food",cards:[
-    {id:"fo1",h:"پانی",r:"paani",e:"Water"},{id:"fo2",h:"کھانا",r:"khaana",e:"Food"},
-    {id:"fo3",h:"دودھ",r:"doodh",e:"Milk"},{id:"fo4",h:"چائے",r:"chaay",e:"Tea"},
-    {id:"fo5",h:"روٹی",r:"roti",e:"Flatbread"},{id:"fo6",h:"چاول",r:"chaaval",e:"Rice"},
-    {id:"fo7",h:"دال",r:"daal",e:"Lentils"},{id:"fo8",h:"مٹھائی",r:"mithai",e:"Sweets"}
+    {id:"fo1",h:"پانی",r:"paani",e:"Water",d:"पानी"},{id:"fo2",h:"کھانا",r:"khaana",e:"Food",d:"खाना"},
+    {id:"fo3",h:"دودھ",r:"doodh",e:"Milk",d:"दूध"},{id:"fo4",h:"چائے",r:"chaay",e:"Tea",d:"चाय"},
+    {id:"fo5",h:"روٹی",r:"roti",e:"Flatbread",d:"रोटी"},{id:"fo6",h:"چاول",r:"chaaval",e:"Rice",d:"चावल"},
+    {id:"fo7",h:"دال",r:"daal",e:"Lentils",d:"दाल"},{id:"fo8",h:"مٹھائی",r:"mithai",e:"Sweets",d:"मिठाई"}
   ]},
   {id:"numbers",label:"Numbers",cards:[
-    {id:"n1",h:"ایک",r:"ek",e:"One"},{id:"n2",h:"دو",r:"do",e:"Two"},
-    {id:"n3",h:"تین",r:"teen",e:"Three"},{id:"n4",h:"چار",r:"chaar",e:"Four"},
-    {id:"n5",h:"پانچ",r:"paanch",e:"Five"},{id:"n6",h:"چھ",r:"chhah",e:"Six"},
-    {id:"n7",h:"سات",r:"saat",e:"Seven"},{id:"n8",h:"آٹھ",r:"aath",e:"Eight"},
-    {id:"n9",h:"نو",r:"nau",e:"Nine"},{id:"n10",h:"دس",r:"das",e:"Ten"}
+    {id:"n1",h:"ایک",r:"ek",e:"One",d:"एक"},{id:"n2",h:"دو",r:"do",e:"Two",d:"दो"},
+    {id:"n3",h:"تین",r:"teen",e:"Three",d:"तीन"},{id:"n4",h:"چار",r:"chaar",e:"Four",d:"चार"},
+    {id:"n5",h:"پانچ",r:"paanch",e:"Five",d:"पाँच"},{id:"n6",h:"چھ",r:"chhah",e:"Six",d:"छह"},
+    {id:"n7",h:"سات",r:"saat",e:"Seven",d:"सात"},{id:"n8",h:"آٹھ",r:"aath",e:"Eight",d:"आठ"},
+    {id:"n9",h:"نو",r:"nau",e:"Nine",d:"नौ"},{id:"n10",h:"دس",r:"das",e:"Ten",d:"दस"}
   ]}
 ];
 
+const ALPHABET_WORDS_DECK={id:"alphabet_words",label:"Alphabet Primer",cards:[
+  {id:"aw1",h:"الف",r:"alif",e:"alif — the first letter · ا",d:"अलिफ़"},
+  {id:"aw2",h:"بات",r:"baat",e:"talk · ب",d:"बात"},
+  {id:"aw3",h:"پانی",r:"paani",e:"water · پ",d:"पानी"},
+  {id:"aw4",h:"تارا",r:"taara",e:"star · ت",d:"तारा"},
+  {id:"aw5",h:"ٹوپی",r:"topi",e:"hat · ٹ",d:"टोपी"},
+  {id:"aw6",h:"ثواب",r:"sawaab",e:"virtue · ث",d:"सवाब"},
+  {id:"aw7",h:"جنگل",r:"jangal",e:"forest · ج",d:"जंगल"},
+  {id:"aw8",h:"چائے",r:"chaay",e:"tea · چ",d:"चाय"},
+  {id:"aw9",h:"حال",r:"haal",e:"condition · ح",d:"हाल"},
+  {id:"aw10",h:"خدا",r:"khuda",e:"God · خ",d:"ख़ुदा"},
+  {id:"aw11",h:"دل",r:"dil",e:"heart · د",d:"दिल"},
+  {id:"aw12",h:"ڈاکیا",r:"daakiya",e:"postman · ڈ",d:"डाकिया"},
+  {id:"aw13",h:"ذہن",r:"zehan",e:"mind · ذ",d:"ज़ेहन"},
+  {id:"aw14",h:"روٹی",r:"roti",e:"bread · ر",d:"रोटी"},
+  {id:"aw15",h:"ڑانا",r:"raana",e:"to jump · ڑ",d:"कूदना"},
+  {id:"aw16",h:"زمین",r:"zameen",e:"earth · ز",d:"ज़मीन"},
+  {id:"aw17",h:"ژالہ",r:"zhaala",e:"hail · ژ",d:"झाला"},
+  {id:"aw18",h:"سلام",r:"salaam",e:"hello · س",d:"सलाम"},
+  {id:"aw19",h:"شہر",r:"shahar",e:"city · ش",d:"शहर"},
+  {id:"aw20",h:"صبح",r:"subah",e:"morning · ص",d:"सुबह"},
+  {id:"aw21",h:"ضرور",r:"zaroor",e:"definitely · ض",d:"ज़रूर"},
+  {id:"aw22",h:"طاقت",r:"taaqat",e:"strength · ط",d:"ताक़त"},
+  {id:"aw23",h:"ظالم",r:"zaalim",e:"tyrant · ظ",d:"ज़ालिम"},
+  {id:"aw24",h:"عشق",r:"ishq",e:"love · ع",d:"इश्क़"},
+  {id:"aw25",h:"غریب",r:"ghareeb",e:"poor · غ",d:"ग़रीब"},
+  {id:"aw26",h:"فرق",r:"farq",e:"difference · ف",d:"फ़र्क़"},
+  {id:"aw27",h:"قسمت",r:"qismat",e:"fate · ق",d:"क़िस्मत"},
+  {id:"aw28",h:"کتاب",r:"kitaab",e:"book · ک",d:"किताब"},
+  {id:"aw29",h:"گھر",r:"ghar",e:"home · گ",d:"घर"},
+  {id:"aw30",h:"لفظ",r:"lafz",e:"word · ل",d:"लफ़्ज़"},
+  {id:"aw31",h:"ماں",r:"maan",e:"mother · م",d:"माँ"},
+  {id:"aw32",h:"نام",r:"naam",e:"name · ن",d:"नाम"},
+  {id:"aw33",h:"ناں",r:"naan",e:"bread · ں",d:"नान"},
+  {id:"aw34",h:"وقت",r:"waqt",e:"time · و",d:"वक़्त"},
+  {id:"aw35",h:"ہاتھ",r:"haath",e:"hand · ہ",d:"हाथ"},
+  {id:"aw36",h:"ھدیہ",r:"hadiya",e:"gift · ھ",d:"हदिया"},
+  {id:"aw37",h:"ءانہ",r:"aana",e:"glottal — آنا · ء",d:"आना"},
+  {id:"aw38",h:"یاد",r:"yaad",e:"memory · ی",d:"याद"},
+  {id:"aw39",h:"ے",r:"bare ye",e:"final e · ے",d:"बड़ी ये"}
+],sub:"39 words",isScript:false};
+
 const ALL_DECKS=[
   {id:"letters",label:"Letters · حروف",sub:"39 letters",cards:LETTERS,isScript:true},
+  ALPHABET_WORDS_DECK,
   ...WORD_DECKS.map(d=>({...d,sub:`${d.cards.length} words`,isScript:false}))
 ];
 const ALL_CARDS=ALL_DECKS.flatMap(d=>d.cards);
@@ -273,22 +319,37 @@ function shuffle(arr){
 }
 
 // Font preference
-function getUrduFont(){return document.body.classList.contains('naskh-mode')?'Noto Naskh Arabic':'Noto Naskh Arabic';}
+function getUrduFont(){return document.body.classList.contains('naskh-mode')?'Noto Naskh Arabic':'Noto Nastaliq Urdu';}
 function setFont(f){
   if(f==='naskh'){document.body.classList.add('naskh-mode');document.getElementById('btn-naskh').classList.add('active');document.getElementById('btn-nastaliq').classList.remove('active');}
   else{document.body.classList.remove('naskh-mode');document.getElementById('btn-nastaliq').classList.add('active');document.getElementById('btn-naskh').classList.remove('active');}
   try{localStorage.setItem('likho_urdu_font',f);}catch{}
   if(ghostChar)drawGrid();
+  // Also redraw trace canvas if it's open
+  const tw=document.getElementById("trace-wrap");
+  if(tw&&tw.style.display==="flex"){
+    const tc=document.getElementById("trace-canvas");
+    if(tc){const ghost=tc.dataset.ghost;if(ghost)drawTraceGrid(ghost);}
+  }
 }
 function initFontPref(){try{const f=localStorage.getItem('likho_urdu_font');if(f)setFont(f);}catch{}}
 
 const cv=document.getElementById("draw-canvas"),ctx=cv.getContext("2d");
 let drawing=false,lx=0,ly=0,ghostChar=null;
 let lastPointerTime=0,lastPointerX=0,lastPointerY=0;
-function xy(e){const r=cv.getBoundingClientRect(),sx=cv.width/r.width,sy=cv.height/r.height,s=e.touches?e.touches[0]:e;return[(s.clientX-r.left)*sx,(s.clientY-r.top)*sy]}
+let logicalW=320,logicalH=320;
+function initCanvas(lw,lh){
+  const dpr=window.devicePixelRatio||1;
+  logicalW=lw;logicalH=lh;
+  cv.width=Math.round(lw*dpr);cv.height=Math.round(lh*dpr);
+  cv.style.width=lw+"px";cv.style.height=lh+"px";
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+}
+// xy() works in CSS-px space (ctx already DPR-scaled via setTransform)
+function xy(e){const r=cv.getBoundingClientRect(),s=e.touches?e.touches[0]:e;return[s.clientX-r.left,s.clientY-r.top]}
 
 function drawGrid(){
-  const W=cv.width,H=cv.height;
+  const W=logicalW,H=logicalH;
   ctx.clearRect(0,0,W,H);ctx.fillStyle="#F5F3F0";ctx.fillRect(0,0,W,H);
   ctx.strokeStyle="rgba(26,20,16,0.05)";ctx.lineWidth=1;
   for(let y=40;y<H;y+=40){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}
@@ -309,7 +370,7 @@ function drawGrid(){
     ctx.textBaseline="middle";ctx.textAlign="center";
     ctx.direction="rtl";
     for(let i=0;i<8;i++){
-      ctx.font=`${fs}px 'Noto Naskh Arabic',serif`;
+      ctx.font=`${fs}px '${getUrduFont()}',serif`;
       const m=ctx.measureText(ghostChar);
       const tw=m.width;
       const th=(m.actualBoundingBoxAscent||fs*0.75)+(m.actualBoundingBoxDescent||fs*0.35);
@@ -324,32 +385,27 @@ function drawGrid(){
 
 function clearCanvas(){ghostChar=currentCard&&isRevealed?currentCard.h:null;drawGrid()}
 
-// Variable-width calligraphic stroke for Urdu
-cv.addEventListener("mousedown",e=>{drawing=true;[lx,ly]=xy(e);lastPointerTime=Date.now();lastPointerX=lx;lastPointerY=ly});
-cv.addEventListener("mousemove",e=>{
-  if(!drawing)return;
-  const[x,y]=xy(e);const now=Date.now();
+// Smooth calligraphic stroke — Bézier midpoint curves + EMA line-width smoothing
+let smoothLw=3; // exponential moving average of line width
+function strokePoint(x,y){
+  const now=Date.now();
   const dist=Math.hypot(x-lastPointerX,y-lastPointerY);
   const dt=Math.max(1,now-lastPointerTime);
   const speed=dist/dt;
-  const lw=Math.max(1.5,Math.min(5,4.5-speed*8));
-  ctx.beginPath();ctx.moveTo(lx,ly);ctx.lineTo(x,y);
-  ctx.strokeStyle="#1A1410";ctx.lineWidth=lw;ctx.lineCap=ctx.lineJoin="round";ctx.stroke();
+  const rawLw=Math.max(1.2,Math.min(5,4.8-speed*6));
+  smoothLw=smoothLw*0.7+rawLw*0.3; // EMA smoothing
+  // Quadratic Bézier to midpoint for smooth curves
+  const mx=(lx+x)/2,my=(ly+y)/2;
+  ctx.beginPath();ctx.moveTo(lx,ly);
+  ctx.quadraticCurveTo(lx,ly,mx,my);
+  ctx.strokeStyle="#1A1410";ctx.lineWidth=smoothLw;ctx.lineCap=ctx.lineJoin="round";ctx.stroke();
   [lx,ly]=[x,y];lastPointerTime=now;lastPointerX=x;lastPointerY=y;
-});
+}
+cv.addEventListener("mousedown",e=>{drawing=true;[lx,ly]=xy(e);lastPointerTime=Date.now();lastPointerX=lx;lastPointerY=ly;smoothLw=3;});
+cv.addEventListener("mousemove",e=>{if(!drawing)return;const[x,y]=xy(e);strokePoint(x,y);});
 cv.addEventListener("mouseup",()=>drawing=false);cv.addEventListener("mouseleave",()=>drawing=false);
-cv.addEventListener("touchstart",e=>{e.preventDefault();drawing=true;[lx,ly]=xy(e);lastPointerTime=Date.now();lastPointerX=lx;lastPointerY=ly},{passive:false});
-cv.addEventListener("touchmove",e=>{
-  e.preventDefault();if(!drawing)return;
-  const[x,y]=xy(e);const now=Date.now();
-  const dist=Math.hypot(x-lastPointerX,y-lastPointerY);
-  const dt=Math.max(1,now-lastPointerTime);
-  const speed=dist/dt;
-  const lw=Math.max(1.5,Math.min(5,4.5-speed*8));
-  ctx.beginPath();ctx.moveTo(lx,ly);ctx.lineTo(x,y);
-  ctx.strokeStyle="#1A1410";ctx.lineWidth=lw;ctx.lineCap=ctx.lineJoin="round";ctx.stroke();
-  [lx,ly]=[x,y];lastPointerTime=now;lastPointerX=x;lastPointerY=y;
-},{passive:false});
+cv.addEventListener("touchstart",e=>{e.preventDefault();drawing=true;[lx,ly]=xy(e);lastPointerTime=Date.now();lastPointerX=lx;lastPointerY=ly;smoothLw=3;},{passive:false});
+cv.addEventListener("touchmove",e=>{e.preventDefault();if(!drawing)return;const[x,y]=xy(e);strokePoint(x,y);},{passive:false});
 cv.addEventListener("touchend",()=>drawing=false);
 
 let currentDeck=null,queue=[],qIdx=0,currentCard=null,isRevealed=false,sessionGrades=[];
@@ -376,10 +432,95 @@ function startReview(id){
   document.getElementById("review-grid").innerHTML=reviewCards.map((c,i)=>`<div class="review-grid-card" id="rgc-${i}" onclick="highlightGrid(${i})"><div class="review-grid-char">${c.h}</div><div class="review-grid-rom">${c.r}</div><div class="review-grid-eng">${c.e}</div></div>`).join("");
   document.getElementById("review-grid-phase").style.display="block";
   document.getElementById("review-flip-phase").style.display="none";showScreen("review");
+  // Hover-to-speak on grid cards
+  let hoverTimer=null;
+  document.querySelectorAll(".review-grid-card").forEach((el,i)=>{
+    const c=reviewCards[i];
+    el.addEventListener("mouseenter",()=>{hoverTimer=setTimeout(()=>speak(c.d||c.r),300);});
+    el.addEventListener("mouseleave",()=>clearTimeout(hoverTimer));
+  });
 }
 function backToGrid(){document.getElementById("review-grid-phase").style.display="block";document.getElementById("review-flip-phase").style.display="none";}
 function highlightGrid(i){document.querySelectorAll(".review-grid-card").forEach(el=>el.classList.remove("active"));document.getElementById("rgc-"+i)?.classList.add("active");flipIdx=i;document.getElementById("review-grid-phase").style.display="none";document.getElementById("review-flip-phase").style.display="flex";renderFlip();}
 function startFlip(){flipIdx=0;flipShown=false;document.getElementById("review-grid-phase").style.display="none";document.getElementById("review-flip-phase").style.display="flex";renderFlip()}
+
+// ─── Trace canvas (Urdu) ──────────────────────────────────────────────────────
+// No shiro; baseline at 38%, descender at 72%; RTL; Noto Naskh Arabic; variable stroke
+function toggleTrace(e,ghost){
+  if(e)e.stopPropagation();
+  const wrap=document.getElementById("trace-wrap"),btn=document.getElementById("btn-trace-toggle");
+  if(!wrap||!btn)return;
+  const showing=wrap.style.display==="flex";
+  if(showing){wrap.style.display="none";btn.textContent="✍️ trace";}
+  else{wrap.style.display="flex";btn.textContent="✕ hide";drawTraceGrid(ghost);initTrace(ghost);}
+}
+function clearTrace(e,ghost){if(e)e.stopPropagation();drawTraceGrid(ghost);}
+
+function drawTraceGrid(ghost){
+  const tc=document.getElementById("trace-canvas");if(!tc)return;
+  if(ghost)tc.dataset.ghost=ghost;
+  const dpr=window.devicePixelRatio||1;
+  const LW=260,LH=280;
+  tc.width=Math.round(LW*dpr);tc.height=Math.round(LH*dpr);
+  tc.style.width=LW+"px";tc.style.height=LH+"px";
+  const tctx=tc.getContext("2d");
+  tctx.setTransform(dpr,0,0,dpr,0,0);
+  const W=LW,H=LH;
+  tctx.clearRect(0,0,W,H);tctx.fillStyle="#F5F3F0";tctx.fillRect(0,0,W,H);
+  // Ghost character — centered, no lines
+  if(ghost){
+    const maxW=W*0.88,maxH=H*0.72;
+    let fs=Math.round(W*0.50);
+    tctx.direction="rtl";tctx.textBaseline="middle";tctx.textAlign="center";
+    for(let i=0;i<8;i++){
+      tctx.font=`${fs}px '${getUrduFont()}',serif`;
+      const m=tctx.measureText(ghost);
+      const th=(m.actualBoundingBoxAscent||fs*0.7)+(m.actualBoundingBoxDescent||fs*0.35);
+      if(m.width<=maxW&&th<=maxH)break;
+      fs=Math.round(fs*0.82);
+    }
+    tctx.font=`${fs}px '${getUrduFont()}',serif`;
+    tctx.fillStyle="rgba(122,58,16,0.09)";
+    tctx.fillText(ghost,W/2,H/2);
+    tctx.direction="ltr";
+  }
+}
+
+function initTrace(ghost){
+  const tc=document.getElementById("trace-canvas");if(!tc)return;
+  drawTraceGrid(ghost);
+  let tdrawing=false,tlx=0,tly=0,tLastTime=0,tLastX=0,tLastY=0;
+  // Cursor-aligned coordinate helper: works in CSS-px space (ctx already DPR-scaled via setTransform)
+  function getP(e){
+    const tc4=document.getElementById("trace-canvas");
+    const r=tc4.getBoundingClientRect();
+    const s=e.touches?e.touches[0]:e;
+    return[s.clientX-r.left, s.clientY-r.top];
+  }
+  // Remove old listeners by cloning
+  const tc2=tc.cloneNode(true);tc.parentNode.replaceChild(tc2,tc);
+  const tc3=document.getElementById("trace-canvas");
+  const tctx2=tc3.getContext("2d");
+  // Re-draw ghost on the cloned canvas
+  drawTraceGrid(ghost);
+  let tSmLw=3;
+  function tStroke(x,y){
+    const now=Date.now(),dist=Math.hypot(x-tLastX,y-tLastY),dt=Math.max(1,now-tLastTime),speed=dist/dt;
+    const rawLw=Math.max(1.2,Math.min(5,4.8-speed*6));
+    tSmLw=tSmLw*0.7+rawLw*0.3;
+    const mx=(tlx+x)/2,my=(tly+y)/2;
+    tctx2.beginPath();tctx2.moveTo(tlx,tly);
+    tctx2.quadraticCurveTo(tlx,tly,mx,my);
+    tctx2.strokeStyle="#1A1410";tctx2.lineWidth=tSmLw;tctx2.lineCap=tctx2.lineJoin="round";tctx2.stroke();
+    [tlx,tly]=[x,y];tLastTime=now;tLastX=x;tLastY=y;
+  }
+  tc3.addEventListener("mousedown",e=>{e.stopPropagation();tdrawing=true;[tlx,tly]=getP(e);tLastTime=Date.now();tLastX=tlx;tLastY=tly;tSmLw=3;});
+  tc3.addEventListener("mousemove",e=>{if(!tdrawing)return;const[x,y]=getP(e);tStroke(x,y);});
+  tc3.addEventListener("mouseup",()=>tdrawing=false);tc3.addEventListener("mouseleave",()=>tdrawing=false);
+  tc3.addEventListener("touchstart",e=>{e.stopPropagation();e.preventDefault();tdrawing=true;[tlx,tly]=getP(e);tLastTime=Date.now();tLastX=tlx;tLastY=tly;tSmLw=3;},{passive:false});
+  tc3.addEventListener("touchmove",e=>{e.stopPropagation();e.preventDefault();if(!tdrawing)return;const[x,y]=getP(e);tStroke(x,y);},{passive:false});
+  tc3.addEventListener("touchend",e=>{e.stopPropagation();tdrawing=false;},{passive:false});
+}
 
 function renderFlip(){
   const c=reviewCards[flipIdx];
@@ -389,6 +530,7 @@ function renderFlip(){
   document.getElementById("flip-forms").style.display="none";
   document.getElementById("flip-rom").style.display="none";document.getElementById("flip-eng").style.display="none";
   document.getElementById("flip-count").textContent=`${flipIdx+1} / ${reviewCards.length}`;flipShown=false;
+  const ta=document.getElementById("trace-area");if(ta)ta.innerHTML="";
 }
 function flipCard(){
   if(flipShown){flipNav(1);return;}
@@ -401,6 +543,9 @@ function flipCard(){
     document.getElementById("flip-forms").innerHTML=`<div class="flip-form"><div class="flip-form-char">${c.iso}</div><div class="flip-form-label">isolated</div></div><div class="flip-form"><div class="flip-form-char">${c.ini}</div><div class="flip-form-label">initial</div></div><div class="flip-form"><div class="flip-form-char">${c.med}</div><div class="flip-form-label">medial</div></div><div class="flip-form"><div class="flip-form-char">${c.fin}</div><div class="flip-form-label">final</div></div>`;
     document.getElementById("flip-forms").style.display="flex";
   }
+  // Inject trace button
+  const ta=document.getElementById("trace-area");
+  if(ta){const ghost=c.h;ta.innerHTML=`<div style="margin-top:10px;display:flex;flex-direction:column;align-items:center;gap:6px"><button id="btn-trace-toggle" style="background:transparent;border:1.5px solid var(--accent);border-radius:3px;padding:5px 16px;font-family:inherit;font-size:12px;color:var(--accent);cursor:pointer;letter-spacing:0.08em" onclick="toggleTrace(event,'${ghost}')">✍️ trace</button><div id="trace-wrap" style="display:none;flex-direction:column;align-items:center;gap:6px"><canvas id="trace-canvas" style="display:block;touch-action:none;cursor:crosshair;border-radius:6px;border:1.5px solid var(--rule);box-shadow:inset 0 1px 4px rgba(0,0,0,0.05)"></canvas><button onclick="clearTrace(event,'${ghost}')" style="background:transparent;border:1.5px solid var(--rule);border-radius:3px;padding:4px 14px;font-family:inherit;font-size:11px;color:var(--inkfader);cursor:pointer">↺ clear</button></div></div>`;}
   flipShown=true;
 }
 function flipNav(dir){flipIdx=Math.max(0,Math.min(reviewCards.length-1,flipIdx+dir));renderFlip()}
@@ -412,7 +557,7 @@ function startStudy(id){
   queue=shuffle(due.length>0?due:currentDeck.cards);
   qIdx=0;sessionGrades=[];isRevealed=false;ghostChar=null;lastGradeSnapshot=null;showScreen("study");loadCard();
 }
-function resizeCanvas(){const isWord=!currentDeck.isScript;const W=isWord?580:320,H=320;cv.width=W;cv.height=H;cv.style.width=W+"px";cv.style.height=H+"px"}
+function resizeCanvas(){const isWord=!currentDeck.isScript;const W=isWord?580:320,H=320;initCanvas(W,H);}
 function loadCard(){
   if(qIdx>=queue.length){showDone();return}
   currentCard=queue[qIdx];isRevealed=false;ghostChar=null;resizeCanvas();drawGrid();
@@ -483,8 +628,26 @@ document.addEventListener("keydown",e=>{
   if(e.key===" "&&!isRevealed){e.preventDefault();reveal();return}if(e.key==="?"&&!isRevealed){dontKnow();return}
   if(e.key==="1"&&isRevealed)grade(0);if(e.key==="2"&&isRevealed)grade(1);if(e.key==="3"&&isRevealed)grade(2);if(e.key==="4"&&isRevealed)grade(3);
 });
-document.getElementById("flip-card").addEventListener("click",flipCard);
-initFontPref();renderHome();drawGrid();
+// ─── TTS ───────────────────────────────────────────────────────────────────────
+let _voices=[];
+function _loadVoices(){_voices=window.speechSynthesis.getVoices();}
+_loadVoices();
+window.speechSynthesis.onvoiceschanged=_loadVoices;
+
+function speak(text){
+  if(!text)return;
+  window.speechSynthesis.cancel();
+  const utt=new SpeechSynthesisUtterance(text);
+  utt.lang="hi-IN";
+  utt.rate=0.9;
+  const v=_voices.find(v=>v.lang==="hi-IN")||_voices.find(v=>v.lang.startsWith("hi"));
+  if(v)utt.voice=v;
+  const btn=document.querySelector(".btn-speak.active-speak");
+  if(btn){btn.classList.add("speaking");utt.onend=()=>{btn.classList.remove("speaking");btn.classList.remove("active-speak");};utt.onerror=()=>{btn.classList.remove("speaking");btn.classList.remove("active-speak");};}
+  window.speechSynthesis.speak(utt);
+}
+document.getElementById("flip-card").addEventListener("click",function(e){if(document.getElementById("trace-wrap")&&document.getElementById("trace-wrap").style.display==="flex")return;flipCard();});
+initCanvas(320,320);initFontPref();renderHome();drawGrid();
 </script>
 </body>
 </html>
