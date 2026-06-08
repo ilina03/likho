@@ -168,7 +168,7 @@ function xy(e){
 function drawGhost(context,W,H,ghost,isWord){
   const shiroY=Math.round(H*0.28);
   const maxW=W*0.88,maxH=H*0.55;
-  let fs=isWord?Math.round(H*0.42):Math.round(W*0.58);
+  let fs=isWord?Math.round(H*0.42):Math.round(Math.min(W,H)*0.55);
   context.textBaseline="alphabetic";context.textAlign="center";
   for(let i=0;i<8;i++){
     context.font=`${fs}px serif`;
@@ -185,8 +185,13 @@ function drawGhost(context,W,H,ghost,isWord){
   const shiroFactors={"अ": 0.966, "आ": 0.966, "ई": 0.668, "ऐ": 0.689, "ओ": 0.689, "औ": 0.658, "अं": 0.76, "अः": 0.966, "भ": 0.966};
   const factor=shiroFactors[ghost]??0.98;
   const ghostY=isWord?Math.round(H*0.68):shiroY+asc*factor;
+  // Don't rely on textAlign="center" — iOS Safari can ignore it after setTransform.
+  // Manually center by measuring width and offsetting x.
+  const ghostW=context.measureText(ghost).width;
   context.fillStyle="rgba(200,105,10,0.08)";
-  context.fillText(ghost,W/2,ghostY);
+  context.textAlign="left";
+  context.textBaseline="alphabetic";
+  context.fillText(ghost,W/2-ghostW/2,ghostY);
 }
 
 function drawGrid(){
@@ -202,7 +207,11 @@ function drawGrid(){
   ctx.beginPath();ctx.moveTo(W/2,0);ctx.lineTo(W/2,H);ctx.stroke();ctx.setLineDash([]);
   if(ghostChar){
     const isWord=currentDeck&&!currentDeck.isScript;
+    ctx.save();
+    ctx.textAlign="center";
+    ctx.textBaseline="alphabetic";
     drawGhost(ctx,W,H,ghostChar,isWord);
+    ctx.restore();
   }
 }
 
@@ -225,16 +234,20 @@ function clearTrace(e,ghost){if(e)e.stopPropagation();drawTraceGrid(ghost);}
 
 function drawTraceGrid(ghost){
   const tc=document.getElementById("trace-canvas");if(!tc)return;
+  const dpr=window.devicePixelRatio||1;
+  const LW=260,LH=280;
+  tc.width=Math.round(LW*dpr);tc.height=Math.round(LH*dpr);
+  tc.style.width=LW+"px";tc.style.height=LH+"px";
   const tctx=tc.getContext("2d");
-  const W=tc.width,H=tc.height;
-  tctx.setTransform(1,0,0,1,0,0);
+  tctx.setTransform(dpr,0,0,dpr,0,0);
+  const W=LW,H=LH;
   tctx.clearRect(0,0,W,H);tctx.fillStyle="#F7F3EC";tctx.fillRect(0,0,W,H);
   const shiroY=Math.round(H*0.28);
   tctx.strokeStyle="rgba(200,105,10,0.22)";tctx.lineWidth=1.5;tctx.setLineDash([]);
   tctx.beginPath();tctx.moveTo(0,shiroY);tctx.lineTo(W,shiroY);tctx.stroke();
   tctx.strokeStyle="rgba(200,105,10,0.10)";tctx.lineWidth=1;tctx.setLineDash([3,5]);
   tctx.beginPath();tctx.moveTo(W/2,0);tctx.lineTo(W/2,H);tctx.stroke();tctx.setLineDash([]);
-  if(ghost){drawGhost(tctx,W,H,ghost,false);}
+  if(ghost){tctx.save();tctx.textAlign="center";tctx.textBaseline="alphabetic";drawGhost(tctx,W,H,ghost,false);tctx.restore();}
 }
 
 function initTrace(ghost){
@@ -280,7 +293,7 @@ function flipCard(){
   document.getElementById("flip-rom").style.display="block";document.getElementById("flip-eng").style.display="block";
   if(c.ex&&!isDiac){document.getElementById("flip-example").textContent=c.ex;document.getElementById("flip-example").style.display="block";}
   const ta=document.getElementById("trace-area");
-  if(ta){const ghost=isDiac?c.mark:c.h;ta.innerHTML=`<div style="margin-top:10px;display:flex;flex-direction:column;align-items:center;gap:6px"><button id="btn-trace-toggle" style="background:transparent;border:1.5px solid var(--accent);border-radius:3px;padding:5px 16px;font-family:inherit;font-size:12px;color:var(--accent);cursor:pointer;letter-spacing:0.08em" onclick="toggleTrace(event,'${ghost}')">✍️ trace</button><div id="trace-wrap" style="display:none;flex-direction:column;align-items:center;gap:6px"><canvas id="trace-canvas" width="260" height="280" style="width:260px;height:280px;display:block;touch-action:none;cursor:crosshair;border-radius:6px;border:1.5px solid var(--rule);box-shadow:inset 0 1px 4px rgba(0,0,0,0.05)"></canvas><button onclick="clearTrace(event,'${ghost}')" style="background:transparent;border:1.5px solid var(--rule);border-radius:3px;padding:4px 14px;font-family:inherit;font-size:11px;color:var(--inkfader);cursor:pointer">↺ clear</button></div></div>`;}
+  if(ta){const ghost=isDiac?c.mark:c.h;ta.innerHTML=`<div style="margin-top:10px;display:flex;flex-direction:column;align-items:center;gap:6px"><button id="btn-trace-toggle" style="background:transparent;border:1.5px solid var(--accent);border-radius:3px;padding:5px 16px;font-family:inherit;font-size:12px;color:var(--accent);cursor:pointer;letter-spacing:0.08em" onclick="toggleTrace(event,'${ghost}')">✍️ trace</button><div id="trace-wrap" style="display:none;flex-direction:column;align-items:center;gap:6px"><canvas id="trace-canvas" style="display:block;touch-action:none;cursor:crosshair;border-radius:6px;border:1.5px solid var(--rule);box-shadow:inset 0 1px 4px rgba(0,0,0,0.05)"></canvas><button onclick="clearTrace(event,'${ghost}')" style="background:transparent;border:1.5px solid var(--rule);border-radius:3px;padding:4px 14px;font-family:inherit;font-size:11px;color:var(--inkfader);cursor:pointer">↺ clear</button></div></div>`;}
   flipShown=true;
 }
 function flipNav(dir){flipIdx=Math.max(0,Math.min(reviewCards.length-1,flipIdx+dir));renderFlip()}
