@@ -44,8 +44,8 @@
   .review-grid-char{font-size:28px;font-family:serif;color:var(--ink);line-height:1.2;word-break:break-all;overflow-wrap:break-word;width:100%}.review-grid-rom{font-size:10px;color:var(--accent);margin-top:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%}.review-grid-eng{font-size:9px;color:var(--inkfader);margin-top:2px;line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%}
   .review-start-btn{margin-top:32px}
   #review-flip-phase{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;padding:60px 48px}
-  .flip-card{width:420px;max-width:90vw;min-height:260px;background:var(--paperdark);border:1.5px solid var(--rule);border-radius:12px;padding:40px 36px;text-align:center;cursor:pointer;transition:all .2s;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px}.flip-card.flipped{background:var(--paper);border-color:var(--accent)}
-  .flip-front-label{font-size:10px;color:var(--inkfader);letter-spacing:0.16em}.flip-char{font-size:96px;font-family:serif;color:var(--ink);line-height:1}.flip-rom{font-size:24px;color:var(--accent);font-style:italic}.flip-eng{font-size:15px;color:var(--inkfade)}.flip-example{font-size:13px;color:var(--inkfader);margin-top:4px;font-style:italic}
+  .flip-card{width:420px;max-width:90vw;min-height:260px;background:var(--paperdark);border:1.5px solid var(--rule);border-radius:12px;padding:40px 36px;text-align:center;cursor:pointer;transition:all .2s;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;position:relative}.flip-card.flipped{background:var(--paper);border-color:var(--accent)}
+  .flip-front-label{font-size:10px;color:var(--inkfader);letter-spacing:0.16em;position:absolute;top:16px;left:50%;transform:translateX(-50%);white-space:nowrap}.flip-char{font-size:96px;font-family:serif;color:var(--ink);line-height:1}.flip-rom{font-size:24px;color:var(--accent);font-style:italic}.flip-eng{font-size:15px;color:var(--inkfade)}.flip-example{font-size:13px;color:var(--inkfader);margin-top:4px;font-style:italic}
   .flip-nav{display:flex;gap:12px;align-items:center}.btn-flip-nav{background:transparent;border:1.5px solid var(--rule);border-radius:3px;padding:8px 20px;font-family:inherit;font-size:13px;color:var(--inkfade);cursor:pointer;letter-spacing:0.06em;transition:all .15s}.btn-flip-nav:hover{border-color:var(--ink);color:var(--ink)}.flip-count{font-size:12px;color:var(--inkfader);min-width:60px;text-align:center}
   .btn-start-study{background:var(--ink);color:var(--paper);border:none;border-radius:3px;padding:10px 28px;font-family:inherit;font-size:13px;letter-spacing:0.08em;cursor:pointer}.btn-start-study:hover{opacity:.85}
   #progress-bar{position:fixed;top:0;left:0;height:2px;background:var(--accent);transition:width .4s;z-index:10}
@@ -70,6 +70,9 @@
   #confirm-overlay{display:none;position:fixed;inset:0;background:rgba(26,18,9,0.4);z-index:300;align-items:center;justify-content:center;backdrop-filter:blur(2px)}#confirm-overlay.open{display:flex}
   .confirm-box{background:var(--paper);border-radius:4px;padding:36px 40px;width:360px;max-width:90vw;box-shadow:0 12px 48px rgba(26,18,9,0.2);text-align:center}.confirm-title{font-size:18px;font-weight:600;margin-bottom:8px}.confirm-sub{font-size:14px;color:var(--inkfade);margin-bottom:24px;line-height:1.5}.confirm-btns{display:flex;gap:10px;justify-content:center}.btn-cancel{background:transparent;border:1.5px solid var(--rule);border-radius:3px;padding:8px 24px;font-family:inherit;font-size:13px;color:var(--inkfade);cursor:pointer;letter-spacing:0.06em}.btn-cancel:hover{border-color:var(--ink);color:var(--ink)}.btn-confirm-reset{background:var(--again);color:#fff;border:none;border-radius:3px;padding:8px 24px;font-family:inherit;font-size:13px;cursor:pointer;letter-spacing:0.06em;font-weight:600}.btn-confirm-reset:hover{opacity:.85}
   @media(max-width:900px){header,.hero,.overall-progress,.decks,footer{padding-left:28px;padding-right:28px}.hero-title{font-size:40px}.hero-char{display:none}#study-screen.active{flex-direction:column}.study-left,.study-right{width:100%;min-height:auto;padding:48px 28px;border-right:none;border-bottom:1px solid var(--rule)}.study-right{border-bottom:none}.ref-grid{grid-template-columns:repeat(4,1fr)}.ref-modal{padding:28px 24px}.overall-progress{flex-wrap:wrap;gap:20px}.review-header,#review-grid-phase{padding-left:28px;padding-right:28px}.flip-card{width:90vw}}
+
+  .btn-speak{position:absolute;bottom:14px;right:16px;background:transparent;border:none;color:var(--inkfade);cursor:pointer;font-size:18px;padding:4px;line-height:1;opacity:0.5;transition:opacity .15s}.btn-speak:hover{opacity:1}
+  .btn-speak.speaking{color:var(--accent);opacity:1}
 </style>
 </head>
 <body>
@@ -93,7 +96,7 @@
   <div class="review-header"><button class="btn-back" onclick="goHome()">← decks</button><div class="review-title" id="review-title"></div><div class="review-sub" id="review-sub"></div></div>
   <div id="review-grid-phase"><div class="review-grid" id="review-grid"></div><div class="review-start-btn"><button class="btn-filled btn-study" onclick="startFlip()">Flip through →</button></div></div>
   <div id="review-flip-phase" style="display:none">
-    <div class="flip-card" id="flip-card"><div class="flip-front-label" id="flip-front-label">TAP TO REVEAL</div><div class="flip-char" id="flip-char"></div><div class="flip-rom" id="flip-rom" style="display:none"></div><div class="flip-eng" id="flip-eng" style="display:none"></div><div class="flip-example" id="flip-example" style="display:none"></div><div id="trace-area"></div></div>
+    <div class="flip-card" id="flip-card"><div class="flip-front-label" id="flip-front-label">TAP TO REVEAL</div><button class="btn-speak" id="btn-speak" title="Listen" onclick="event.stopPropagation();const c=reviewCards[flipIdx];document.getElementById('btn-speak').classList.add('active-speak');speak(c.h);">🔊</button><div class="flip-char" id="flip-char"></div><div class="flip-rom" id="flip-rom" style="display:none"></div><div class="flip-eng" id="flip-eng" style="display:none"></div><div class="flip-example" id="flip-example" style="display:none"></div><div id="trace-area"></div></div>
     <div class="flip-nav"><button class="btn-flip-nav" onclick="backToGrid()">⊞ grid</button><button class="btn-flip-nav" onclick="flipNav(-1)">← prev</button><div class="flip-count" id="flip-count"></div><button class="btn-flip-nav" onclick="flipNav(1)">next →</button></div>
     <button class="btn-start-study" onclick="startStudyFromReview()">Start writing practice →</button>
   </div>
@@ -111,8 +114,46 @@
 <script>
 const VOWELS=[{id:"v1",h:"अ",r:"a",e:"short a",ex:"अमर — amar (immortal)"},{id:"v2",h:"आ",r:"aa",e:"long a",ex:"आम — aam (mango)"},{id:"v3",h:"इ",r:"i",e:"short i",ex:"इधर — idhar (here)"},{id:"v4",h:"ई",r:"ee",e:"long i",ex:"ईश्वर — ishwar (God)"},{id:"v5",h:"उ",r:"u",e:"short u",ex:"उठो — utho (get up)"},{id:"v6",h:"ऊ",r:"oo",e:"long u",ex:"ऊन — oon (wool)"},{id:"v7",h:"ए",r:"e",e:"like e in prey",ex:"एक — ek (one)"},{id:"v8",h:"ऐ",r:"ai",e:"like ai in aisle",ex:"ऐनक — ainak (glasses)"},{id:"v9",h:"ओ",r:"o",e:"like o in go",ex:"ओस — os (dew)"},{id:"v10",h:"औ",r:"au",e:"like au in auto",ex:"औरत — aurat (woman)"},{id:"v11",h:"अं",r:"an",e:"nasal vowel — anusvara",ex:"अंगूर — angoor (grapes)"},{id:"v12",h:"अः",r:"ah",e:"aspirate — visarga",ex:"rare in modern Hindi"}];
 const CONSONANTS=[{id:"c1",h:"क",r:"ka",e:"k unaspirated",ex:"कल — kal (tomorrow)"},{id:"c2",h:"ख",r:"kha",e:"kh aspirated",ex:"खाना — khaana (food)"},{id:"c3",h:"ग",r:"ga",e:"g unaspirated",ex:"गाना — gaana (song)"},{id:"c4",h:"घ",r:"gha",e:"gh aspirated",ex:"घर — ghar (home)"},{id:"c5",h:"च",r:"cha",e:"ch unaspirated",ex:"चाय — chai (tea)"},{id:"c6",h:"छ",r:"chha",e:"chh aspirated",ex:"छाता — chhaata (umbrella)"},{id:"c7",h:"ज",r:"ja",e:"j unaspirated",ex:"जल — jal (water)"},{id:"c8",h:"झ",r:"jha",e:"jh aspirated",ex:"झील — jheel (lake)"},{id:"c9",h:"ट",r:"ṭa",e:"hard t retroflex",ex:"टमाटर — tamaatar (tomato)"},{id:"c10",h:"ड",r:"ḍa",e:"hard d retroflex",ex:"डाल — daal (branch)"},{id:"c11",h:"त",r:"ta",e:"soft t dental",ex:"तारा — taara (star)"},{id:"c12",h:"द",r:"da",e:"soft d dental",ex:"दिल — dil (heart)"},{id:"c13",h:"न",r:"na",e:"n sound",ex:"नाम — naam (name)"},{id:"c14",h:"प",r:"pa",e:"p unaspirated",ex:"पानी — paani (water)"},{id:"c15",h:"फ",r:"pha",e:"ph/f aspirated",ex:"फूल — phool (flower)"},{id:"c16",h:"ब",r:"ba",e:"b unaspirated",ex:"बात — baat (talk)"},{id:"c17",h:"भ",r:"bha",e:"bh aspirated",ex:"भाई — bhai (brother)"},{id:"c18",h:"म",r:"ma",e:"m sound",ex:"माँ — maa (mother)"},{id:"c19",h:"य",r:"ya",e:"y sound",ex:"यार — yaar (friend)"},{id:"c20",h:"र",r:"ra",e:"r rolled",ex:"राज — raaj (kingdom)"},{id:"c21",h:"ल",r:"la",e:"l sound",ex:"लाल — laal (red)"},{id:"c22",h:"व",r:"va",e:"v / w sound",ex:"वक्त — waqt (time)"},{id:"c23",h:"श",r:"sha",e:"sh palatal",ex:"शहर — shahar (city)"},{id:"c24",h:"ष",r:"ṣha",e:"sh retroflex",ex:"षट् — shat (six, Sanskrit)"},{id:"c25",h:"स",r:"sa",e:"s sound",ex:"सच — sach (truth)"},{id:"c26",h:"ह",r:"ha",e:"h sound",ex:"हाथ — haath (hand)"}];
+const ALPHABET_WORDS_DECK={id:"alphabet_words",label:"Alphabet Primer",cards:[
+  {id:"aw1",h:"अमर",r:"amar",e:"immortal · अ"},
+  {id:"aw2",h:"आम",r:"aam",e:"mango · आ"},
+  {id:"aw3",h:"इधर",r:"idhar",e:"here · इ"},
+  {id:"aw4",h:"ईश्वर",r:"ishwar",e:"God · ई"},
+  {id:"aw5",h:"उठो",r:"utho",e:"get up · उ"},
+  {id:"aw6",h:"ऊन",r:"oon",e:"wool · ऊ"},
+  {id:"aw7",h:"एक",r:"ek",e:"one · ए"},
+  {id:"aw8",h:"ऐनक",r:"ainak",e:"glasses · ऐ"},
+  {id:"aw9",h:"ओस",r:"os",e:"dew · ओ"},
+  {id:"aw10",h:"औरत",r:"aurat",e:"woman · औ"},
+  {id:"aw11",h:"अंगूर",r:"angoor",e:"grapes · अं"},
+  {id:"aw12",h:"कल",r:"kal",e:"tomorrow · क"},
+  {id:"aw13",h:"खाना",r:"khaana",e:"food · ख"},
+  {id:"aw14",h:"गाना",r:"gaana",e:"song · ग"},
+  {id:"aw15",h:"घर",r:"ghar",e:"home · घ"},
+  {id:"aw16",h:"चाय",r:"chai",e:"tea · च"},
+  {id:"aw17",h:"छाता",r:"chhaata",e:"umbrella · छ"},
+  {id:"aw18",h:"जल",r:"jal",e:"water · ज"},
+  {id:"aw19",h:"झील",r:"jheel",e:"lake · झ"},
+  {id:"aw20",h:"टमाटर",r:"tamaatar",e:"tomato · ट"},
+  {id:"aw21",h:"डाल",r:"daal",e:"branch · ड"},
+  {id:"aw22",h:"तारा",r:"taara",e:"star · त"},
+  {id:"aw23",h:"दिल",r:"dil",e:"heart · द"},
+  {id:"aw24",h:"नाम",r:"naam",e:"name · न"},
+  {id:"aw25",h:"पानी",r:"paani",e:"water · प"},
+  {id:"aw26",h:"फूल",r:"phool",e:"flower · फ"},
+  {id:"aw27",h:"बात",r:"baat",e:"talk · ब"},
+  {id:"aw28",h:"भाई",r:"bhai",e:"brother · भ"},
+  {id:"aw29",h:"माँ",r:"maa",e:"mother · म"},
+  {id:"aw30",h:"यार",r:"yaar",e:"friend · य"},
+  {id:"aw31",h:"राज",r:"raaj",e:"kingdom · र"},
+  {id:"aw32",h:"लाल",r:"laal",e:"red · ल"},
+  {id:"aw33",h:"वक्त",r:"waqt",e:"time · व"},
+  {id:"aw34",h:"शहर",r:"shahar",e:"city · श"},
+  {id:"aw35",h:"सच",r:"sach",e:"truth · स"},
+  {id:"aw36",h:"हाथ",r:"haath",e:"hand · ह"}
+],sub:"36 words",isScript:false};
 const WORD_DECKS=[{id:"greetings",label:"Greetings",cards:[{id:"w1",h:"नमस्ते",r:"namaste",e:"Hello / Greetings"},{id:"w2",h:"धन्यवाद",r:"dhanyavaad",e:"Thank you"},{id:"w3",h:"हाँ",r:"haan",e:"Yes"},{id:"w4",h:"नहीं",r:"nahin",e:"No"},{id:"w5",h:"माफ़ करें",r:"maaf karen",e:"Sorry / Excuse me"},{id:"w6",h:"कैसे हो",r:"kaise ho",e:"How are you?"},{id:"w7",h:"ठीक हूँ",r:"theek hoon",e:"I'm fine"},{id:"w8",h:"अलविदा",r:"alvida",e:"Goodbye"}]},{id:"family",label:"Family",cards:[{id:"fa1",h:"माँ",r:"maa",e:"Mother"},{id:"fa2",h:"पिताजी",r:"pitaji",e:"Father"},{id:"fa3",h:"भाई",r:"bhai",e:"Brother"},{id:"fa4",h:"बहन",r:"behen",e:"Sister"},{id:"fa5",h:"दादा",r:"daada",e:"Paternal grandfather"},{id:"fa6",h:"दादी",r:"daadi",e:"Paternal grandmother"},{id:"fa7",h:"नाना",r:"naana",e:"Maternal grandfather"},{id:"fa8",h:"नानी",r:"naani",e:"Maternal grandmother"}]},{id:"body",label:"Body",cards:[{id:"b1",h:"हाथ",r:"haath",e:"Hand"},{id:"b2",h:"पैर",r:"pair",e:"Foot / Leg"},{id:"b3",h:"आँख",r:"aankh",e:"Eye"},{id:"b4",h:"कान",r:"kaan",e:"Ear"},{id:"b5",h:"नाक",r:"naak",e:"Nose"},{id:"b6",h:"मुँह",r:"munh",e:"Mouth"},{id:"b7",h:"सिर",r:"sir",e:"Head"},{id:"b8",h:"दिल",r:"dil",e:"Heart"}]},{id:"food",label:"Food",cards:[{id:"fo1",h:"पानी",r:"paani",e:"Water"},{id:"fo2",h:"खाना",r:"khaana",e:"Food / Meal"},{id:"fo3",h:"दूध",r:"doodh",e:"Milk"},{id:"fo4",h:"चाय",r:"chai",e:"Tea"},{id:"fo5",h:"रोटी",r:"roti",e:"Flatbread"},{id:"fo6",h:"चावल",r:"chaaval",e:"Rice"},{id:"fo7",h:"दाल",r:"daal",e:"Lentils"},{id:"fo8",h:"मिठाई",r:"mithai",e:"Sweets"}]},{id:"numbers",label:"Numbers",cards:[{id:"n1",h:"एक",r:"ek",e:"One"},{id:"n2",h:"दो",r:"do",e:"Two"},{id:"n3",h:"तीन",r:"teen",e:"Three"},{id:"n4",h:"चार",r:"chaar",e:"Four"},{id:"n5",h:"पाँच",r:"paanch",e:"Five"},{id:"n6",h:"छह",r:"chhah",e:"Six"},{id:"n7",h:"सात",r:"saat",e:"Seven"},{id:"n8",h:"आठ",r:"aath",e:"Eight"},{id:"n9",h:"नौ",r:"nau",e:"Nine"},{id:"n10",h:"दस",r:"das",e:"Ten"}]},{id:"colors",label:"Colors",cards:[{id:"col1",h:"लाल",r:"laal",e:"Red"},{id:"col2",h:"नीला",r:"neela",e:"Blue"},{id:"col3",h:"हरा",r:"hara",e:"Green"},{id:"col4",h:"पीला",r:"peela",e:"Yellow"},{id:"col5",h:"सफ़ेद",r:"safed",e:"White"},{id:"col6",h:"काला",r:"kaala",e:"Black"},{id:"col7",h:"नारंगी",r:"narangi",e:"Orange"},{id:"col8",h:"गुलाबी",r:"gulaabi",e:"Pink"}]}];
-const ALL_DECKS=[{id:"vowels",label:"Vowels",sub:"12 characters",cards:VOWELS,isScript:true},{id:"consonants",label:"Consonants",sub:"26 characters",cards:CONSONANTS,isScript:true},{id:"diacritics",label:"Vowel Signs · मात्राएँ",sub:"12 diacritics",cards:[{id:"hd1",mark:"ा",h:"का",base:"क",r:"k+kaa=kaa",baseRom:"k",vowelRom:"kaa",e:"long a — extends the vowel",ex:""},{id:"hd2",mark:"ि",h:"कि",base:"क",r:"k+ki=ki",baseRom:"k",vowelRom:"ki",e:"short i — before the consonant visually",ex:""},{id:"hd3",mark:"ी",h:"की",base:"क",r:"k+kee=kee",baseRom:"k",vowelRom:"kee",e:"long i",ex:""},{id:"hd4",mark:"ु",h:"कु",base:"क",r:"k+ku=ku",baseRom:"k",vowelRom:"ku",e:"short u — below the consonant",ex:""},{id:"hd5",mark:"ू",h:"कू",base:"क",r:"k+koo=koo",baseRom:"k",vowelRom:"koo",e:"long u — below the consonant",ex:""},{id:"hd6",mark:"े",h:"के",base:"क",r:"k+ke=ke",baseRom:"k",vowelRom:"ke",e:"e — like a in gate",ex:""},{id:"hd7",mark:"ै",h:"कै",base:"क",r:"k+kai=kai",baseRom:"k",vowelRom:"kai",e:"ai — like ai in aisle",ex:""},{id:"hd8",mark:"ो",h:"को",base:"क",r:"k+ko=ko",baseRom:"k",vowelRom:"ko",e:"o — like o in go",ex:""},{id:"hd9",mark:"ौ",h:"कौ",base:"क",r:"k+kau=kau",baseRom:"k",vowelRom:"kau",e:"au — like ow in how",ex:""},{id:"hd10",mark:"ं",h:"कं",base:"क",r:"k+kan=kan",baseRom:"k",vowelRom:"kan",e:"anusvara — nasalizes the vowel",ex:""},{id:"hd11",mark:"ः",h:"कः",base:"क",r:"k+kah=kah",baseRom:"k",vowelRom:"kah",e:"visarga — adds breath after",ex:""},{id:"hd12",mark:"्",h:"क्",base:"क",r:"k+k=k",baseRom:"k",vowelRom:"k",e:"halant — removes inherent vowel, pure consonant",ex:""}],isScript:true,isDiacritic:true},...WORD_DECKS.map(d=>({...d,sub:`${d.cards.length} words`,isScript:false}))];
+const ALL_DECKS=[{id:"vowels",label:"Vowels",sub:"12 characters",cards:VOWELS,isScript:true},{id:"consonants",label:"Consonants",sub:"26 characters",cards:CONSONANTS,isScript:true},{id:"diacritics",label:"Vowel Signs · मात्राएँ",sub:"12 diacritics",cards:[{id:"hd1",mark:"ा",h:"का",base:"क",r:"k+kaa=kaa",baseRom:"k",vowelRom:"kaa",e:"long a — extends the vowel",ex:""},{id:"hd2",mark:"ि",h:"कि",base:"क",r:"k+ki=ki",baseRom:"k",vowelRom:"ki",e:"short i — before the consonant visually",ex:""},{id:"hd3",mark:"ी",h:"की",base:"क",r:"k+kee=kee",baseRom:"k",vowelRom:"kee",e:"long i",ex:""},{id:"hd4",mark:"ु",h:"कु",base:"क",r:"k+ku=ku",baseRom:"k",vowelRom:"ku",e:"short u — below the consonant",ex:""},{id:"hd5",mark:"ू",h:"कू",base:"क",r:"k+koo=koo",baseRom:"k",vowelRom:"koo",e:"long u — below the consonant",ex:""},{id:"hd6",mark:"े",h:"के",base:"क",r:"k+ke=ke",baseRom:"k",vowelRom:"ke",e:"e — like a in gate",ex:""},{id:"hd7",mark:"ै",h:"कै",base:"क",r:"k+kai=kai",baseRom:"k",vowelRom:"kai",e:"ai — like ai in aisle",ex:""},{id:"hd8",mark:"ो",h:"को",base:"क",r:"k+ko=ko",baseRom:"k",vowelRom:"ko",e:"o — like o in go",ex:""},{id:"hd9",mark:"ौ",h:"कौ",base:"क",r:"k+kau=kau",baseRom:"k",vowelRom:"kau",e:"au — like ow in how",ex:""},{id:"hd10",mark:"ं",h:"कं",base:"क",r:"k+kan=kan",baseRom:"k",vowelRom:"kan",e:"anusvara — nasalizes the vowel",ex:""},{id:"hd11",mark:"ः",h:"कः",base:"क",r:"k+kah=kah",baseRom:"k",vowelRom:"kah",e:"visarga — adds breath after",ex:""},{id:"hd12",mark:"्",h:"क्",base:"क",r:"k+k=k",baseRom:"k",vowelRom:"k",e:"halant — removes inherent vowel, pure consonant",ex:""}],isScript:true,isDiacritic:true},ALPHABET_WORDS_DECK,...WORD_DECKS.map(d=>({...d,sub:`${d.cards.length} words`,isScript:false}))];
 const ALL_CARDS=ALL_DECKS.flatMap(d=>d.cards);
 
 const SRS_KEY="likho_hindi_srs";
@@ -167,7 +208,7 @@ function xy(e){
 // FIX (shiro): In Devanagari, characters hang FROM the shiro (headline) —
 function drawGhost(context,W,H,ghost,isWord){
   const shiroY=Math.round(H*0.28);
-  const maxW=W*0.88,maxH=H*0.55;
+  const maxW=W*0.88,maxH=H*0.62;
   let fs=isWord?Math.round(H*0.42):Math.round(Math.min(W,H)*0.55);
   context.textBaseline="alphabetic";context.textAlign="center";
   for(let i=0;i<8;i++){
@@ -180,13 +221,12 @@ function drawGhost(context,W,H,ghost,isWord){
   context.font=`${fs}px serif`;
   const m2=context.measureText(ghost);
   const asc=m2.actualBoundingBoxAscent||fs*0.78;
-  // Lookup table: factor = 130.8 / actualAscent so the TOP of the shiro bar lands on shiroY.
-  // Default 0.969 for asc=135 chars; exceptions for chars with marks above the shiro.
-  const shiroFactors={"अ": 0.966, "आ": 0.966, "ई": 0.668, "ऐ": 0.689, "ओ": 0.689, "औ": 0.658, "अं": 0.76, "अः": 0.966, "भ": 0.966};
-  const factor=shiroFactors[ghost]??0.98;
-  const ghostY=isWord?Math.round(H*0.68):shiroY+asc*factor;
-  // Don't rely on textAlign="center" — iOS Safari can ignore it after setTransform.
-  // Manually center by measuring width and offsetting x.
+  const shiroFactors={"\u0905": 0.966, "\u0906": 0.966, "\u0908": 0.668, "\u0910": 0.689, "\u0913": 0.689, "\u0914": 0.658, "\u0905\u0902": 0.76, "\u0905\u0903": 0.966, "\u092D": 0.966};
+  // For words: measure a plain consonant at the same fs to get the true shiro height,
+  // ignoring diacritics above/below that inflate/deflate actualBoundingBoxAscent.
+  const refAsc=isWord?(context.measureText("\u0928").actualBoundingBoxAscent||fs*0.72):asc;
+  const factor=isWord?0.98:(shiroFactors[ghost]??0.98);
+  const ghostY=shiroY+refAsc*factor;
   const ghostW=context.measureText(ghost).width;
   context.fillStyle="rgba(200,105,10,0.08)";
   context.textAlign="left";
@@ -247,7 +287,7 @@ function drawTraceGrid(ghost){
   tctx.beginPath();tctx.moveTo(0,shiroY);tctx.lineTo(W,shiroY);tctx.stroke();
   tctx.strokeStyle="rgba(200,105,10,0.10)";tctx.lineWidth=1;tctx.setLineDash([3,5]);
   tctx.beginPath();tctx.moveTo(W/2,0);tctx.lineTo(W/2,H);tctx.stroke();tctx.setLineDash([]);
-  if(ghost){tctx.save();tctx.textAlign="center";tctx.textBaseline="alphabetic";drawGhost(tctx,W,H,ghost,false);tctx.restore();}
+  if(ghost){tctx.save();tctx.textAlign="center";tctx.textBaseline="alphabetic";drawGhost(tctx,W,H,ghost,reviewDeck&&!reviewDeck.isScript);tctx.restore();}
 }
 
 function initTrace(ghost){
@@ -279,7 +319,16 @@ function renderHome(){
     el.innerHTML=decks.map(deck=>{const dueN=dueCards(deck.cards).length,done=dueN===0,total=deck.cards.length,seenN=deck.cards.filter(c=>(SRS[c.id]?.reps??0)>0).length;return`<div class="deck-row"><div class="deck-info"><div class="deck-name">${deck.label}</div><div class="deck-meta"><span class="deck-sub">${deck.sub}</span>${seenN>0?`<span class="deck-seen">${seenN}/${total} seen</span>`:""}<span class="deck-due ${done?"due-off":"due-on"}">${done?"✓ caught up":`${dueN} due`}</span></div></div><div class="prog-track"><div class="prog-fill" style="width:${(seenN/total)*100}%"></div></div><div class="deck-btns"><button class="btn-review-deck" onclick="startReview('${deck.id}')">browse</button><button class="btn-study ${done?"btn-outline":"btn-filled"}" onclick="startStudy('${deck.id}')">${done?"review":"study"}</button></div></div>`;}).join("");
   });buildRef();
 }
-function startReview(id){reviewDeck=ALL_DECKS.find(d=>d.id===id);reviewCards=reviewDeck.cards;flipIdx=0;flipShown=false;document.getElementById("review-title").textContent=reviewDeck.label+" — Browse";document.getElementById("review-sub").textContent=reviewCards.length+" characters";const isDiac=!!reviewDeck.isDiacritic;document.getElementById("review-grid").innerHTML=reviewCards.map((c,i)=>{const charDisplay=isDiac?`${c.mark} → ${c.h}`:c.h,romDisplay=isDiac?c.vowelRom:c.r,charLen=(isDiac?c.mark:c.h).length,fontSize=charLen<=2?28:charLen<=4?22:charLen<=6?18:14;return`<div class="review-grid-card" id="rgc-${i}" onclick="highlightGrid(${i})"><div class="review-grid-char" style="font-size:${fontSize}px">${charDisplay}</div><div class="review-grid-rom">${romDisplay}</div><div class="review-grid-eng">${c.e}</div></div>`;}).join("");document.getElementById("review-grid-phase").style.display="block";document.getElementById("review-flip-phase").style.display="none";showScreen("review");}
+function startReview(id){reviewDeck=ALL_DECKS.find(d=>d.id===id);reviewCards=reviewDeck.cards;flipIdx=0;flipShown=false;document.getElementById("review-title").textContent=reviewDeck.label+" — Browse";document.getElementById("review-sub").textContent=reviewCards.length+" characters";const isDiac=!!reviewDeck.isDiacritic;document.getElementById("review-grid").innerHTML=reviewCards.map((c,i)=>{const charDisplay=isDiac?`${c.mark} → ${c.h}`:c.h,romDisplay=isDiac?c.vowelRom:c.r,charLen=(isDiac?c.mark:c.h).length,fontSize=charLen<=2?28:charLen<=4?22:charLen<=6?18:14;return`<div class="review-grid-card" id="rgc-${i}" onclick="highlightGrid(${i})"><div class="review-grid-char" style="font-size:${fontSize}px">${charDisplay}</div><div class="review-grid-rom">${romDisplay}</div><div class="review-grid-eng">${c.e}</div></div>`;}).join("");document.getElementById("review-grid-phase").style.display="block";document.getElementById("review-flip-phase").style.display="none";showScreen("review");
+  // Hover-to-speak on grid cards
+  let hoverTimer=null;
+  document.querySelectorAll(".review-grid-card").forEach((el,i)=>{
+    const c=reviewCards[i];
+    const text=isDiac?c.h:c.h;
+    el.addEventListener("mouseenter",()=>{hoverTimer=setTimeout(()=>speak(text),300);});
+    el.addEventListener("mouseleave",()=>clearTimeout(hoverTimer));
+  });
+}
 function backToGrid(){document.getElementById("review-grid-phase").style.display="block";document.getElementById("review-flip-phase").style.display="none";}
 function highlightGrid(i){document.querySelectorAll(".review-grid-card").forEach(el=>el.classList.remove("active"));document.getElementById("rgc-"+i)?.classList.add("active");flipIdx=i;document.getElementById("review-grid-phase").style.display="none";document.getElementById("review-flip-phase").style.display="flex";renderFlip();}
 function startFlip(){flipIdx=0;flipShown=false;document.getElementById("review-grid-phase").style.display="none";document.getElementById("review-flip-phase").style.display="flex";renderFlip()}
@@ -362,6 +411,26 @@ document.addEventListener("keydown",e=>{
   if(e.key===" "&&!isRevealed){e.preventDefault();reveal();return}if(e.key==="?"&&!isRevealed){dontKnow();return}
   if(e.key==="1"&&isRevealed)grade(0);if(e.key==="2"&&isRevealed)grade(1);if(e.key==="3"&&isRevealed)grade(2);if(e.key==="4"&&isRevealed)grade(3);
 });
+
+
+// ─── TTS ───────────────────────────────────────────────────────────────────────
+function speak(text){
+  if(!text)return;
+  window.speechSynthesis.cancel();
+  const utt=new SpeechSynthesisUtterance(text);
+  utt.lang="hi-IN";
+  // Prefer an Indian Hindi voice if available
+  const voices=window.speechSynthesis.getVoices();
+  const hindiVoice=voices.find(v=>v.lang==="hi-IN")||voices.find(v=>v.lang.startsWith("hi"));
+  if(hindiVoice)utt.voice=hindiVoice;
+  utt.rate=0.9;
+  // Visual feedback on speak button
+  const btn=document.querySelector(".btn-speak.active-speak");
+  if(btn){btn.classList.add("speaking");utt.onend=()=>btn.classList.remove("speaking");}
+  window.speechSynthesis.speak(utt);
+}
+// Voices load async on some browsers
+window.speechSynthesis.onvoiceschanged=()=>{};
 
 // FIX (iOS): initialise canvas with DPR scaling on page load
 initCanvas(320,320);
