@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Likho · Malayalam · മലയാളം Writing Practice</title>
-<meta name="description" content="Free Hindi Devanagari writing practice for heritage speakers.">
+<meta name="description" content="Free Malayalam writing practice for heritage speakers.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
 <style>
@@ -44,7 +44,7 @@
   .review-grid-char{font-size:28px;font-family:serif;color:var(--ink);line-height:1.2;word-break:break-all;overflow-wrap:break-word;width:100%}.review-grid-rom{font-size:10px;color:var(--accent);margin-top:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%}.review-grid-eng{font-size:9px;color:var(--inkfader);margin-top:2px;line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%}
   .review-start-btn{margin-top:32px}
   #review-flip-phase{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;padding:60px 48px}
-  .flip-card{width:420px;max-width:90vw;min-height:260px;background:var(--paperdark);border:1.5px solid var(--rule);border-radius:12px;padding:40px 36px;text-align:center;cursor:pointer;transition:all .2s;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px}.flip-card.flipped{background:var(--paper);border-color:var(--accent)}
+  .flip-card{width:420px;max-width:90vw;min-height:260px;background:var(--paperdark);border:1.5px solid var(--rule);border-radius:12px;padding:40px 36px;text-align:center;cursor:pointer;transition:all .2s;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;position:relative}.flip-card.flipped{background:var(--paper);border-color:var(--accent)}
   .flip-front-label{font-size:10px;color:var(--inkfader);letter-spacing:0.16em}.flip-char{font-size:96px;font-family:serif;color:var(--ink);line-height:1}.flip-rom{font-size:24px;color:var(--accent);font-style:italic}.flip-eng{font-size:15px;color:var(--inkfade)}.flip-example{font-size:13px;color:var(--inkfader);margin-top:4px;font-style:italic}
   .flip-nav{display:flex;gap:12px;align-items:center}.btn-flip-nav{background:transparent;border:1.5px solid var(--rule);border-radius:3px;padding:8px 20px;font-family:inherit;font-size:13px;color:var(--inkfade);cursor:pointer;letter-spacing:0.06em;transition:all .15s}.btn-flip-nav:hover{border-color:var(--ink);color:var(--ink)}.flip-count{font-size:12px;color:var(--inkfader);min-width:60px;text-align:center}
   .btn-start-study{background:var(--ink);color:var(--paper);border:none;border-radius:3px;padding:10px 28px;font-family:inherit;font-size:13px;letter-spacing:0.08em;cursor:pointer}.btn-start-study:hover{opacity:.85}
@@ -54,7 +54,10 @@
   .study-left,.study-right{width:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 48px;gap:28px;min-height:100vh}.study-left{border-right:1px solid var(--rule)}
   .prompt-label{font-size:11px;color:var(--accent);letter-spacing:0.18em;text-align:center}.prompt-word{font-size:44px;color:var(--ink);line-height:1.1;margin-bottom:8px;text-align:center}.prompt-rom{font-size:21px;color:var(--inkfade);font-style:italic;text-align:center}.prompt-rom-script{font-size:62px;color:var(--accent);font-style:italic;margin-bottom:6px;text-align:center}.prompt-eng-script{font-size:15px;color:var(--inkfade);text-align:center}.hint{font-size:11px;color:var(--inkfader);letter-spacing:0.1em}
   .canvas-wrap{display:flex;flex-direction:column;align-items:center;gap:8px}
+  .canvas-scroll{max-width:100%;overflow-x:auto;border-radius:4px;}
   #draw-canvas{display:block;touch-action:none;cursor:crosshair;border-radius:4px;border:1.5px solid var(--rule);box-shadow:inset 0 1px 4px rgba(13,26,18,0.05),0 2px 14px rgba(13,26,18,0.07)}
+  .btn-speak{position:absolute;bottom:14px;right:16px;background:transparent;border:none;color:var(--inkfade);cursor:pointer;font-size:18px;padding:4px;line-height:1;opacity:0.5;transition:opacity .15s}.btn-speak:hover{opacity:1}
+  .btn-speak.speaking{color:var(--accent);opacity:1}
   .btn-clear{background:transparent;border:none;color:var(--inkfader);font-size:12px;cursor:pointer;letter-spacing:0.1em;font-family:inherit;padding:2px 0}.btn-clear:hover{color:var(--ink)}
   .reveal-row{display:flex;gap:10px;align-items:center}.btn-reveal{background:var(--ink);color:var(--paper);border:none;border-radius:3px;padding:12px 40px;font-family:inherit;font-size:15px;letter-spacing:0.1em;cursor:pointer}.btn-reveal:hover{opacity:.85}.btn-dontknow{background:transparent;border:1.5px solid var(--again);color:var(--again);border-radius:3px;padding:12px 16px;font-family:inherit;font-size:13px;letter-spacing:0.06em;cursor:pointer}.btn-dontknow:hover{background:var(--again);color:#fff}
   .answer-char{font-size:86px;color:var(--ink);font-family:serif;line-height:1;text-align:center}.answer-char.word{font-size:52px}.answer-rom{font-size:21px;color:var(--accent);margin-top:4px;text-align:center}.answer-eng{font-size:14px;color:var(--inkfade);margin-top:3px;text-align:center}.answer-example{font-size:13px;color:var(--inkfader);margin-top:6px;text-align:center;font-style:italic}
@@ -63,11 +66,11 @@
   .g-again{border:1.5px solid var(--again);color:var(--again)}.g-again:hover{background:rgba(181,58,42,0.08)}.g-hard{border:1.5px solid var(--hard);color:var(--hard)}.g-hard:hover{background:rgba(176,112,32,0.08)}.g-good{border:1.5px solid var(--good);color:var(--good)}.g-good:hover{background:rgba(58,122,74,0.08)}.g-easy{border:1.5px solid var(--easy);color:var(--easy)}.g-easy:hover{background:rgba(42,90,138,0.08)}
   .done-word{font-size:52px;font-weight:300;letter-spacing:-0.02em}.done-sub{font-size:14px;color:var(--inkfade);letter-spacing:0.1em}.done-grades{display:flex;gap:20px}.done-box{text-align:center;width:68px}.done-num{font-size:30px;font-weight:600}.done-lbl{font-size:11px;letter-spacing:0.08em;margin-top:2px}
   .btn-home{background:transparent;border:1.5px solid var(--ink);border-radius:3px;padding:10px 32px;font-family:inherit;font-size:14px;color:var(--ink);letter-spacing:0.08em;cursor:pointer}.btn-home:hover{background:var(--ink);color:var(--paper)}
-  #ref-overlay{display:none;position:fixed;inset:0;background:rgba(13,26,18,0.05,0.5);z-index:200;align-items:center;justify-content:center;backdrop-filter:blur(2px)}#ref-overlay.open{display:flex}
-  .ref-modal{background:var(--paper);border-radius:4px;padding:40px 48px;width:820px;max-width:92vw;max-height:86vh;overflow-y:auto;box-shadow:0 24px 80px rgba(13,26,18,0.05,0.25)}.ref-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:28px}.ref-title{font-size:20px;font-weight:600;letter-spacing:-0.01em}.btn-close{background:transparent;border:none;color:var(--inkfader);cursor:pointer;font-size:20px;line-height:1}
+  #ref-overlay{display:none;position:fixed;inset:0;background:rgba(13,26,18,0.5);z-index:200;align-items:center;justify-content:center;backdrop-filter:blur(2px)}#ref-overlay.open{display:flex}
+  .ref-modal{background:var(--paper);border-radius:4px;padding:40px 48px;width:820px;max-width:92vw;max-height:86vh;overflow-y:auto;box-shadow:0 24px 80px rgba(13,26,18,0.25)}.ref-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:28px}.ref-title{font-size:20px;font-weight:600;letter-spacing:-0.01em}.btn-close{background:transparent;border:none;color:var(--inkfader);cursor:pointer;font-size:20px;line-height:1}
   .ref-sec{margin-bottom:28px}.ref-sec-label{font-size:11px;color:var(--accent);letter-spacing:0.16em;margin-bottom:12px}.ref-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}.ref-card{background:var(--paperdark);border:1px solid var(--rule);border-radius:3px;padding:10px 6px;text-align:center}.ref-char{font-size:26px;color:var(--ink);font-family:serif;line-height:1.2}.ref-rom{font-size:11px;color:var(--accent);margin-top:3px}.ref-eng{font-size:9px;color:var(--inkfader);margin-top:2px;line-height:1.3}
-  #confirm-overlay{display:none;position:fixed;inset:0;background:rgba(13,26,18,0.05,0.4);z-index:300;align-items:center;justify-content:center;backdrop-filter:blur(2px)}#confirm-overlay.open{display:flex}
-  .confirm-box{background:var(--paper);border-radius:4px;padding:36px 40px;width:360px;max-width:90vw;box-shadow:0 12px 48px rgba(13,26,18,0.05,0.2);text-align:center}.confirm-title{font-size:18px;font-weight:600;margin-bottom:8px}.confirm-sub{font-size:14px;color:var(--inkfade);margin-bottom:24px;line-height:1.5}.confirm-btns{display:flex;gap:10px;justify-content:center}.btn-cancel{background:transparent;border:1.5px solid var(--rule);border-radius:3px;padding:8px 24px;font-family:inherit;font-size:13px;color:var(--inkfade);cursor:pointer;letter-spacing:0.06em}.btn-cancel:hover{border-color:var(--ink);color:var(--ink)}.btn-confirm-reset{background:var(--again);color:#fff;border:none;border-radius:3px;padding:8px 24px;font-family:inherit;font-size:13px;cursor:pointer;letter-spacing:0.06em;font-weight:600}.btn-confirm-reset:hover{opacity:.85}
+  #confirm-overlay{display:none;position:fixed;inset:0;background:rgba(13,26,18,0.4);z-index:300;align-items:center;justify-content:center;backdrop-filter:blur(2px)}#confirm-overlay.open{display:flex}
+  .confirm-box{background:var(--paper);border-radius:4px;padding:36px 40px;width:360px;max-width:90vw;box-shadow:0 12px 48px rgba(13,26,18,0.2);text-align:center}.confirm-title{font-size:18px;font-weight:600;margin-bottom:8px}.confirm-sub{font-size:14px;color:var(--inkfade);margin-bottom:24px;line-height:1.5}.confirm-btns{display:flex;gap:10px;justify-content:center}.btn-cancel{background:transparent;border:1.5px solid var(--rule);border-radius:3px;padding:8px 24px;font-family:inherit;font-size:13px;color:var(--inkfade);cursor:pointer;letter-spacing:0.06em}.btn-cancel:hover{border-color:var(--ink);color:var(--ink)}.btn-confirm-reset{background:var(--again);color:#fff;border:none;border-radius:3px;padding:8px 24px;font-family:inherit;font-size:13px;cursor:pointer;letter-spacing:0.06em;font-weight:600}.btn-confirm-reset:hover{opacity:.85}
   @media(max-width:900px){header,.hero,.overall-progress,.decks,footer{padding-left:28px;padding-right:28px}.hero-title{font-size:40px}.hero-char{display:none}#study-screen.active{flex-direction:column}.study-left,.study-right{width:100%;min-height:auto;padding:48px 28px;border-right:none;border-bottom:1px solid var(--rule)}.study-right{border-bottom:none}.ref-grid{grid-template-columns:repeat(4,1fr)}.ref-modal{padding:28px 24px}.overall-progress{flex-wrap:wrap;gap:20px}.review-header,#review-grid-phase{padding-left:28px;padding-right:28px}.flip-card{width:90vw}}
 </style>
 </head>
@@ -92,7 +95,7 @@
   <div class="review-header"><button class="btn-back" onclick="goHome()">← decks</button><div class="review-title" id="review-title"></div><div class="review-sub" id="review-sub"></div></div>
   <div id="review-grid-phase"><div class="review-grid" id="review-grid"></div><div class="review-start-btn"><button class="btn-filled btn-study" onclick="startFlip()">Flip through →</button></div></div>
   <div id="review-flip-phase" style="display:none">
-    <div class="flip-card" id="flip-card"><div class="flip-front-label" id="flip-front-label">TAP TO REVEAL</div><div class="flip-char" id="flip-char"></div><div class="flip-rom" id="flip-rom" style="display:none"></div><div class="flip-eng" id="flip-eng" style="display:none"></div><div class="flip-example" id="flip-example" style="display:none"></div><div id="trace-area"></div></div>
+    <div class="flip-card" id="flip-card"><div class="flip-front-label" id="flip-front-label">TAP TO REVEAL</div><button class="btn-speak" id="btn-speak" title="Listen" onclick="event.stopPropagation();speak(reviewCards[flipIdx].h,this);">🔊</button><div class="flip-char" id="flip-char"></div><div class="flip-rom" id="flip-rom" style="display:none"></div><div class="flip-eng" id="flip-eng" style="display:none"></div><div class="flip-example" id="flip-example" style="display:none"></div><div id="trace-area"></div></div>
     <div class="flip-nav"><button class="btn-flip-nav" onclick="backToGrid()">⊞ grid</button><button class="btn-flip-nav" onclick="flipNav(-1)">← prev</button><div class="flip-count" id="flip-count"></div><button class="btn-flip-nav" onclick="flipNav(1)">next →</button></div>
     <button class="btn-start-study" onclick="startStudyFromReview()">Start writing practice →</button>
   </div>
@@ -101,16 +104,58 @@
   <div id="progress-bar"></div>
   <div class="study-nav"><button class="btn-back" onclick="goHome()">← decks</button><span class="study-count" id="study-count"></span></div>
   <div class="study-left"><div class="prompt-label" id="prompt-label"></div><div id="prompt-main"></div><div class="hint">space to reveal · ? to skip</div></div>
-  <div class="study-right"><div class="canvas-wrap"><canvas id="draw-canvas" width="320" height="320" style="width:320px;height:320px;transition:all 0.2s"></canvas><button class="btn-clear" onclick="clearCanvas()">↺ clear</button></div><div id="reveal-area"></div></div>
+  <div class="study-right"><div class="canvas-wrap"><div class="canvas-scroll"><canvas id="draw-canvas"></canvas></div><button class="btn-clear" onclick="clearCanvas()">↺ clear</button></div><div id="reveal-area"></div></div>
 </div>
 <div id="done-screen" class="screen"><div class="done-word" id="done-word"></div><div class="done-sub" id="done-sub"></div><div class="done-grades" id="done-grades"></div><button class="btn-home" onclick="goHome()">back to decks</button></div>
 <div id="ref-overlay" onclick="closeRefOverlay(event)"><div class="ref-modal"><div class="ref-header"><div class="ref-title">Malayalam Script Reference · അക്ഷരമാല</div><button class="btn-close" onclick="closeRef()">✕</button></div><div class="ref-sec"><div class="ref-sec-label">VOWELS · സ്വരങ്ങൾ</div><div class="ref-grid" id="ref-vowels"></div></div><div class="ref-sec"><div class="ref-sec-label">CONSONANTS · വ്യഞ്ജനങ്ങൾ</div><div class="ref-grid" id="ref-consonants"></div></div></div></div>
-<div id="confirm-overlay" onclick="closeConfirmOverlay(event)"><div class="confirm-box"><div class="confirm-title">Reset all progress?</div><div class="confirm-sub">This will clear your SRS history for all decks. This cannot be undone. This cannot be undone.</div><div class="confirm-btns"><button class="btn-cancel" onclick="closeConfirm()">Cancel</button><button class="btn-confirm-reset" onclick="doReset()">Reset</button></div></div></div>
+<div id="confirm-overlay" onclick="closeConfirmOverlay(event)"><div class="confirm-box"><div class="confirm-title">Reset all progress?</div><div class="confirm-sub">This will clear your SRS history for all decks. This cannot be undone.</div><div class="confirm-btns"><button class="btn-cancel" onclick="closeConfirm()">Cancel</button><button class="btn-confirm-reset" onclick="doReset()">Reset</button></div></div></div>
 <script>
 const VOWELS=[{id:"v1",h:"അ",r:"a",e:"short a",ex:"അമ്മ — amma (mother)"},{id:"v2",h:"ആ",r:"aa",e:"long a",ex:"ആന — aana (elephant)"},{id:"v3",h:"ഇ",r:"i",e:"short i",ex:"ഇല — ila (leaf)"},{id:"v4",h:"ഈ",r:"ee",e:"long i",ex:"ഈന്തപ്പഴം — eenthapazhom (date fruit)"},{id:"v5",h:"ഉ",r:"u",e:"short u",ex:"ഉണ്ണി — unni (baby boy)"},{id:"v6",h:"ഊ",r:"oo",e:"long u",ex:"ഊഞ്ഞാൽ — ooonnjaal (swing)"},{id:"v7",h:"എ",r:"e",e:"short e",ex:"എലി — eli (rat)"},{id:"v8",h:"ഏ",r:"ee",e:"long e",ex:"ഏണി — eeni (ladder)"},{id:"v9",h:"ഐ",r:"ai",e:"ai sound",ex:"ഐശ്വര്യം — aishwaryam (prosperity)"},{id:"v10",h:"ഒ",r:"o",e:"short o",ex:"ഒട്ടകം — ottakam (camel)"},{id:"v11",h:"ഓ",r:"oo",e:"long o",ex:"ഓട്ടം — oottam (running)"},{id:"v12",h:"ഔ",r:"au",e:"au sound",ex:"ഔഷധം — aushadham (medicine)"},{id:"v13",h:"അം",r:"am",e:"anusvara — nasal",ex:""},{id:"v14",h:"അഃ",r:"ah",e:"visarga — aspirate",ex:""}];
 const CONSONANTS=[{id:"c1",h:"ക",r:"ka",e:"k sound",ex:"കണ്ണ് — kann (eye)"},{id:"c2",h:"ഖ",r:"kha",e:"kh aspirated",ex:"ഖേദം — khedam (sorrow)"},{id:"c3",h:"ഗ",r:"ga",e:"g sound",ex:"ഗണം — ganam (group)"},{id:"c4",h:"ഘ",r:"gha",e:"gh aspirated",ex:"ഘടം — ghatam (pot)"},{id:"c5",h:"ങ",r:"ṅa",e:"ng nasal",ex:"rare standalone"},{id:"c6",h:"ച",r:"ca",e:"ch sound",ex:"ചന്ദ്രൻ — chandran (moon)"},{id:"c7",h:"ഛ",r:"cha",e:"chh aspirated",ex:"ഛായ — chaaya (shadow)"},{id:"c8",h:"ജ",r:"ja",e:"j sound",ex:"ജലം — jalam (water)"},{id:"c9",h:"ഝ",r:"jha",e:"jh aspirated",ex:""},{id:"c10",h:"ഞ",r:"ña",e:"ny palatal nasal",ex:"ഞാൻ — njaan (I/me)"},{id:"c11",h:"ട",r:"ṭa",e:"hard t retroflex",ex:""},{id:"c12",h:"ഠ",r:"ṭha",e:"hard th retroflex",ex:"rare"},{id:"c13",h:"ഡ",r:"ḍa",e:"hard d retroflex",ex:""},{id:"c14",h:"ഢ",r:"ḍha",e:"hard dh retroflex",ex:"rare"},{id:"c15",h:"ണ",r:"ṇa",e:"retroflex n",ex:"മണൽ — manal (sand)"},{id:"c16",h:"ത",r:"ta",e:"soft t dental",ex:"തല — thala (head)"},{id:"c17",h:"ഥ",r:"tha",e:"soft th dental",ex:"rare"},{id:"c18",h:"ദ",r:"da",e:"soft d dental",ex:"ദയ — daya (mercy)"},{id:"c19",h:"ധ",r:"dha",e:"soft dh dental",ex:"ധൈര്യം — dhairyam (courage)"},{id:"c20",h:"ന",r:"na",e:"n sound",ex:"നല്ല — nalla (good)"},{id:"c21",h:"പ",r:"pa",e:"p sound",ex:"പൂ — poo (flower)"},{id:"c22",h:"ഫ",r:"pha",e:"ph/f aspirated",ex:"ഫലം — phalam (fruit)"},{id:"c23",h:"ബ",r:"ba",e:"b sound",ex:"ബഹുമാനം — bahumaanam (respect)"},{id:"c24",h:"ഭ",r:"bha",e:"bh aspirated",ex:"ഭക്ഷണം — bhakshanam (food)"},{id:"c25",h:"മ",r:"ma",e:"m sound",ex:"മലയാളം — malayaalam"},{id:"c26",h:"യ",r:"ya",e:"y sound",ex:"യന്ത്രം — yantram (machine)"},{id:"c27",h:"ര",r:"ra",e:"r sound",ex:"രാത്രി — raathri (night)"},{id:"c28",h:"ല",r:"la",e:"l sound",ex:"ലോകം — lokam (world)"},{id:"c29",h:"വ",r:"va",e:"v sound",ex:"വാ — vaa (come)"},{id:"c30",h:"ശ",r:"sha",e:"sh palatal",ex:"ശബ്ദം — shabdam (sound)"},{id:"c31",h:"ഷ",r:"ṣha",e:"sh retroflex",ex:"ഷർട്ട് — shirt"},{id:"c32",h:"സ",r:"sa",e:"s sound",ex:"സൂര്യൻ — sooryan (sun)"},{id:"c33",h:"ഹ",r:"ha",e:"h sound",ex:"ഹൃദയം — hridayam (heart)"},{id:"c34",h:"ള",r:"ḷa",e:"retroflex l",ex:"കള — kala (weed)"},{id:"c35",h:"ഴ",r:"zha",e:"unique Malayalam zh",ex:"മഴ — mazha (rain)"},{id:"c36",h:"റ",r:"ṟa",e:"hard r alveolar",ex:"റോഡ് — road"}];
 const WORD_DECKS=[{id:"greetings",label:"Greetings",cards:[{id:"w1",h:"നമസ്കാരം",r:"namaskaram",e:"Hello / Greetings",ex:""},{id:"w2",h:"നന്ദി",r:"nandi",e:"Thank you",ex:""},{id:"w3",h:"അതെ",r:"athe",e:"Yes",ex:""},{id:"w4",h:"ഇല്ല",r:"illa",e:"No",ex:""},{id:"w5",h:"ക്ഷമിക്കൂ",r:"kshamikkoo",e:"Sorry / Excuse me",ex:""},{id:"w6",h:"സുഖമാണോ",r:"sukhamaano",e:"Are you well?",ex:""},{id:"w7",h:"സുഖമാണ്",r:"sukhaman",e:"I am well",ex:""},{id:"w8",h:"വിട",r:"vida",e:"Goodbye",ex:""}]},{id:"family",label:"Family",cards:[{id:"fa1",h:"അമ്മ",r:"amma",e:"Mother",ex:""},{id:"fa2",h:"അച്ഛൻ",r:"acchan",e:"Father",ex:""},{id:"fa3",h:"ചേട്ടൻ",r:"chettan",e:"Elder brother",ex:""},{id:"fa4",h:"ചേച്ചി",r:"chechi",e:"Elder sister",ex:""},{id:"fa5",h:"അനിയൻ",r:"aniyan",e:"Younger brother",ex:""},{id:"fa6",h:"അനിയത്തി",r:"aniyathi",e:"Younger sister",ex:""},{id:"fa7",h:"മുത്തച്ഛൻ",r:"muthacchan",e:"Grandfather",ex:""},{id:"fa8",h:"മുത്തശ്ശി",r:"muthashi",e:"Grandmother",ex:""}]},{id:"body",label:"Body",cards:[{id:"b1",h:"കൈ",r:"kai",e:"Hand",ex:""},{id:"b2",h:"കാൽ",r:"kaal",e:"Foot / Leg",ex:""},{id:"b3",h:"കണ്ണ്",r:"kann",e:"Eye",ex:""},{id:"b4",h:"ചെവി",r:"chevi",e:"Ear",ex:""},{id:"b5",h:"മൂക്ക്",r:"mookku",e:"Nose",ex:""},{id:"b6",h:"വായ",r:"vaaya",e:"Mouth",ex:""},{id:"b7",h:"തല",r:"thala",e:"Head",ex:""},{id:"b8",h:"ഹൃദയം",r:"hridayam",e:"Heart",ex:""}]},{id:"food",label:"Food",cards:[{id:"fo1",h:"വെള്ളം",r:"vellam",e:"Water",ex:""},{id:"fo2",h:"ഭക്ഷണം",r:"bhakshanam",e:"Food",ex:""},{id:"fo3",h:"പാൽ",r:"paal",e:"Milk",ex:""},{id:"fo4",h:"ചായ",r:"chaaya",e:"Tea",ex:""},{id:"fo5",h:"ചോറ്",r:"choru",e:"Rice (cooked)",ex:""},{id:"fo6",h:"റൊട്ടി",r:"rotti",e:"Bread",ex:""},{id:"fo7",h:"കറി",r:"kari",e:"Curry",ex:""},{id:"fo8",h:"മധുരം",r:"madhuram",e:"Sweet",ex:""}]},{id:"numbers",label:"Numbers",cards:[{id:"n1",h:"ഒന്ന്",r:"onnu",e:"One",ex:""},{id:"n2",h:"രണ്ട്",r:"randu",e:"Two",ex:""},{id:"n3",h:"മൂന്ന്",r:"moonnu",e:"Three",ex:""},{id:"n4",h:"നാല്",r:"naalu",e:"Four",ex:""},{id:"n5",h:"അഞ്ച്",r:"anchu",e:"Five",ex:""},{id:"n6",h:"ആറ്",r:"aaru",e:"Six",ex:""},{id:"n7",h:"ഏഴ്",r:"eezhu",e:"Seven",ex:""},{id:"n8",h:"എട്ട്",r:"ettu",e:"Eight",ex:""},{id:"n9",h:"ഒൻപത്",r:"onpathu",e:"Nine",ex:""},{id:"n10",h:"പത്ത്",r:"paththu",e:"Ten",ex:""}]},{id:"colors",label:"Colors",cards:[{id:"col1",h:"ചുവപ്പ്",r:"chuvappu",e:"Red",ex:""},{id:"col2",h:"നീല",r:"neela",e:"Blue",ex:""},{id:"col3",h:"പച്ച",r:"pacha",e:"Green",ex:""},{id:"col4",h:"മഞ്ഞ",r:"manja",e:"Yellow",ex:""},{id:"col5",h:"വെള്ള",r:"vella",e:"White",ex:""},{id:"col6",h:"കറുപ്പ്",r:"karuppu",e:"Black",ex:""},{id:"col7",h:"ഓറഞ്ച്",r:"oranchu",e:"Orange",ex:""},{id:"col8",h:"പിങ്ക്",r:"pinku",e:"Pink",ex:""}]}];
-const ALL_DECKS=[{id:"vowels",label:"Vowels",sub:"14 characters",cards:VOWELS,isScript:true},{id:"consonants",label:"Consonants",sub:"36 characters",cards:CONSONANTS,isScript:true},{id:"diacritics",label:"Vowel Signs · ചിഹ്നങ്ങൾ",sub:"13 diacritics",cards:[{id:"mld1",mark:"ാ",h:"കാ",base:"ക",r:"k+kaa=kaa",baseRom:"k",vowelRom:"kaa",e:"long a — ആ sound",ex:""},{id:"mld2",mark:"ി",h:"കി",base:"ക",r:"k+ki=ki",baseRom:"k",vowelRom:"ki",e:"short i — ഇ sound",ex:""},{id:"mld3",mark:"ീ",h:"കീ",base:"ക",r:"k+kee=kee",baseRom:"k",vowelRom:"kee",e:"long i — ഈ sound",ex:""},{id:"mld4",mark:"ു",h:"കു",base:"ക",r:"k+ku=ku",baseRom:"k",vowelRom:"ku",e:"short u — ഉ sound",ex:""},{id:"mld5",mark:"ൂ",h:"കൂ",base:"ക",r:"k+koo=koo",baseRom:"k",vowelRom:"koo",e:"long u — ഊ sound",ex:""},{id:"mld6",mark:"െ",h:"കെ",base:"ക",r:"k+ke=ke",baseRom:"k",vowelRom:"ke",e:"short e — എ sound",ex:""},{id:"mld7",mark:"േ",h:"കേ",base:"ക",r:"k+kee=kee",baseRom:"k",vowelRom:"kee",e:"long e — ഏ sound",ex:""},{id:"mld8",mark:"ൈ",h:"കൈ",base:"ക",r:"k+kai=kai",baseRom:"k",vowelRom:"kai",e:"ai — ഐ sound",ex:""},{id:"mld9",mark:"ൊ",h:"കൊ",base:"ക",r:"k+ko=ko",baseRom:"k",vowelRom:"ko",e:"short o — ഒ sound",ex:""},{id:"mld10",mark:"ോ",h:"കോ",base:"ക",r:"k+koo=koo",baseRom:"k",vowelRom:"koo",e:"long o — ഓ sound",ex:""},{id:"mld11",mark:"ൌ",h:"കൌ",base:"ക",r:"k+kau=kau",baseRom:"k",vowelRom:"kau",e:"au — ഔ sound",ex:""},{id:"mld12",mark:"ം",h:"കം",base:"ക",r:"k+kam=kam",baseRom:"k",vowelRom:"kam",e:"anusvara — nasal ending",ex:""},{id:"mld13",mark:"്",h:"ക്",base:"ക",r:"k+k=k",baseRom:"k",vowelRom:"k",e:"virama — removes inherent a",ex:""}],isScript:true,isDiacritic:true},...WORD_DECKS.map(d=>({...d,sub:`${d.cards.length} words`,isScript:false}))];
+const ALPHABET_WORDS_DECK={id:"alphabet_words",label:"Alphabet Primer",cards:[
+  {id:"aw1",h:"അമ്മ",r:"amma",e:"mother · അ"},
+  {id:"aw2",h:"ആന",r:"aana",e:"elephant · ആ"},
+  {id:"aw3",h:"ഇല",r:"ila",e:"leaf · ഇ"},
+  {id:"aw4",h:"ഈച്ച",r:"eeecha",e:"fly · ഈ"},
+  {id:"aw5",h:"ഉണ്ണി",r:"unni",e:"baby · ഉ"},
+  {id:"aw6",h:"ഊര്",r:"oor",e:"village · ഊ"},
+  {id:"aw7",h:"എലി",r:"eli",e:"rat · എ"},
+  {id:"aw8",h:"ഏണി",r:"eeni",e:"ladder · ഏ"},
+  {id:"aw9",h:"ഐനി",r:"aini",e:"mirror · ഐ"},
+  {id:"aw10",h:"ഒട്ടകം",r:"ottakam",e:"camel · ഒ"},
+  {id:"aw11",h:"ഓട്",r:"oot",e:"tile · ഓ"},
+  {id:"aw12",h:"ഔത",r:"autha",e:"wasp · ഔ"},
+  {id:"aw13",h:"കൈ",r:"kai",e:"hand · ക"},
+  {id:"aw14",h:"ഖര",r:"khara",e:"hard · ഖ"},
+  {id:"aw15",h:"ഗണം",r:"ganam",e:"group · ഗ"},
+  {id:"aw16",h:"ഘടം",r:"ghatam",e:"pot · ഘ"},
+  {id:"aw17",h:"ചന്ദ്രൻ",r:"chandran",e:"moon · ച"},
+  {id:"aw18",h:"ഛായ",r:"chaaya",e:"shade · ഛ"},
+  {id:"aw19",h:"ജലം",r:"jalam",e:"water · ജ"},
+  {id:"aw20",h:"ഞാൻ",r:"njaan",e:"I · ഞ"},
+  {id:"aw21",h:"മണൽ",r:"manal",e:"sand · ണ"},
+  {id:"aw22",h:"തല",r:"thala",e:"head · ത"},
+  {id:"aw23",h:"ദയ",r:"daya",e:"mercy · ദ"},
+  {id:"aw24",h:"ധനം",r:"dhanam",e:"money · ധ"},
+  {id:"aw25",h:"നാട്",r:"naad",e:"homeland · ന"},
+  {id:"aw26",h:"പൂ",r:"poo",e:"flower · പ"},
+  {id:"aw27",h:"ഫലം",r:"phalam",e:"fruit · ഫ"},
+  {id:"aw28",h:"ബസ്",r:"bas",e:"bus · ബ"},
+  {id:"aw29",h:"ഭൂമി",r:"bhoomi",e:"earth · ഭ"},
+  {id:"aw30",h:"മലം",r:"malam",e:"hill · മ"},
+  {id:"aw31",h:"യുദ്ധം",r:"yuddham",e:"war · യ"},
+  {id:"aw32",h:"രാജ്",r:"raaj",e:"king · ര"},
+  {id:"aw33",h:"ലോകം",r:"lokam",e:"world · ല"},
+  {id:"aw34",h:"വള",r:"vala",e:"bangle · വ"},
+  {id:"aw35",h:"ശക്തി",r:"shakthi",e:"power · ശ"},
+  {id:"aw36",h:"സൂര്യൻ",r:"sooryan",e:"sun · സ"},
+  {id:"aw37",h:"ഹരം",r:"haram",e:"green · ഹ"},
+  {id:"aw38",h:"കള",r:"kala",e:"weed · ള"},
+  {id:"aw39",h:"മഴ",r:"mazha",e:"rain · ഴ"},
+  {id:"aw40",h:"റൊട്ടി",r:"rotti",e:"bread · റ"}
+],sub:"40 words",isScript:false};
+const ALL_DECKS=[{id:"vowels",label:"Vowels",sub:"14 characters",cards:VOWELS,isScript:true},{id:"consonants",label:"Consonants",sub:"36 characters",cards:CONSONANTS,isScript:true},{id:"diacritics",label:"Vowel Signs · ചിഹ്നങ്ങൾ",sub:"13 diacritics",cards:[{id:"mld1",mark:"ാ",h:"കാ",base:"ക",r:"k+kaa=kaa",baseRom:"k",vowelRom:"kaa",e:"long a — ആ sound",ex:""},{id:"mld2",mark:"ി",h:"കി",base:"ക",r:"k+ki=ki",baseRom:"k",vowelRom:"ki",e:"short i — ഇ sound",ex:""},{id:"mld3",mark:"ീ",h:"കീ",base:"ക",r:"k+kee=kee",baseRom:"k",vowelRom:"kee",e:"long i — ഈ sound",ex:""},{id:"mld4",mark:"ു",h:"കു",base:"ക",r:"k+ku=ku",baseRom:"k",vowelRom:"ku",e:"short u — ഉ sound",ex:""},{id:"mld5",mark:"ൂ",h:"കൂ",base:"ക",r:"k+koo=koo",baseRom:"k",vowelRom:"koo",e:"long u — ഊ sound",ex:""},{id:"mld6",mark:"െ",h:"കെ",base:"ക",r:"k+ke=ke",baseRom:"k",vowelRom:"ke",e:"short e — എ sound",ex:""},{id:"mld7",mark:"േ",h:"കേ",base:"ക",r:"k+kee=kee",baseRom:"k",vowelRom:"kee",e:"long e — ഏ sound",ex:""},{id:"mld8",mark:"ൈ",h:"കൈ",base:"ക",r:"k+kai=kai",baseRom:"k",vowelRom:"kai",e:"ai — ഐ sound",ex:""},{id:"mld9",mark:"ൊ",h:"കൊ",base:"ക",r:"k+ko=ko",baseRom:"k",vowelRom:"ko",e:"short o — ഒ sound",ex:""},{id:"mld10",mark:"ോ",h:"കോ",base:"ക",r:"k+koo=koo",baseRom:"k",vowelRom:"koo",e:"long o — ഓ sound",ex:""},{id:"mld11",mark:"ൌ",h:"കൌ",base:"ക",r:"k+kau=kau",baseRom:"k",vowelRom:"kau",e:"au — ഔ sound",ex:""},{id:"mld12",mark:"ം",h:"കം",base:"ക",r:"k+kam=kam",baseRom:"k",vowelRom:"kam",e:"anusvara — nasal ending",ex:""},{id:"mld13",mark:"്",h:"ക്",base:"ക",r:"k+k=k",baseRom:"k",vowelRom:"k",e:"virama — removes inherent a",ex:""}],isScript:true,isDiacritic:true},ALPHABET_WORDS_DECK,...WORD_DECKS.map(d=>({...d,sub:`${d.cards.length} words`,isScript:false}))];
 const ALL_CARDS=ALL_DECKS.flatMap(d=>d.cards);
 const SRS_KEY="likho_malayalam_srs";
 function loadSRS(){try{return JSON.parse(localStorage.getItem(SRS_KEY)||"{}")}catch{return{}}}
@@ -135,10 +180,18 @@ function shuffle(arr){
 
 const cv=document.getElementById("draw-canvas"),ctx=cv.getContext("2d");
 let drawing=false,lx=0,ly=0,ghostChar=null;
-function xy(e){const r=cv.getBoundingClientRect(),sx=cv.width/r.width,sy=cv.height/r.height,s=e.touches?e.touches[0]:e;return[(s.clientX-r.left)*sx,(s.clientY-r.top)*sy]}
+let logicalW=320,logicalH=320;
+function initCanvas(lw,lh){
+  const dpr=window.devicePixelRatio||1;
+  logicalW=lw;logicalH=lh;
+  cv.width=Math.round(lw*dpr);cv.height=Math.round(lh*dpr);
+  cv.style.width=lw+"px";cv.style.height=lh+"px";
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+}
+function xy(e){const r=cv.getBoundingClientRect(),s=e.touches?e.touches[0]:e;return[s.clientX-r.left,s.clientY-r.top]}
 
 function drawGrid(){
-  const W=cv.width,H=cv.height;
+  const W=logicalW,H=logicalH;
   ctx.clearRect(0,0,W,H);ctx.fillStyle="#F4F7F5";ctx.fillRect(0,0,W,H);
   ctx.strokeStyle="rgba(13,26,18,0.05)";ctx.lineWidth=1;
   for(let y=40;y<H;y+=40){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}
@@ -146,31 +199,68 @@ function drawGrid(){
   const baseline=Math.round(H*0.65);
   ctx.strokeStyle="rgba(26,107,90,0.22)";ctx.lineWidth=1.5;ctx.setLineDash([]);
   ctx.beginPath();ctx.moveTo(0,baseline);ctx.lineTo(W,baseline);ctx.stroke();
-  // geometric circle guide for rounded letterforms
-  const cr=Math.round(W*0.30);
-  ctx.strokeStyle="rgba(26,107,90,0.07)";ctx.lineWidth=1;ctx.setLineDash([3,5]);
-  ctx.beginPath();ctx.arc(W/2,baseline-cr,cr,0,Math.PI*2);ctx.stroke();
-  // center cross
-  ctx.strokeStyle="rgba(26,107,90,0.06)";ctx.lineWidth=1;ctx.setLineDash([4,6]);
-  ctx.beginPath();ctx.moveTo(W/2,0);ctx.lineTo(W/2,H);ctx.stroke();
-  ctx.beginPath();ctx.moveTo(0,baseline-cr);ctx.lineTo(W,baseline-cr);ctx.stroke();
-  ctx.setLineDash([]);
+  // geometric circle guide — one per cell for word cards, once for script cards
+  const isWordCanvas=currentDeck&&!currentDeck.isScript;
+  if(isWordCanvas){
+    const cellW=260;
+    const numCells=Math.round(W/cellW);
+    for(let i=0;i<numCells;i++){
+      const cx=cellW*i+cellW/2;
+      const cr=Math.round(cellW*0.30);
+      ctx.strokeStyle="rgba(26,107,90,0.07)";ctx.lineWidth=1;ctx.setLineDash([3,5]);
+      ctx.beginPath();ctx.arc(cx,baseline-cr,cr,0,Math.PI*2);ctx.stroke();
+      ctx.strokeStyle="rgba(26,107,90,0.06)";ctx.lineWidth=1;
+      ctx.beginPath();ctx.moveTo(cx,0);ctx.lineTo(cx,H);ctx.stroke();
+    }
+    ctx.setLineDash([]);
+  } else {
+    const cr=Math.round(W*0.30);
+    ctx.strokeStyle="rgba(26,107,90,0.07)";ctx.lineWidth=1;ctx.setLineDash([3,5]);
+    ctx.beginPath();ctx.arc(W/2,baseline-cr,cr,0,Math.PI*2);ctx.stroke();
+    ctx.strokeStyle="rgba(26,107,90,0.06)";ctx.lineWidth=1;ctx.setLineDash([4,6]);
+    ctx.beginPath();ctx.moveTo(W/2,0);ctx.lineTo(W/2,H);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(0,baseline-cr);ctx.lineTo(W,baseline-cr);ctx.stroke();
+    ctx.setLineDash([]);
+  }
   // FIX 2: dynamic font sizing for ghost character
   if(ghostChar){
     const isWord=currentDeck&&!currentDeck.isScript;
-    const maxW=W*0.88,maxH=H*0.55;
-    let fs=isWord?Math.round(H*0.42):Math.round(W*0.58);
-    ctx.textBaseline="middle";ctx.textAlign="center";
-    for(let i=0;i<8;i++){
-      ctx.font=`${fs}px serif`;
-      const m=ctx.measureText(ghostChar);
-      const tw=m.width;
-      const th=(m.actualBoundingBoxAscent||fs*0.75)+(m.actualBoundingBoxDescent||fs*0.2);
-      if(tw<=maxW&&th<=maxH)break;
-      fs=Math.round(fs*0.82);
+    if(isWord){
+      const aksharas=getAksharas(ghostChar);
+      const cellW=260;
+      ctx.textBaseline="alphabetic";ctx.textAlign="center";
+      aksharas.forEach((ch,i)=>{
+        const cx=cellW*i+cellW/2;
+        // cell divider
+        if(i>0){
+          ctx.strokeStyle="rgba(26,107,90,0.10)";ctx.lineWidth=1;ctx.setLineDash([3,4]);
+          ctx.beginPath();ctx.moveTo(cellW*i,baseline-H*0.55);ctx.lineTo(cellW*i,baseline+H*0.12);ctx.stroke();
+          ctx.setLineDash([]);
+        }
+        // size the character to fill ~70% of the cell height
+        let fs=Math.round(H*0.62);
+        for(let j=0;j<8;j++){
+          ctx.font=`${fs}px serif`;
+          if(ctx.measureText(ch).width<=cellW*0.78)break;
+          fs=Math.round(fs*0.84);
+        }
+        ctx.font=`${fs}px serif`;
+        ctx.fillStyle="rgba(26,107,90,0.08)";
+        ctx.fillText(ch,cx,baseline+1.0);
+      });
+    } else {
+      const maxW=W*0.88,maxH=H*0.55;
+      let fs=Math.round(W*0.58);
+      ctx.textBaseline="alphabetic";ctx.textAlign="center";
+      for(let i=0;i<8;i++){
+        ctx.font=`${fs}px serif`;
+        const m=ctx.measureText(ghostChar);
+        if(m.width<=maxW&&(m.actualBoundingBoxAscent||fs*0.75)+(m.actualBoundingBoxDescent||fs*0.2)<=maxH)break;
+        fs=Math.round(fs*0.82);
+      }
+      ctx.fillStyle="rgba(26,107,90,0.08)";
+      ctx.fillText(ghostChar,W/2,baseline+1.0);
     }
-    ctx.fillStyle="rgba(26,107,90,0.08)";
-    ctx.fillText(ghostChar,W/2,H/2+W*0.04);
   }
 }
 
@@ -191,34 +281,42 @@ function toggleTrace(e,ghost){if(e)e.stopPropagation();const wrap=document.getEl
 function clearTrace(e,ghost){if(e)e.stopPropagation();drawTraceGrid(ghost);}
 function drawTraceGrid(ghost){
   const tc=document.getElementById("trace-canvas");if(!tc)return;
-  const ctx=tc.getContext("2d"),W=tc.width,H=tc.height;
-  ctx.clearRect(0,0,W,H);ctx.fillStyle="#F4F7F5";ctx.fillRect(0,0,W,H);
+  const tctx=tc.getContext("2d"),W=260,H=280;
+  tctx.clearRect(0,0,W,H);tctx.fillStyle="#F4F7F5";tctx.fillRect(0,0,W,H);
   // baseline + circle to match study canvas
   const baseline=Math.round(H*0.65);
   const cr=Math.round(W*0.28);
-  ctx.strokeStyle="rgba(26,107,90,0.20)";ctx.lineWidth=1.5;ctx.setLineDash([]);
-  ctx.beginPath();ctx.moveTo(0,baseline);ctx.lineTo(W,baseline);ctx.stroke();
-  ctx.strokeStyle="rgba(26,107,90,0.08)";ctx.lineWidth=1;ctx.setLineDash([3,5]);
-  ctx.beginPath();ctx.arc(W/2,baseline-cr,cr,0,Math.PI*2);ctx.stroke();
-  ctx.beginPath();ctx.moveTo(W/2,0);ctx.lineTo(W/2,H);ctx.stroke();ctx.setLineDash([]);
+  tctx.strokeStyle="rgba(26,107,90,0.20)";tctx.lineWidth=1.5;tctx.setLineDash([]);
+  tctx.beginPath();tctx.moveTo(0,baseline);tctx.lineTo(W,baseline);tctx.stroke();
+  tctx.strokeStyle="rgba(26,107,90,0.08)";tctx.lineWidth=1;tctx.setLineDash([3,5]);
+  tctx.beginPath();tctx.arc(W/2,baseline-cr,cr,0,Math.PI*2);tctx.stroke();
+  tctx.beginPath();tctx.moveTo(W/2,0);tctx.lineTo(W/2,H);tctx.stroke();tctx.setLineDash([]);
   if(ghost){
     let fs=Math.round(W*0.40);
-    ctx.textAlign="center";ctx.textBaseline="alphabetic";
+    tctx.textAlign="center";tctx.textBaseline="alphabetic";
     for(let i=0;i<6;i++){
-      ctx.font=fs+"px serif";
-      const m=ctx.measureText(ghost);
+      tctx.font=fs+"px serif";
+      const m=tctx.measureText(ghost);
       if(m.width<=W*0.82)break;
       fs=Math.round(fs*0.84);
     }
-    ctx.fillStyle="rgba(26,107,90,0.13)";
-    ctx.fillText(ghost,W/2,baseline-(fs*0.05));
+    tctx.fillStyle="rgba(26,107,90,0.13)";
+    tctx.fillText(ghost,W/2,baseline+1.0);
   }
 }
 function initTrace(ghost){
   const tc=document.getElementById("trace-canvas");if(!tc)return;
+  if(tc._traceInited)return;
+  tc._traceInited=true;
   drawTraceGrid(ghost);
-  const tctx=tc.getContext("2d");let tdrawing=false,tlx=0,tly=0;
-  function getP(e){const r=tc.getBoundingClientRect(),sx=tc.width/r.width,sy=tc.height/r.height,s=e.touches?e.touches[0]:e;return[(s.clientX-r.left)*sx,(s.clientY-r.top)*sy];}
+  const dpr=window.devicePixelRatio||1;
+  const LW=260,LH=280;
+  tc.width=Math.round(LW*dpr);tc.height=Math.round(LH*dpr);
+  tc.style.width=LW+"px";tc.style.height=LH+"px";
+  const tctx=tc.getContext("2d");tctx.setTransform(dpr,0,0,dpr,0,0);
+  drawTraceGrid(ghost);
+  let tdrawing=false,tlx=0,tly=0;
+  function getP(e){const r=tc.getBoundingClientRect(),s=e.touches?e.touches[0]:e;return[s.clientX-r.left,s.clientY-r.top];}
   tc.addEventListener("mousedown",e=>{e.stopPropagation();tdrawing=true;[tlx,tly]=getP(e)});
   tc.addEventListener("mousemove",e=>{if(!tdrawing)return;const[x,y]=getP(e);tctx.beginPath();tctx.moveTo(tlx,tly);tctx.lineTo(x,y);tctx.strokeStyle="#0D1A12";tctx.lineWidth=3;tctx.lineCap=tctx.lineJoin="round";tctx.stroke();tlx=x;tly=y;});
   tc.addEventListener("mouseup",()=>tdrawing=false);tc.addEventListener("mouseleave",()=>tdrawing=false);
@@ -236,7 +334,14 @@ function renderHome(){
     el.innerHTML=decks.map(deck=>{const dueN=dueCards(deck.cards).length,done=dueN===0,total=deck.cards.length,seenN=deck.cards.filter(c=>(SRS[c.id]?.reps??0)>0).length;return`<div class="deck-row"><div class="deck-info"><div class="deck-name">${deck.label}</div><div class="deck-meta"><span class="deck-sub">${deck.sub}</span>${seenN>0?`<span class="deck-seen">${seenN}/${total} seen</span>`:""}<span class="deck-due ${done?"due-off":"due-on"}">${done?"✓ caught up":`${dueN} due`}</span></div></div><div class="prog-track"><div class="prog-fill" style="width:${(seenN/total)*100}%"></div></div><div class="deck-btns"><button class="btn-review-deck" onclick="startReview('${deck.id}')">browse</button><button class="btn-study ${done?"btn-outline":"btn-filled"}" onclick="startStudy('${deck.id}')">${done?"review":"study"}</button></div></div>`;}).join("");
   });buildRef();
 }
-function startReview(id){reviewDeck=ALL_DECKS.find(d=>d.id===id);reviewCards=reviewDeck.cards;flipIdx=0;flipShown=false;document.getElementById("review-title").textContent=reviewDeck.label+" — Browse";document.getElementById("review-sub").textContent=reviewCards.length+" characters";const isDiac=!!reviewDeck.isDiacritic;document.getElementById("review-grid").innerHTML=reviewCards.map((c,i)=>{const charDisplay=isDiac?`${c.mark} → ${c.h}`:c.h,romDisplay=isDiac?c.vowelRom:c.r,charLen=(isDiac?c.mark:c.h).length,fontSize=charLen<=2?28:charLen<=4?22:charLen<=6?18:14;return`<div class="review-grid-card" id="rgc-${i}" onclick="highlightGrid(${i})"><div class="review-grid-char" style="font-size:${fontSize}px">${charDisplay}</div><div class="review-grid-rom">${romDisplay}</div><div class="review-grid-eng">${c.e}</div></div>`;}).join("");document.getElementById("review-grid-phase").style.display="block";document.getElementById("review-flip-phase").style.display="none";showScreen("review");}
+function startReview(id){reviewDeck=ALL_DECKS.find(d=>d.id===id);reviewCards=reviewDeck.cards;flipIdx=0;flipShown=false;document.getElementById("review-title").textContent=reviewDeck.label+" — Browse";document.getElementById("review-sub").textContent=reviewCards.length+" characters";const isDiac=!!reviewDeck.isDiacritic;document.getElementById("review-grid").innerHTML=reviewCards.map((c,i)=>{const charDisplay=isDiac?`${c.mark} → ${c.h}`:c.h,romDisplay=isDiac?c.vowelRom:c.r,charLen=(isDiac?c.mark:c.h).length,fontSize=charLen<=2?28:charLen<=4?22:charLen<=6?18:14;return`<div class="review-grid-card" id="rgc-${i}" onclick="highlightGrid(${i})"><div class="review-grid-char" style="font-size:${fontSize}px">${charDisplay}</div><div class="review-grid-rom">${romDisplay}</div><div class="review-grid-eng">${c.e}</div></div>`;}).join("");document.getElementById("review-grid-phase").style.display="block";document.getElementById("review-flip-phase").style.display="none";showScreen("review");
+  let hoverTimer=null;
+  document.querySelectorAll(".review-grid-card").forEach((el,i)=>{
+    const c=reviewCards[i];
+    el.addEventListener("mouseenter",()=>{hoverTimer=setTimeout(()=>speak(c.h,null),300);});
+    el.addEventListener("mouseleave",()=>clearTimeout(hoverTimer));
+  });
+}
 function backToGrid(){document.getElementById("review-grid-phase").style.display="block";document.getElementById("review-flip-phase").style.display="none";}
 function highlightGrid(i){document.querySelectorAll(".review-grid-card").forEach(el=>el.classList.remove("active"));document.getElementById("rgc-"+i)?.classList.add("active");flipIdx=i;document.getElementById("review-grid-phase").style.display="none";document.getElementById("review-flip-phase").style.display="flex";renderFlip();}
 function startFlip(){flipIdx=0;flipShown=false;document.getElementById("review-grid-phase").style.display="none";document.getElementById("review-flip-phase").style.display="flex";renderFlip()}
@@ -261,15 +366,35 @@ function startStudy(id){
   queue=shuffle(due.length>0?due:currentDeck.cards);
   qIdx=0;sessionGrades=[];isRevealed=false;ghostChar=null;lastGradeSnapshot=null;showScreen("study");loadCard();
 }
-function resizeCanvas(){const isWord=!currentDeck.isScript;const W=isWord?580:320,H=320;cv.width=W;cv.height=H;cv.style.width=W+"px";cv.style.height=H+"px"}
+function getAksharas(str){
+  if(typeof Intl!=="undefined"&&Intl.Segmenter){
+    return [...new Intl.Segmenter("ml",{granularity:"grapheme"}).segment(str)].map(s=>s.segment);
+  }
+  return [...str.match(/[\u0D00-\u0D7F][\u0D00-\u0D7F\u200C\u200D]*/gu)||[str]];
+}
+function resizeCanvas(){
+  const isWord=currentDeck&&!currentDeck.isScript;
+  if(isWord){
+    const n=getAksharas(currentCard.h).length;
+    initCanvas(Math.max(320,n*260),260);
+  } else {
+    initCanvas(320,320);
+  }
+}
 function loadCard(){
   if(qIdx>=queue.length){showDone();return}
   currentCard=queue[qIdx];isRevealed=false;ghostChar=null;resizeCanvas();drawGrid();
-  document.getElementById("progress-bar").style.width=(qIdx/queue.length*50)+"vw";
+  document.getElementById("progress-bar").style.width=(qIdx/queue.length*100)+"%";
   document.getElementById("study-count").textContent=`${qIdx+1} / ${queue.length}`;
   if(currentDeck.isDiacritic){document.getElementById("prompt-label").textContent="WHAT DOES THIS MARK DO?";document.getElementById("prompt-main").innerHTML=`<div class="prompt-mark">${currentCard.mark}</div><div class="prompt-mark-label">${currentCard.e}</div>`;}
-  else{document.getElementById("prompt-label").textContent=currentDeck.isScript?"WRITE THIS CHARACTER":"WRITE IN MALAYALAM";document.getElementById("prompt-main").innerHTML=currentDeck.isScript?`<div class="prompt-rom-script">${currentCard.r}</div><div class="prompt-eng-script">${currentCard.e}</div>`:`<div class="prompt-word">${currentCard.e}</div><div class="prompt-rom">${currentCard.r}</div>`;}
-  // FIX 3: show undo button if snapshot exists
+  else{
+    document.getElementById("prompt-label").textContent=currentDeck.isScript?"WRITE THIS CHARACTER":"WRITE IN MALAYALAM";
+    if(currentDeck.isScript){
+      document.getElementById("prompt-main").innerHTML=`<div class="prompt-rom-script">${currentCard.r}</div><div class="prompt-eng-script">${currentCard.e}</div>`;
+    } else {
+      document.getElementById("prompt-main").innerHTML=`<div class="prompt-word">${currentCard.e}</div><div class="prompt-rom">${currentCard.r}</div>`;
+    }
+  }
   document.getElementById("reveal-area").innerHTML=`<div class="reveal-row"><button class="btn-reveal" onclick="reveal()">reveal</button><button class="btn-dontknow" onclick="dontKnow()">don't know</button></div>${lastGradeSnapshot?`<div style="text-align:center;margin-top:8px"><button onclick="undoGrade()" style="background:transparent;border:none;color:var(--inkfader);font-size:11px;cursor:pointer;font-family:inherit;letter-spacing:0.1em;text-decoration:underline">↩ undo last grade</button></div>`:''}`;
 }
 function dontKnow(){SRS[currentCard.id]=stepSRS(SRS[currentCard.id]??initCard(),0);saveSRS(SRS);sessionGrades.push(0);isRevealed=true;ghostChar=currentCard.h;drawGrid();showAnswer();}
@@ -318,6 +443,36 @@ document.addEventListener("keydown",e=>{
   if(e.key===" "&&!isRevealed){e.preventDefault();reveal();return}if(e.key==="?"&&!isRevealed){dontKnow();return}
   if(e.key==="1"&&isRevealed)grade(0);if(e.key==="2"&&isRevealed)grade(1);if(e.key==="3"&&isRevealed)grade(2);if(e.key==="4"&&isRevealed)grade(3);
 });
+// ─── TTS ───────────────────────────────────────────────────────────────────────
+let _voices=[];
+function _loadVoices(){_voices=window.speechSynthesis.getVoices();}
+_loadVoices();
+window.speechSynthesis.onvoiceschanged=_loadVoices;
+
+function _pickVoice(){
+  return _voices.find(v=>v.lang==="ml-IN")
+    ||_voices.find(v=>v.lang.startsWith("ml"))
+    ||_voices.find(v=>v.name.toLowerCase().includes("malayalam"))
+    ||null;
+}
+
+function speak(text,btn){
+  if(!text||!window.speechSynthesis)return;
+  window.speechSynthesis.cancel();
+  const utt=new SpeechSynthesisUtterance(text);
+  utt.lang="ml-IN";
+  utt.rate=0.85;
+  const voice=_pickVoice();
+  if(voice)utt.voice=voice;
+  if(btn){
+    btn.classList.add("speaking");
+    utt.onend=()=>btn.classList.remove("speaking");
+    utt.onerror=()=>btn.classList.remove("speaking");
+  }
+  window.speechSynthesis.speak(utt);
+}
+
+initCanvas(320,320);
 renderHome();drawGrid();
 document.getElementById("flip-card").addEventListener("click",function(e){if(document.getElementById("trace-wrap")&&document.getElementById("trace-wrap").style.display==="flex")return;flipCard();});
 
