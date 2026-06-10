@@ -292,6 +292,8 @@ function drawTraceGrid(ghost){
 
 function initTrace(ghost){
   const tc=document.getElementById("trace-canvas");if(!tc)return;
+  if(tc._traceInited)return;
+  tc._traceInited=true;
   drawTraceGrid(ghost);
   const tctx=tc.getContext("2d");let tdrawing=false,tlx=0,tly=0;
   // FIX (iOS): use same coordinate helper pattern as main canvas
@@ -299,8 +301,7 @@ function initTrace(ghost){
     const r=tc.getBoundingClientRect();
     const s=e.touches?e.touches[0]:e;
     // scale from CSS display size to canvas pixel size
-    const sx=tc.width/r.width, sy=tc.height/r.height;
-    return[(s.clientX-r.left)*sx,(s.clientY-r.top)*sy];
+    return[s.clientX-r.left, s.clientY-r.top];
   }
   tc.addEventListener("mousedown",e=>{e.stopPropagation();tdrawing=true;[tlx,tly]=getP(e)});
   tc.addEventListener("mousemove",e=>{if(!tdrawing)return;const[x,y]=getP(e);tctx.beginPath();tctx.moveTo(tlx,tly);tctx.lineTo(x,y);tctx.strokeStyle="#1A1209";tctx.lineWidth=3;tctx.lineCap=tctx.lineJoin="round";tctx.stroke();tlx=x;tly=y;});
