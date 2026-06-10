@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Likho · Gujarati · ગુજરાતી Writing Practice</title>
+<meta name="description" content="Free Gujarati writing practice for heritage speakers.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--paper:#FBF8F2;--paperdark:#F2EBE0;--ink:#1A1005;--inkfade:#5A4020;--inkfader:#9A7A50;--rule:rgba(26,16,5,0.1);--accent:#B06010;--again:#B53A2A;--hard:#B07020;--good:#3A7A4A;--easy:#2A5A8A;}
+  body{background:var(--paper);color:var(--ink);font-family:'Crimson Pro',Georgia,serif;min-height:100vh}
+  ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--paperdark)}::-webkit-scrollbar-thumb{background:var(--inkfader);border-radius:3px}
+  .screen{display:none;min-height:100vh}.screen.active{display:block}
+  #study-screen{display:none;flex-direction:row}#study-screen.active{display:flex}
+  #review-screen{display:none;flex-direction:column;min-height:100vh}#review-screen.active{display:flex}
+  #done-screen{display:none;align-items:center;justify-content:center;flex-direction:column;gap:36px;min-height:100vh}#done-screen.active{display:flex}
+  header{border-bottom:1px solid var(--rule);padding:0 64px;display:flex;align-items:center;justify-content:space-between;height:64px}
+  .logo{display:flex;align-items:baseline;gap:12px;text-decoration:none;color:var(--ink)}.logo-script{font-size:24px;font-weight:600;letter-spacing:-0.02em}.logo-en{font-size:13px;color:var(--inkfader);letter-spacing:0.12em}
+  .header-right{display:flex;align-items:center;gap:28px}
+  .btn-ghost{background:transparent;border:none;color:var(--inkfader);cursor:pointer;font-size:13px;letter-spacing:0.1em;font-family:inherit;padding:0}.btn-ghost:hover{color:var(--ink)}
+  .btn-back-home{background:transparent;border:none;color:var(--inkfader);cursor:pointer;font-size:13px;letter-spacing:0.08em;font-family:inherit;padding:0;text-decoration:none}.btn-back-home:hover{color:var(--ink)}
+  .hero{padding:56px 64px 40px;border-bottom:1px solid var(--rule);display:flex;align-items:flex-end;justify-content:space-between}
+  .hero-title{font-size:60px;font-weight:300;letter-spacing:-0.03em;line-height:1.05;margin-bottom:12px}.hero-sub{font-size:15px;color:var(--inkfade);max-width:440px;line-height:1.6}.hero-char{font-size:140px;color:var(--accent);opacity:0.1;font-family:serif;line-height:1;user-select:none;margin-bottom:-12px}
+  .overall-progress{padding:24px 64px;border-bottom:1px solid var(--rule);display:flex;align-items:center;gap:32px;flex-wrap:wrap}
+  .overall-stat{text-align:center}.overall-num{font-size:28px;font-weight:300;color:var(--ink);letter-spacing:-0.02em}.overall-lbl{font-size:10px;color:var(--inkfader);letter-spacing:0.14em;margin-top:2px}
+  .overall-bar-wrap{flex:1;max-width:320px}.overall-bar-label{font-size:11px;color:var(--inkfader);letter-spacing:0.1em;margin-bottom:6px;display:flex;justify-content:space-between}.overall-bar-track{height:4px;background:var(--paperdark);border-radius:99px;overflow:hidden}.overall-bar-fill{height:100%;background:var(--accent);border-radius:99px;transition:width .6s}
+  .btn-reset{background:transparent;border:none;color:var(--inkfader);font-size:11px;cursor:pointer;font-family:inherit;letter-spacing:0.1em;padding:0;margin-left:auto}.btn-reset:hover{color:var(--again)}
+  .decks{padding:0 64px;max-width:860px}.section-label{padding:28px 0 8px;font-size:11px;color:var(--inkfader);letter-spacing:0.18em}
+  .deck-row{display:flex;align-items:center;padding:16px 0;border-bottom:1px solid var(--rule)}.deck-info{flex:1}.deck-name{font-size:17px;font-weight:600;letter-spacing:-0.01em}.deck-meta{display:flex;align-items:center;gap:14px;margin-top:3px}.deck-sub,.deck-seen{font-size:12px;color:var(--inkfader)}.deck-due{font-size:11px;font-weight:600;letter-spacing:0.06em}.due-on{color:var(--accent)}.due-off{color:var(--good)}
+  .prog-track{width:72px;height:3px;background:var(--paperdark);border-radius:99px;margin:0 20px;overflow:hidden}.prog-fill{height:100%;background:var(--accent);border-radius:99px;transition:width .6s}
+  .deck-btns{display:flex;gap:8px}
+  .btn-review-deck{border:1.5px solid var(--accent);border-radius:3px;padding:7px 14px;text-align:center;font-family:inherit;font-size:12px;letter-spacing:0.08em;cursor:pointer;transition:all .15s;background:transparent;color:var(--accent)}.btn-review-deck:hover{background:var(--accent);color:var(--paper)}
+  .btn-study{border:1.5px solid var(--ink);border-radius:3px;padding:7px 22px;min-width:84px;text-align:center;font-family:inherit;font-size:13px;letter-spacing:0.1em;cursor:pointer;transition:all .15s}
+  .btn-filled{background:var(--ink);color:var(--paper)}.btn-outline{background:transparent;color:var(--ink)}.btn-filled:hover{background:var(--paper);color:var(--ink)}.btn-outline:hover{background:var(--ink);color:var(--paper)}
+  footer{padding:36px 64px;margin-top:24px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;font-size:12px;color:var(--inkfader);letter-spacing:0.06em}
+  .prompt-mark{font-size:88px;font-family:serif;color:var(--accent);line-height:1.2;text-align:center}.prompt-mark-label{font-size:11px;color:var(--inkfader);letter-spacing:0.12em;text-align:center;margin-top:4px}
+  .answer-mark-row{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap}.answer-mark{font-size:52px;font-family:serif;color:var(--accent);line-height:1}.answer-mark-arrow{font-size:20px;color:var(--inkfader)}.answer-with-base{font-size:86px;font-family:serif;color:var(--ink);line-height:1}
+  .review-header{padding:20px 64px;border-bottom:1px solid var(--rule);display:flex;align-items:center;gap:16px}.review-title{font-size:16px;font-weight:600;color:var(--ink)}.review-sub{font-size:12px;color:var(--inkfader);margin-left:auto}
+  #review-grid-phase{padding:40px 64px}
+  .review-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;max-width:960px}
+  .review-grid-card{background:var(--paperdark);border:1.5px solid var(--rule);border-radius:6px;padding:12px 8px;text-align:center;cursor:pointer;transition:all .15s;overflow:hidden;min-height:90px;display:flex;flex-direction:column;align-items:center;justify-content:center}.review-grid-card:hover,.review-grid-card.active{border-color:var(--accent);background:var(--paper)}
+  .review-grid-char{font-size:28px;font-family:serif;color:var(--ink);line-height:1.2;word-break:break-all;overflow-wrap:break-word;width:100%}.review-grid-rom{font-size:10px;color:var(--accent);margin-top:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%}.review-grid-eng{font-size:9px;color:var(--inkfader);margin-top:2px;line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%}
+  .review-start-btn{margin-top:32px}
+  #review-flip-phase{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;padding:60px 48px}
+  .flip-card{width:420px;max-width:90vw;min-height:260px;background:var(--paperdark);border:1.5px solid var(--rule);border-radius:12px;padding:40px 36px;text-align:center;cursor:pointer;transition:all .2s;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;position:relative}.flip-card.flipped{background:var(--paper);border-color:var(--accent)}
+  .flip-front-label{font-size:10px;color:var(--inkfader);letter-spacing:0.16em}.flip-char{font-size:96px;font-family:serif;color:var(--ink);line-height:1}.flip-rom{font-size:24px;color:var(--accent);font-style:italic}.flip-eng{font-size:15px;color:var(--inkfade)}.flip-example{font-size:13px;color:var(--inkfader);margin-top:4px;font-style:italic}
+  .flip-nav{display:flex;gap:12px;align-items:center}.btn-flip-nav{background:transparent;border:1.5px solid var(--rule);border-radius:3px;padding:8px 20px;font-family:inherit;font-size:13px;color:var(--inkfade);cursor:pointer;letter-spacing:0.06em;transition:all .15s}.btn-flip-nav:hover{border-color:var(--ink);color:var(--ink)}.flip-count{font-size:12px;color:var(--inkfader);min-width:60px;text-align:center}
+  .btn-start-study{background:var(--ink);color:var(--paper);border:none;border-radius:3px;padding:10px 28px;font-family:inherit;font-size:13px;letter-spacing:0.08em;cursor:pointer}.btn-start-study:hover{opacity:.85}
+  #progress-bar{position:fixed;top:0;left:0;height:2px;background:var(--accent);transition:width .4s;z-index:10}
+  .study-nav{position:fixed;top:20px;left:24px;display:flex;align-items:center;gap:16px;z-index:10}
+  .btn-back{background:transparent;border:none;color:var(--inkfader);cursor:pointer;font-size:13px;letter-spacing:0.08em;font-family:inherit;padding:0}.btn-back:hover{color:var(--ink)}.study-count{font-size:12px;color:var(--inkfader);letter-spacing:0.1em}
+  .study-left,.study-right{width:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 48px;gap:28px;min-height:100vh}.study-left{border-right:1px solid var(--rule)}
+  .prompt-label{font-size:11px;color:var(--accent);letter-spacing:0.18em;text-align:center}.prompt-word{font-size:44px;color:var(--ink);line-height:1.1;margin-bottom:8px;text-align:center}.prompt-rom{font-size:21px;color:var(--inkfade);font-style:italic;text-align:center}.prompt-rom-script{font-size:62px;color:var(--accent);font-style:italic;margin-bottom:6px;text-align:center}.prompt-eng-script{font-size:15px;color:var(--inkfade);text-align:center}.hint{font-size:11px;color:var(--inkfader);letter-spacing:0.1em}
+  .canvas-wrap{display:flex;flex-direction:column;align-items:center;gap:8px}
+  .canvas-scroll{max-width:100%;overflow-x:auto;border-radius:4px;}
+  #draw-canvas{display:block;touch-action:none;cursor:crosshair;border-radius:4px;border:1.5px solid var(--rule);box-shadow:inset 0 1px 4px rgba(13,26,18,0.05),0 2px 14px rgba(13,26,18,0.07)}
+  .btn-clear{background:transparent;border:none;color:var(--inkfader);font-size:12px;cursor:pointer;letter-spacing:0.1em;font-family:inherit;padding:2px 0}.btn-clear:hover{color:var(--ink)}
+  .reveal-row{display:flex;gap:10px;align-items:center}.btn-reveal{background:var(--ink);color:var(--paper);border:none;border-radius:3px;padding:12px 40px;font-family:inherit;font-size:15px;letter-spacing:0.1em;cursor:pointer}.btn-reveal:hover{opacity:.85}.btn-dontknow{background:transparent;border:1.5px solid var(--again);color:var(--again);border-radius:3px;padding:12px 16px;font-family:inherit;font-size:13px;letter-spacing:0.06em;cursor:pointer}.btn-dontknow:hover{background:var(--again);color:#fff}
+  .answer-char{font-size:86px;color:var(--ink);font-family:serif;line-height:1;text-align:center}.answer-char.word{font-size:52px}.answer-rom{font-size:21px;color:var(--accent);margin-top:4px;text-align:center}.answer-eng{font-size:14px;color:var(--inkfade);margin-top:3px;text-align:center}.answer-example{font-size:13px;color:var(--inkfader);margin-top:6px;text-align:center;font-style:italic}
+  .grade-label{font-size:11px;color:var(--inkfader);letter-spacing:0.1em;text-align:center;margin-bottom:8px}.grade-bar{display:flex;gap:8px;justify-content:center}
+  .btn-grade{width:84px;padding:9px 0;border-radius:3px;font-family:inherit;font-size:13px;font-weight:600;letter-spacing:0.04em;cursor:pointer;background:var(--paper);transition:background .15s}.btn-grade span{display:block;font-size:10px;opacity:.5;font-weight:400;margin-top:2px}
+  .g-again{border:1.5px solid var(--again);color:var(--again)}.g-again:hover{background:rgba(181,58,42,0.08)}.g-hard{border:1.5px solid var(--hard);color:var(--hard)}.g-hard:hover{background:rgba(176,112,32,0.08)}.g-good{border:1.5px solid var(--good);color:var(--good)}.g-good:hover{background:rgba(58,122,74,0.08)}.g-easy{border:1.5px solid var(--easy);color:var(--easy)}.g-easy:hover{background:rgba(42,90,138,0.08)}
+  .done-word{font-size:52px;font-weight:300;letter-spacing:-0.02em}.done-sub{font-size:14px;color:var(--inkfade);letter-spacing:0.1em}.done-grades{display:flex;gap:20px}.done-box{text-align:center;width:68px}.done-num{font-size:30px;font-weight:600}.done-lbl{font-size:11px;letter-spacing:0.08em;margin-top:2px}
+  .btn-home{background:transparent;border:1.5px solid var(--ink);border-radius:3px;padding:10px 32px;font-family:inherit;font-size:14px;color:var(--ink);letter-spacing:0.08em;cursor:pointer}.btn-home:hover{background:var(--ink);color:var(--paper)}
+  #ref-overlay{display:none;position:fixed;inset:0;background:rgba(13,26,18,0.5);z-index:200;align-items:center;justify-content:center;backdrop-filter:blur(2px)}#ref-overlay.open{display:flex}
+  .ref-modal{background:var(--paper);border-radius:4px;padding:40px 48px;width:820px;max-width:92vw;max-height:86vh;overflow-y:auto;box-shadow:0 24px 80px rgba(13,26,18,0.25)}.ref-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:28px}.ref-title{font-size:20px;font-weight:600;letter-spacing:-0.01em}.btn-close{background:transparent;border:none;color:var(--inkfader);cursor:pointer;font-size:20px;line-height:1}
+  .ref-sec{margin-bottom:28px}.ref-sec-label{font-size:11px;color:var(--accent);letter-spacing:0.16em;margin-bottom:12px}.ref-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}.ref-card{background:var(--paperdark);border:1px solid var(--rule);border-radius:3px;padding:10px 6px;text-align:center}.ref-char{font-size:26px;color:var(--ink);font-family:serif;line-height:1.2}.ref-rom{font-size:11px;color:var(--accent);margin-top:3px}.ref-eng{font-size:9px;color:var(--inkfader);margin-top:2px;line-height:1.3}
+  #confirm-overlay{display:none;position:fixed;inset:0;background:rgba(13,26,18,0.4);z-index:300;align-items:center;justify-content:center;backdrop-filter:blur(2px)}#confirm-overlay.open{display:flex}
+  .confirm-box{background:var(--paper);border-radius:4px;padding:36px 40px;width:360px;max-width:90vw;box-shadow:0 12px 48px rgba(13,26,18,0.2);text-align:center}.confirm-title{font-size:18px;font-weight:600;margin-bottom:8px}.confirm-sub{font-size:14px;color:var(--inkfade);margin-bottom:24px;line-height:1.5}.confirm-btns{display:flex;gap:10px;justify-content:center}.btn-cancel{background:transparent;border:1.5px solid var(--rule);border-radius:3px;padding:8px 24px;font-family:inherit;font-size:13px;color:var(--inkfade);cursor:pointer;letter-spacing:0.06em}.btn-cancel:hover{border-color:var(--ink);color:var(--ink)}.btn-confirm-reset{background:var(--again);color:#fff;border:none;border-radius:3px;padding:8px 24px;font-family:inherit;font-size:13px;cursor:pointer;letter-spacing:0.06em;font-weight:600}.btn-confirm-reset:hover{opacity:.85}
+  @media(max-width:900px){header,.hero,.overall-progress,.decks,footer{padding-left:28px;padding-right:28px}.hero-title{font-size:40px}.hero-char{display:none}#study-screen.active{flex-direction:column}.study-left,.study-right{width:100%;min-height:auto;padding:48px 28px;border-right:none;border-bottom:1px solid var(--rule)}.study-right{border-bottom:none}.ref-grid{grid-template-columns:repeat(4,1fr)}.ref-modal{padding:28px 24px}.overall-progress{flex-wrap:wrap;gap:20px}.review-header,#review-grid-phase{padding-left:28px;padding-right:28px}.flip-card{width:90vw}}
+</style>
+</head>
+<body>
+<div id="home-screen" class="screen active">
+  <header>
+    <a class="logo" href="../index.html"><span class="logo-script">ലിഖോ</span><span class="logo-en">LIKHO</span></a>
+    <div class="header-right"><button class="btn-ghost" onclick="openRef()">reference</button><a class="btn-back-home" href="../index.html">← all languages</a></div>
+  </header>
+  <div class="hero"><div><div class="hero-title">ગુજરાતી</div><div class="hero-sub">Heritage writing practice for Gujarati script · ગુજરાતી</div></div><div class="hero-char">ക</div></div>
+  <div class="overall-progress">
+    <div class="overall-stat"><div class="overall-num" id="stat-seen">0</div><div class="overall-lbl">CARDS SEEN</div></div>
+    <div class="overall-stat"><div class="overall-num" id="stat-due">0</div><div class="overall-lbl">DUE TODAY</div></div>
+    <div class="overall-stat"><div class="overall-num" id="stat-total">0</div><div class="overall-lbl">TOTAL CARDS</div></div>
+    <div class="overall-bar-wrap"><div class="overall-bar-label"><span>overall progress</span><span id="bar-pct">0%</span></div><div class="overall-bar-track"><div class="overall-bar-fill" id="overall-bar" style="width:0%"></div></div></div>
+    <button class="btn-reset" onclick="confirmReset()">reset progress</button>
+  </div>
+  <div class="decks"><div class="section-label">ALPHABET</div><div id="deck-list-script"></div><div class="section-label">WORDS</div><div id="deck-list-words"></div></div>
+  <footer><span>likho · gujarati · ગુજરાતી script</span><span>draw · reveal · grade · repeat</span></footer>
+</div>
+<div id="review-screen" class="screen">
+  <div class="review-header"><button class="btn-back" onclick="goHome()">← decks</button><div class="review-title" id="review-title"></div><div class="review-sub" id="review-sub"></div></div>
+  <div id="review-grid-phase"><div class="review-grid" id="review-grid"></div><div class="review-start-btn"><button class="btn-filled btn-study" onclick="startFlip()">Flip through →</button></div></div>
+  <div id="review-flip-phase" style="display:none">
+    <div class="flip-card" id="flip-card"><div class="flip-front-label" id="flip-front-label">TAP TO REVEAL</div><div class="flip-char" id="flip-char"></div><div class="flip-rom" id="flip-rom" style="display:none"></div><div class="flip-eng" id="flip-eng" style="display:none"></div><div class="flip-example" id="flip-example" style="display:none"></div><div id="trace-area"></div></div>
+    <div class="flip-nav"><button class="btn-flip-nav" onclick="backToGrid()">⊞ grid</button><button class="btn-flip-nav" onclick="flipNav(-1)">← prev</button><div class="flip-count" id="flip-count"></div><button class="btn-flip-nav" id="btn-flip-next" onclick="flipNav(1)">next →</button></div>
+    <button class="btn-start-study" onclick="startStudyFromReview()">Start writing practice →</button>
+  </div>
+</div>
+<div id="study-screen" class="screen">
+  <div id="progress-bar"></div>
+  <div class="study-nav"><button class="btn-back" onclick="goHome()">← decks</button><span class="study-count" id="study-count"></span></div>
+  <div class="study-left"><div class="prompt-label" id="prompt-label"></div><div id="prompt-main"></div><div class="hint">space to reveal · ? to skip</div></div>
+  <div class="study-right"><div class="canvas-wrap"><div class="canvas-scroll"><canvas id="draw-canvas"></canvas></div><button class="btn-clear" onclick="clearCanvas()">↺ clear</button></div><div id="reveal-area"></div></div>
+</div>
+<div id="done-screen" class="screen"><div class="done-word" id="done-word"></div><div class="done-sub" id="done-sub"></div><div class="done-grades" id="done-grades"></div><button class="btn-home" onclick="goHome()">back to decks</button></div>
+<div id="ref-overlay" onclick="closeRefOverlay(event)"><div class="ref-modal"><div class="ref-header"><div class="ref-title">Gujarati Script Reference · ગુજરાતી અક્ષરો</div><button class="btn-close" onclick="closeRef()">✕</button></div><div class="ref-sec"><div class="ref-sec-label">VOWELS · સ્વર</div><div class="ref-grid" id="ref-vowels"></div></div><div class="ref-sec"><div class="ref-sec-label">CONSONANTS · વ્યંજન</div><div class="ref-grid" id="ref-consonants"></div></div></div></div>
+<div id="confirm-overlay" onclick="closeConfirmOverlay(event)"><div class="confirm-box"><div class="confirm-title">Reset all progress?</div><div class="confirm-sub">This will clear your SRS history for all decks. This cannot be undone.</div><div class="confirm-btns"><button class="btn-cancel" onclick="closeConfirm()">Cancel</button><button class="btn-confirm-reset" onclick="doReset()">Reset</button></div></div></div>
+<script>
+const VOWELS=[
+  {id:"v1",h:"અ",r:"a",e:"short a",ex:"અમ — am (I/me)"},
+  {id:"v2",h:"આ",r:"aa",e:"long a",ex:"આમ — aam (mango)"},
+  {id:"v3",h:"ઇ",r:"i",e:"short i",ex:"ઇચ્છા — ichchha (wish)"},
+  {id:"v4",h:"ઈ",r:"ee",e:"long i",ex:"ઈગ — eeg (jealousy)"},
+  {id:"v5",h:"ઉ",r:"u",e:"short u",ex:"ઉંટ — unt (camel)"},
+  {id:"v6",h:"ઊ",r:"oo",e:"long u",ex:"ઊન — oon (wool)"},
+  {id:"v7",h:"ઋ",r:"ri",e:"vocalic r",ex:"ઋષિ — rishi (sage)"},
+  {id:"v8",h:"એ",r:"e",e:"e sound",ex:"એક — ek (one)"},
+  {id:"v9",h:"ઐ",r:"ai",e:"ai sound",ex:"ઐ — ai (come)"},
+  {id:"v10",h:"ઓ",r:"o",e:"o sound",ex:"ઓસ — os (dew)"},
+  {id:"v11",h:"ઔ",r:"au",e:"au sound",ex:"ઔષધ — aushadh (medicine)"},
+  {id:"v12",h:"અં",r:"am",e:"anusvara nasal",ex:""},
+  {id:"v13",h:"અઃ",r:"ah",e:"visarga aspirate",ex:""}
+];
+const CONSONANTS=[
+  {id:"c1",h:"ક",r:"ka",e:"k sound",ex:"કમળ — kamal (lotus)"},
+  {id:"c2",h:"ખ",r:"kha",e:"kh aspirated",ex:"ખિસ્સો — khisso (pocket)"},
+  {id:"c3",h:"ગ",r:"ga",e:"g sound",ex:"ગાય — gaay (cow)"},
+  {id:"c4",h:"ઘ",r:"gha",e:"gh aspirated",ex:"ઘર — ghar (house)"},
+  {id:"c5",h:"ચ",r:"ca",e:"ch sound",ex:"ચા — chaa (tea)"},
+  {id:"c6",h:"છ",r:"cha",e:"chh aspirated",ex:"છત — chhat (roof)"},
+  {id:"c7",h:"જ",r:"ja",e:"j sound",ex:"જળ — jal (water)"},
+  {id:"c8",h:"ઝ",r:"zha",e:"zh sound",ex:"ઝાડ — zaad (tree)"},
+  {id:"c9",h:"ટ",r:"ṭa",e:"hard t retroflex",ex:"ટોપ — top (hat)"},
+  {id:"c10",h:"ઠ",r:"ṭha",e:"hard th retroflex",ex:"ઠંડ — thand (cold)"},
+  {id:"c11",h:"ડ",r:"ḍa",e:"hard d retroflex",ex:"ડોક — dok (neck)"},
+  {id:"c12",h:"ઢ",r:"ḍha",e:"hard dh retroflex",ex:"ઢોલ — dhol (drum)"},
+  {id:"c13",h:"ણ",r:"ṇa",e:"retroflex n",ex:"ણ — retroflex nasal"},
+  {id:"c14",h:"ત",r:"ta",e:"soft t dental",ex:"તળ — tal (bottom)"},
+  {id:"c15",h:"થ",r:"tha",e:"soft th dental",ex:"થર — thar (layer)"},
+  {id:"c16",h:"દ",r:"da",e:"soft d dental",ex:"દવા — dava (medicine)"},
+  {id:"c17",h:"ધ",r:"dha",e:"soft dh dental",ex:"ધન — dhan (wealth)"},
+  {id:"c18",h:"ન",r:"na",e:"n sound",ex:"નામ — naam (name)"},
+  {id:"c19",h:"પ",r:"pa",e:"p sound",ex:"પાણી — paani (water)"},
+  {id:"c20",h:"ફ",r:"pha",e:"ph/f sound",ex:"ફૂલ — phool (flower)"},
+  {id:"c21",h:"બ",r:"ba",e:"b sound",ex:"બળ — bal (strength)"},
+  {id:"c22",h:"ભ",r:"bha",e:"bh aspirated",ex:"ભણ — bhan (study)"},
+  {id:"c23",h:"મ",r:"ma",e:"m sound",ex:"માણસ — maanas (person)"},
+  {id:"c24",h:"ય",r:"ya",e:"y sound",ex:"યાર — yaar (friend)"},
+  {id:"c25",h:"ર",r:"ra",e:"r sound",ex:"રાત — raat (night)"},
+  {id:"c26",h:"લ",r:"la",e:"l sound",ex:"લગ્ન — lagna (wedding)"},
+  {id:"c27",h:"વ",r:"va",e:"v sound",ex:"વાત — vaat (talk)"},
+  {id:"c28",h:"શ",r:"sha",e:"sh palatal",ex:"શહેર — shaher (city)"},
+  {id:"c29",h:"ષ",r:"ṣha",e:"sh retroflex",ex:"ષટ — shhat (six)"},
+  {id:"c30",h:"સ",r:"sa",e:"s sound",ex:"સૂર્ય — soorya (sun)"},
+  {id:"c31",h:"હ",r:"ha",e:"h sound",ex:"હાથ — haath (hand)"},
+  {id:"c32",h:"ળ",r:"ḷa",e:"retroflex l",ex:"ળ — rare letter"},
+  {id:"c33",h:"ક્ષ",r:"kṣa",e:"ksha sound",ex:"ક્ષમા — kshama (forgiveness)"},
+  {id:"c34",h:"જ્ઞ",r:"gya",e:"gya sound",ex:"જ્ઞાન — gyaan (knowledge)"}
+];
+const WORD_DECKS=[
+  {id:"greetings",label:"Greetings",cards:[
+    {id:"w1",h:"નમસ્તે",r:"namaste",e:"Hello",ex:""},
+    {id:"w2",h:"આભાર",r:"aabhaar",e:"Thank you",ex:""},
+    {id:"w3",h:"હા",r:"haa",e:"Yes",ex:""},
+    {id:"w4",h:"ના",r:"naa",e:"No",ex:""},
+    {id:"w5",h:"માફ કરો",r:"maaf karo",e:"Sorry",ex:""},
+    {id:"w6",h:"કેમ છો",r:"kem chho",e:"How are you?",ex:""},
+    {id:"w7",h:"સારું છું",r:"saaru chhum",e:"I am well",ex:""},
+    {id:"w8",h:"ફરી મળીશું",r:"pheri malishum",e:"See you again",ex:""}
+  ]},
+  {id:"family",label:"Family",cards:[
+    {id:"fa1",h:"માં",r:"maa",e:"Mother",ex:""},
+    {id:"fa2",h:"બાપ",r:"baap",e:"Father",ex:""},
+    {id:"fa3",h:"ભાઈ",r:"bhaai",e:"Brother",ex:""},
+    {id:"fa4",h:"બહેન",r:"bahen",e:"Sister",ex:""},
+    {id:"fa5",h:"દાદા",r:"daadaa",e:"Grandfather",ex:""},
+    {id:"fa6",h:"દાદી",r:"daadi",e:"Grandmother",ex:""},
+    {id:"fa7",h:"કાકા",r:"kaakaa",e:"Uncle (paternal)",ex:""},
+    {id:"fa8",h:"કાકી",r:"kaaki",e:"Aunt (paternal)",ex:""}
+  ]},
+  {id:"body",label:"Body",cards:[
+    {id:"b1",h:"હાથ",r:"haath",e:"Hand",ex:""},
+    {id:"b2",h:"પગ",r:"pag",e:"Foot / Leg",ex:""},
+    {id:"b3",h:"આંખ",r:"aankh",e:"Eye",ex:""},
+    {id:"b4",h:"કાન",r:"kaan",e:"Ear",ex:""},
+    {id:"b5",h:"નાક",r:"naak",e:"Nose",ex:""},
+    {id:"b6",h:"મોઢ",r:"modh",e:"Mouth",ex:""},
+    {id:"b7",h:"માથ",r:"maath",e:"Head",ex:""},
+    {id:"b8",h:"હૃદય",r:"hridaya",e:"Heart",ex:""}
+  ]},
+  {id:"food",label:"Food",cards:[
+    {id:"fo1",h:"પાણી",r:"paani",e:"Water",ex:""},
+    {id:"fo2",h:"ભોજન",r:"bhojan",e:"Food / Meal",ex:""},
+    {id:"fo3",h:"દૂધ",r:"doodh",e:"Milk",ex:""},
+    {id:"fo4",h:"ચા",r:"chaa",e:"Tea",ex:""},
+    {id:"fo5",h:"ભાત",r:"bhaat",e:"Rice (cooked)",ex:""},
+    {id:"fo6",h:"રોટલી",r:"rotli",e:"Flatbread",ex:""},
+    {id:"fo7",h:"શાક",r:"shaak",e:"Vegetable curry",ex:""},
+    {id:"fo8",h:"ખીચડી",r:"khichdi",e:"Khichdi",ex:""}
+  ]},
+  {id:"numbers",label:"Numbers",cards:[
+    {id:"n1",h:"એક",r:"ek",e:"One",ex:""},
+    {id:"n2",h:"બે",r:"be",e:"Two",ex:""},
+    {id:"n3",h:"ત્રણ",r:"tran",e:"Three",ex:""},
+    {id:"n4",h:"ચાર",r:"chaar",e:"Four",ex:""},
+    {id:"n5",h:"પાંચ",r:"paanch",e:"Five",ex:""},
+    {id:"n6",h:"છ",r:"chha",e:"Six",ex:""},
+    {id:"n7",h:"સાત",r:"saat",e:"Seven",ex:""},
+    {id:"n8",h:"આઠ",r:"aath",e:"Eight",ex:""},
+    {id:"n9",h:"નવ",r:"nav",e:"Nine",ex:""},
+    {id:"n10",h:"દસ",r:"das",e:"Ten",ex:""}
+  ]},
+  {id:"colors",label:"Colors",cards:[
+    {id:"col1",h:"લાલ",r:"laal",e:"Red",ex:""},
+    {id:"col2",h:"ભૂરો",r:"bhooro",e:"Blue",ex:""},
+    {id:"col3",h:"લીલો",r:"leelo",e:"Green",ex:""},
+    {id:"col4",h:"પીળો",r:"peelo",e:"Yellow",ex:""},
+    {id:"col5",h:"સફેદ",r:"safed",e:"White",ex:""},
+    {id:"col6",h:"કાળો",r:"kaalo",e:"Black",ex:""},
+    {id:"col7",h:"નારંગી",r:"naarangi",e:"Orange",ex:""},
+    {id:"col8",h:"ગુલાબી",r:"gulaabi",e:"Pink",ex:""}
+  ]}
+];
+const ALPHABET_WORDS_DECK={id:"alphabet_words",label:"Alphabet Primer",cards:[
+  {id:"aw1",h:"અનાર",r:"anaar",e:"pomegranate · અ"},
+  {id:"aw2",h:"આંબો",r:"aambo",e:"mango tree · આ"},
+  {id:"aw3",h:"ઇમારત",r:"imaarat",e:"building · ઇ"},
+  {id:"aw4",h:"ઈખ",r:"eekh",e:"sugarcane · ઈ"},
+  {id:"aw5",h:"ઉંટ",r:"unt",e:"camel · ઉ"},
+  {id:"aw6",h:"ઊન",r:"oon",e:"wool · ઊ"},
+  {id:"aw7",h:"ઋષિ",r:"rishi",e:"sage · ઋ"},
+  {id:"aw8",h:"એક",r:"ek",e:"one · એ"},
+  {id:"aw9",h:"ઐ",r:"ai",e:"come (archaic) · ઐ"},
+  {id:"aw10",h:"ઓસ",r:"os",e:"dew · ઓ"},
+  {id:"aw11",h:"ઔષધ",r:"aushadh",e:"medicine · ઔ"},
+  {id:"aw12",h:"કમળ",r:"kamal",e:"lotus · ક"},
+  {id:"aw13",h:"ખિસ્સો",r:"khisso",e:"pocket · ખ"},
+  {id:"aw14",h:"ગાય",r:"gaay",e:"cow · ગ"},
+  {id:"aw15",h:"ઘર",r:"ghar",e:"house · ઘ"},
+  {id:"aw16",h:"ચા",r:"chaa",e:"tea · ચ"},
+  {id:"aw17",h:"છત",r:"chhat",e:"roof · છ"},
+  {id:"aw18",h:"જળ",r:"jal",e:"water · જ"},
+  {id:"aw19",h:"ઝાડ",r:"zaad",e:"tree · ઝ"},
+  {id:"aw20",h:"ટોપ",r:"top",e:"hat · ટ"},
+  {id:"aw21",h:"ઠંડ",r:"thand",e:"cold · ઠ"},
+  {id:"aw22",h:"ડોક",r:"dok",e:"neck · ડ"},
+  {id:"aw23",h:"ઢોલ",r:"dhol",e:"drum · ઢ"},
+  {id:"aw24",h:"તળ",r:"tal",e:"lake bottom · ત"},
+  {id:"aw25",h:"થર",r:"thar",e:"layer · થ"},
+  {id:"aw26",h:"દવા",r:"dava",e:"medicine · દ"},
+  {id:"aw27",h:"ધન",r:"dhan",e:"wealth · ધ"},
+  {id:"aw28",h:"નામ",r:"naam",e:"name · ન"},
+  {id:"aw29",h:"પાણી",r:"paani",e:"water · પ"},
+  {id:"aw30",h:"ફૂલ",r:"phool",e:"flower · ફ"},
+  {id:"aw31",h:"બળ",r:"bal",e:"strength · બ"},
+  {id:"aw32",h:"ભણ",r:"bhan",e:"study · ભ"},
+  {id:"aw33",h:"માણસ",r:"maanas",e:"person · મ"},
+  {id:"aw34",h:"યાર",r:"yaar",e:"friend · ય"},
+  {id:"aw35",h:"રાત",r:"raat",e:"night · ર"},
+  {id:"aw36",h:"લગ્ન",r:"lagna",e:"wedding · લ"},
+  {id:"aw37",h:"વાત",r:"vaat",e:"talk · વ"},
+  {id:"aw38",h:"શહેર",r:"shaher",e:"city · શ"},
+  {id:"aw39",h:"સૂર્ય",r:"soorya",e:"sun · સ"},
+  {id:"aw40",h:"હાથ",r:"haath",e:"hand · હ"}
+],sub:"40 words",isScript:false};
+const ALL_DECKS=[{id:"vowels",label:"Vowels",sub:"14 characters",cards:VOWELS,isScript:true},{id:"consonants",label:"Consonants",sub:"36 characters",cards:CONSONANTS,isScript:true},{id:"diacritics",label:"Vowel Signs · Matras",sub:"13 diacritics",cards:[{id:"mld1",mark:"ാ",h:"കാ",base:"ക",r:"k+kaa=kaa",baseRom:"k",vowelRom:"kaa",e:"long a — ആ sound",ex:""},{id:"mld2",mark:"ി",h:"കി",base:"ക",r:"k+ki=ki",baseRom:"k",vowelRom:"ki",e:"short i — ഇ sound",ex:""},{id:"mld3",mark:"ീ",h:"കീ",base:"ക",r:"k+kee=kee",baseRom:"k",vowelRom:"kee",e:"long i — ഈ sound",ex:""},{id:"mld4",mark:"ു",h:"കു",base:"ക",r:"k+ku=ku",baseRom:"k",vowelRom:"ku",e:"short u — ഉ sound",ex:""},{id:"mld5",mark:"ൂ",h:"കൂ",base:"ക",r:"k+koo=koo",baseRom:"k",vowelRom:"koo",e:"long u — ഊ sound",ex:""},{id:"mld6",mark:"െ",h:"കെ",base:"ക",r:"k+ke=ke",baseRom:"k",vowelRom:"ke",e:"short e — എ sound",ex:""},{id:"mld7",mark:"േ",h:"കേ",base:"ക",r:"k+kee=kee",baseRom:"k",vowelRom:"kee",e:"long e — ഏ sound",ex:""},{id:"mld8",mark:"ൈ",h:"കൈ",base:"ക",r:"k+kai=kai",baseRom:"k",vowelRom:"kai",e:"ai — ഐ sound",ex:""},{id:"mld9",mark:"ൊ",h:"കൊ",base:"ക",r:"k+ko=ko",baseRom:"k",vowelRom:"ko",e:"short o — ഒ sound",ex:""},{id:"mld10",mark:"ോ",h:"കോ",base:"ക",r:"k+koo=koo",baseRom:"k",vowelRom:"koo",e:"long o — ഓ sound",ex:""},{id:"mld11",mark:"ൌ",h:"കൌ",base:"ക",r:"k+kau=kau",baseRom:"k",vowelRom:"kau",e:"au — ഔ sound",ex:""},{id:"mld12",mark:"ം",h:"കം",base:"ക",r:"k+kam=kam",baseRom:"k",vowelRom:"kam",e:"anusvara — nasal ending",ex:""},{id:"mld13",mark:"്",h:"ക്",base:"ക",r:"k+k=k",baseRom:"k",vowelRom:"k",e:"virama — removes inherent a",ex:""}],isScript:true,isDiacritic:true},ALPHABET_WORDS_DECK,...WORD_DECKS.map(d=>({...d,sub:`${d.cards.length} words`,isScript:false}))];
+const ALL_CARDS=ALL_DECKS.flatMap(d=>d.cards);
+const SRS_KEY="likho_gujarati_srs";
+function loadSRS(){try{return JSON.parse(localStorage.getItem(SRS_KEY)||"{}")}catch{return{}}}
+function saveSRS(s){try{localStorage.setItem(SRS_KEY,JSON.stringify(s))}catch{}}
+function initCard(){return{interval:1,ease:2.5,due:0,reps:0}}
+// FIX 1: SRS — reps always increments; reset to 0 only on Again
+function stepSRS(s,q){
+  const ease=Math.max(1.3,s.ease+[-0.3,-0.15,0,0.15][q]);
+  const reps=q===0?0:s.reps+1;
+  const interval=q===0?1:reps===1?1:reps===2?3:Math.round(s.interval*ease);
+  return{interval,ease,due:Date.now()+interval*86400000,reps};
+}
+function dueCards(cards){return cards.filter(c=>(SRS[c.id]?.due??0)<=Date.now())}
+let SRS=loadSRS();
+
+// FIX 5: Fisher-Yates shuffle
+function shuffle(arr){
+  const a=[...arr];
+  for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+  return a;
+}
+
+const cv=document.getElementById("draw-canvas"),ctx=cv.getContext("2d");
+let drawing=false,lx=0,ly=0,ghostChar=null;
+let logicalW=320,logicalH=320;
+function initCanvas(lw,lh){
+  const dpr=window.devicePixelRatio||1;
+  logicalW=lw;logicalH=lh;
+  cv.width=Math.round(lw*dpr);cv.height=Math.round(lh*dpr);
+  cv.style.width=lw+"px";cv.style.height=lh+"px";
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+}
+function xy(e){const r=cv.getBoundingClientRect(),s=e.touches?e.touches[0]:e;return[s.clientX-r.left,s.clientY-r.top]}
+
+// ─── Ghost character placement ──────────────────────────────────────────────
+function drawGhost(context,W,H,ghost,isWord){
+  const maxW=W*0.88,maxH=H*0.62;
+  let fs=isWord?Math.round(H*0.42):Math.round(Math.min(W,H)*0.55);
+  context.textBaseline="alphabetic";context.textAlign="left";
+  for(let i=0;i<8;i++){
+    context.font=`${fs}px serif`;
+    const m=context.measureText(ghost);
+    const tw=m.width,th=(m.actualBoundingBoxAscent||fs*0.75)+(m.actualBoundingBoxDescent||fs*0.2);
+    if(tw<=maxW&&th<=maxH)break;
+    fs=Math.round(fs*0.82);
+  }
+  context.font=`${fs}px serif`;
+  const m2=context.measureText(ghost);
+  const asc=m2.actualBoundingBoxAscent||fs*0.75;
+  const desc=m2.actualBoundingBoxDescent||fs*0.15;
+  const totalH=asc+desc;
+  // Center the glyph vertically in the canvas
+  const ghostY=Math.round((H-totalH)/2)+asc;
+  const ghostW=m2.width;
+  context.textAlign="left";context.textBaseline="alphabetic";
+  context.fillText(ghost,Math.round(W/2-ghostW/2),ghostY);
+}
+function drawGrid(){
+  const W=logicalW,H=logicalH;
+  ctx.clearRect(0,0,W,H);ctx.fillStyle="#FBF8F2";ctx.fillRect(0,0,W,H);
+  ctx.strokeStyle="rgba(13,26,18,0.05)";ctx.lineWidth=1;
+  for(let y=40;y<H;y+=40){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}
+  // baseline — characters rest on this line
+  const baseline=Math.round(H*0.65);
+  ctx.strokeStyle="rgba(26,107,90,0.22)";ctx.lineWidth=1.5;ctx.setLineDash([]);
+  ctx.beginPath();ctx.moveTo(0,baseline);ctx.lineTo(W,baseline);ctx.stroke();
+  // geometric circle guide — one per cell for word cards, once for script cards
+  const isWordCanvas=currentDeck&&!currentDeck.isScript;
+  if(isWordCanvas){
+    const cellW=260;
+    const numCells=Math.round(W/cellW);
+    for(let i=0;i<numCells;i++){
+      const cx=cellW*i+cellW/2;
+      const cr=Math.round(cellW*0.30);
+      ctx.strokeStyle="rgba(176,96,16,0.07)";ctx.lineWidth=1;ctx.setLineDash([3,5]);
+      ctx.beginPath();ctx.arc(cx,baseline-cr,cr,0,Math.PI*2);ctx.stroke();
+      ctx.strokeStyle="rgba(176,96,16,0.06)";ctx.lineWidth=1;
+      ctx.beginPath();ctx.moveTo(cx,0);ctx.lineTo(cx,H);ctx.stroke();
+    }
+    ctx.setLineDash([]);
+  } else {
+    const cr=Math.round(W*0.30);
+    ctx.strokeStyle="rgba(176,96,16,0.07)";ctx.lineWidth=1;ctx.setLineDash([3,5]);
+    ctx.beginPath();ctx.arc(W/2,baseline-cr,cr,0,Math.PI*2);ctx.stroke();
+    ctx.strokeStyle="rgba(176,96,16,0.06)";ctx.lineWidth=1;ctx.setLineDash([4,6]);
+    ctx.beginPath();ctx.moveTo(W/2,0);ctx.lineTo(W/2,H);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(0,baseline-cr);ctx.lineTo(W,baseline-cr);ctx.stroke();
+    ctx.setLineDash([]);
+  }
+  // FIX 2: dynamic font sizing for ghost character
+  if(ghostChar){
+    const isWord=currentDeck&&!currentDeck.isScript;
+    if(isWord){
+      const aksharas=getAksharas(ghostChar);
+      const cellW=260;
+      ctx.textBaseline="alphabetic";ctx.textAlign="center";
+      aksharas.forEach((ch,i)=>{
+        if(i>0){ctx.strokeStyle="rgba(176,96,16,0.10)";ctx.lineWidth=1;ctx.setLineDash([3,4]);ctx.beginPath();ctx.moveTo(cellW*i,0);ctx.lineTo(cellW*i,H);ctx.stroke();ctx.setLineDash([]);}
+        ctx.save();ctx.translate(cellW*i,0);
+        ctx.fillStyle="rgba(176,96,16,0.08)";
+        drawGhost(ctx,cellW,H,ch,false);
+        ctx.restore();
+      });
+    } else {
+      const maxW=W*0.88,maxH=H*0.55;
+      let fs=Math.round(W*0.58);
+      ctx.fillStyle="rgba(176,96,16,0.08)";
+      drawGhost(ctx,W,H,ghostChar,false);
+    }
+  }
+}
+
+function clearCanvas(){ghostChar=currentCard&&isRevealed?currentCard.h:null;drawGrid()}
+cv.addEventListener("mousedown",e=>{drawing=true;[lx,ly]=xy(e)});
+cv.addEventListener("mousemove",e=>{if(!drawing)return;const[x,y]=xy(e);ctx.beginPath();ctx.moveTo(lx,ly);ctx.lineTo(x,y);ctx.strokeStyle="#0D1A12";ctx.lineWidth=3.5;ctx.lineCap=ctx.lineJoin="round";ctx.stroke();[lx,ly]=[x,y]});
+cv.addEventListener("mouseup",()=>drawing=false);cv.addEventListener("mouseleave",()=>drawing=false);
+cv.addEventListener("touchstart",e=>{e.preventDefault();drawing=true;[lx,ly]=xy(e)},{passive:false});
+cv.addEventListener("touchmove",e=>{e.preventDefault();if(!drawing)return;const[x,y]=xy(e);ctx.beginPath();ctx.moveTo(lx,ly);ctx.lineTo(x,y);ctx.strokeStyle="#0D1A12";ctx.lineWidth=3.5;ctx.lineCap=ctx.lineJoin="round";ctx.stroke();[lx,ly]=[x,y]},{passive:false});
+cv.addEventListener("touchend",()=>drawing=false);
+
+let currentDeck=null,queue=[],qIdx=0,currentCard=null,isRevealed=false,sessionGrades=[];
+let reviewDeck=null,reviewCards=[],flipIdx=0,flipShown=false;
+// FIX 3: undo state
+let lastGradeSnapshot=null;
+
+function toggleTrace(e,ghost){if(e)e.stopPropagation();const wrap=document.getElementById("trace-wrap"),btn=document.getElementById("btn-trace-toggle");if(!wrap||!btn)return;const showing=wrap.style.display==="flex";if(showing){wrap.style.display="none";btn.textContent="✍️ trace";}else{wrap.style.display="flex";btn.textContent="✕ hide";drawTraceGrid(ghost);initTrace(ghost);}}
+function clearTrace(e,ghost){if(e)e.stopPropagation();drawTraceGrid(ghost);}
+function drawTraceGrid(ghost){
+  const tc=document.getElementById("trace-canvas");if(!tc)return;
+  const tctx=tc.getContext("2d"),W=260,H=280;
+  tctx.clearRect(0,0,W,H);tctx.fillStyle="#FBF8F2";tctx.fillRect(0,0,W,H);
+  // baseline + circle to match study canvas
+  const baseline=Math.round(H*0.65);
+  const cr=Math.round(W*0.28);
+  tctx.strokeStyle="rgba(176,96,16,0.20)";tctx.lineWidth=1.5;tctx.setLineDash([]);
+  tctx.beginPath();tctx.moveTo(0,baseline);tctx.lineTo(W,baseline);tctx.stroke();
+  tctx.strokeStyle="rgba(176,96,16,0.08)";tctx.lineWidth=1;tctx.setLineDash([3,5]);
+  tctx.beginPath();tctx.arc(W/2,baseline-cr,cr,0,Math.PI*2);tctx.stroke();
+  tctx.beginPath();tctx.moveTo(W/2,0);tctx.lineTo(W/2,H);tctx.stroke();tctx.setLineDash([]);
+  if(ghost){
+    let fs=Math.round(W*0.40);
+    tctx.textAlign="center";tctx.textBaseline="alphabetic";
+    for(let i=0;i<6;i++){
+      tctx.font=fs+"px serif";
+      const m=tctx.measureText(ghost);
+      if(m.width<=W*0.82)break;
+      fs=Math.round(fs*0.84);
+    }
+    tctx.fillStyle="rgba(176,96,16,0.13)";
+    drawGhost(tctx,W,H,ghost,false);
+  }
+}
+function initTrace(ghost){
+  const tc=document.getElementById("trace-canvas");if(!tc)return;
+  if(tc._traceInited)return;
+  tc._traceInited=true;
+  drawTraceGrid(ghost);
+  const dpr=window.devicePixelRatio||1;
+  const LW=260,LH=280;
+  tc.width=Math.round(LW*dpr);tc.height=Math.round(LH*dpr);
+  tc.style.width=LW+"px";tc.style.height=LH+"px";
+  const tctx=tc.getContext("2d");tctx.setTransform(dpr,0,0,dpr,0,0);
+  drawTraceGrid(ghost);
+  let tdrawing=false,tlx=0,tly=0;
+  function getP(e){const r=tc.getBoundingClientRect(),s=e.touches?e.touches[0]:e;return[s.clientX-r.left,s.clientY-r.top];}
+  tc.addEventListener("mousedown",e=>{e.stopPropagation();tdrawing=true;[tlx,tly]=getP(e)});
+  tc.addEventListener("mousemove",e=>{if(!tdrawing)return;const[x,y]=getP(e);tctx.beginPath();tctx.moveTo(tlx,tly);tctx.lineTo(x,y);tctx.strokeStyle="#0D1A12";tctx.lineWidth=3;tctx.lineCap=tctx.lineJoin="round";tctx.stroke();tlx=x;tly=y;});
+  tc.addEventListener("mouseup",()=>tdrawing=false);tc.addEventListener("mouseleave",()=>tdrawing=false);
+  tc.addEventListener("touchstart",e=>{e.stopPropagation();e.preventDefault();tdrawing=true;[tlx,tly]=getP(e);},{passive:false});
+  tc.addEventListener("touchmove",e=>{e.stopPropagation();e.preventDefault();if(!tdrawing)return;const[x,y]=getP(e);tctx.beginPath();tctx.moveTo(tlx,tly);tctx.lineTo(x,y);tctx.strokeStyle="#0D1A12";tctx.lineWidth=3;tctx.lineCap=tctx.lineJoin="round";tctx.stroke();tlx=x;tly=y;},{passive:false});
+  tc.addEventListener("touchend",e=>{e.stopPropagation();tdrawing=false;},{passive:false});
+}
+
+function renderHome(){
+  const totalCards=ALL_CARDS.length,seen=ALL_CARDS.filter(c=>(SRS[c.id]?.reps??0)>0).length,due=ALL_DECKS.reduce((n,d)=>n+dueCards(d.cards).length,0),pct=totalCards>0?Math.round((seen/totalCards)*100):0;
+  document.getElementById("stat-seen").textContent=seen;document.getElementById("stat-due").textContent=due;document.getElementById("stat-total").textContent=totalCards;
+  document.getElementById("overall-bar").style.width=pct+"%";document.getElementById("bar-pct").textContent=pct+"%";
+  ["script","words"].forEach(type=>{
+    const el=document.getElementById(`deck-list-${type}`),decks=type==="script"?ALL_DECKS.filter(d=>d.isScript):ALL_DECKS.filter(d=>!d.isScript);
+    el.innerHTML=decks.map(deck=>{const dueN=dueCards(deck.cards).length,done=dueN===0,total=deck.cards.length,seenN=deck.cards.filter(c=>(SRS[c.id]?.reps??0)>0).length;return`<div class="deck-row"><div class="deck-info"><div class="deck-name">${deck.label}</div><div class="deck-meta"><span class="deck-sub">${deck.sub}</span>${seenN>0?`<span class="deck-seen">${seenN}/${total} seen</span>`:""}<span class="deck-due ${done?"due-off":"due-on"}">${done?"✓ caught up":`${dueN} due`}</span></div></div><div class="prog-track"><div class="prog-fill" style="width:${(seenN/total)*100}%"></div></div><div class="deck-btns"><button class="btn-review-deck" onclick="startReview('${deck.id}')">browse</button><button class="btn-study ${done?"btn-outline":"btn-filled"}" onclick="startStudy('${deck.id}')">${done?"review":"study"}</button></div></div>`;}).join("");
+  });buildRef();
+}
+function startReview(id){reviewDeck=ALL_DECKS.find(d=>d.id===id);reviewCards=reviewDeck.cards;flipIdx=0;flipShown=false;document.getElementById("review-title").textContent=reviewDeck.label+" — Browse";document.getElementById("review-sub").textContent=reviewCards.length+" characters";const isDiac=!!reviewDeck.isDiacritic;document.getElementById("review-grid").innerHTML=reviewCards.map((c,i)=>{const charDisplay=isDiac?`${c.mark} → ${c.h}`:c.h,romDisplay=isDiac?c.vowelRom:c.r,charLen=(isDiac?c.mark:c.h).length,fontSize=charLen<=2?28:charLen<=4?22:charLen<=6?18:14;return`<div class="review-grid-card" id="rgc-${i}" onclick="highlightGrid(${i})"><div class="review-grid-char" style="font-size:${fontSize}px">${charDisplay}</div><div class="review-grid-rom">${romDisplay}</div><div class="review-grid-eng">${c.e}</div></div>`;}).join("");document.getElementById("review-grid-phase").style.display="block";document.getElementById("review-flip-phase").style.display="none";showScreen("review");
+}
+function backToGrid(){document.getElementById("review-grid-phase").style.display="block";document.getElementById("review-flip-phase").style.display="none";}
+function highlightGrid(i){document.querySelectorAll(".review-grid-card").forEach(el=>el.classList.remove("active"));document.getElementById("rgc-"+i)?.classList.add("active");flipIdx=i;document.getElementById("review-grid-phase").style.display="none";document.getElementById("review-flip-phase").style.display="flex";renderFlip();}
+function startFlip(){flipIdx=0;flipShown=false;document.getElementById("review-grid-phase").style.display="none";document.getElementById("review-flip-phase").style.display="flex";renderFlip()}
+function renderFlip(){const c=reviewCards[flipIdx];document.getElementById("flip-card").classList.remove("flipped");document.getElementById("flip-front-label").style.display="block";document.getElementById("flip-char").textContent=c.h;document.getElementById("flip-char").style.display="block";document.getElementById("flip-rom").style.display="none";document.getElementById("flip-eng").style.display="none";document.getElementById("flip-example").style.display="none";document.getElementById("flip-count").textContent=`${flipIdx+1} / ${reviewCards.length}`;document.getElementById("btn-flip-next").textContent=flipIdx===reviewCards.length-1?"finish ✓":"next →";const ta=document.getElementById("trace-area");if(ta)ta.innerHTML="";flipShown=false;}
+function flipCard(){
+  if(flipShown){flipNav(1);return;}
+  const c=reviewCards[flipIdx],isDiac=!!reviewDeck.isDiacritic;
+  document.getElementById("flip-card").classList.add("flipped");document.getElementById("flip-front-label").style.display="none";
+  if(isDiac){document.getElementById("flip-rom").textContent=c.mark+" + "+c.base+" = "+c.h+" · "+c.vowelRom;document.getElementById("flip-eng").textContent=c.e;}
+  else{document.getElementById("flip-rom").textContent=c.r;document.getElementById("flip-eng").textContent=c.e;}
+  document.getElementById("flip-rom").style.display="block";document.getElementById("flip-eng").style.display="block";
+  if(c.ex&&!isDiac){document.getElementById("flip-example").textContent=c.ex;document.getElementById("flip-example").style.display="block";}
+  const ta=document.getElementById("trace-area");
+  if(ta){const ghost=isDiac?c.mark:c.h;ta.innerHTML=`<div style="margin-top:10px;display:flex;flex-direction:column;align-items:center;gap:6px"><button id="btn-trace-toggle" style="background:transparent;border:1.5px solid var(--accent);border-radius:3px;padding:5px 16px;font-family:inherit;font-size:12px;color:var(--accent);cursor:pointer;letter-spacing:0.08em" onclick="toggleTrace(event,'${ghost}')">✍️ trace</button><div id="trace-wrap" style="display:none;flex-direction:column;align-items:center;gap:6px"><canvas id="trace-canvas" width="260" height="280" style="width:260px;height:280px;display:block;touch-action:none;cursor:crosshair;border-radius:6px;border:1.5px solid var(--rule);box-shadow:inset 0 1px 4px rgba(0,0,0,0.05)"></canvas><button onclick="clearTrace(event,'${ghost}')" style="background:transparent;border:1.5px solid var(--rule);border-radius:3px;padding:4px 14px;font-family:inherit;font-size:11px;color:var(--inkfader);cursor:pointer">↺ clear</button></div></div>`;}
+  flipShown=true;
+}
+function flipNav(dir){flipIdx=Math.max(0,Math.min(reviewCards.length-1,flipIdx+dir));renderFlip()}
+function startStudyFromReview(){startStudy(reviewDeck.id)}
+function startStudy(id){
+  currentDeck=ALL_DECKS.find(d=>d.id===id);const due=dueCards(currentDeck.cards);
+  // FIX 5: Fisher-Yates shuffle
+  queue=shuffle(due.length>0?due:currentDeck.cards);
+  qIdx=0;sessionGrades=[];isRevealed=false;ghostChar=null;lastGradeSnapshot=null;showScreen("study");loadCard();
+}
+function getAksharas(str){
+  if(typeof Intl!=="undefined"&&Intl.Segmenter){
+    return [...new Intl.Segmenter("ml",{granularity:"grapheme"}).segment(str)].map(s=>s.segment);
+  }
+  return [...str.match(/[\u0D00-\u0D7F][\u0D00-\u0D7F\u200C\u200D]*/gu)||[str]];
+}
+function resizeCanvas(){
+  const isWord=currentDeck&&!currentDeck.isScript;
+  if(isWord){
+    const n=getAksharas(currentCard.h).length;
+    initCanvas(Math.max(320,n*260),260);
+  } else {
+    initCanvas(320,320);
+  }
+}
+function loadCard(){
+  if(qIdx>=queue.length){showDone();return}
+  currentCard=queue[qIdx];isRevealed=false;ghostChar=null;resizeCanvas();drawGrid();
+  document.getElementById("progress-bar").style.width=(qIdx/queue.length*100)+"%";
+  document.getElementById("study-count").textContent=`${qIdx+1} / ${queue.length}`;
+  if(currentDeck.isDiacritic){document.getElementById("prompt-label").textContent="WHAT DOES THIS MARK DO?";document.getElementById("prompt-main").innerHTML=`<div class="prompt-mark">${currentCard.mark}</div><div class="prompt-mark-label">${currentCard.e}</div>`;}
+  else{
+    document.getElementById("prompt-label").textContent=currentDeck.isScript?"WRITE THIS CHARACTER":"WRITE IN MALAYALAM";
+    if(currentDeck.isScript){
+      document.getElementById("prompt-main").innerHTML=`<div class="prompt-rom-script">${currentCard.r}</div><div class="prompt-eng-script">${currentCard.e}</div>`;
+    } else {
+      document.getElementById("prompt-main").innerHTML=`<div class="prompt-word">${currentCard.e}</div><div class="prompt-rom">${currentCard.r}</div>`;
+    }
+  }
+  document.getElementById("reveal-area").innerHTML=`<div class="reveal-row"><button class="btn-reveal" onclick="reveal()">reveal</button><button class="btn-dontknow" onclick="dontKnow()">don't know</button></div>${lastGradeSnapshot?`<div style="text-align:center;margin-top:8px"><button onclick="undoGrade()" style="background:transparent;border:none;color:var(--inkfader);font-size:11px;cursor:pointer;font-family:inherit;letter-spacing:0.1em;text-decoration:underline">↩ undo last grade</button></div>`:''}`;
+}
+function dontKnow(){SRS[currentCard.id]=stepSRS(SRS[currentCard.id]??initCard(),0);saveSRS(SRS);sessionGrades.push(0);isRevealed=true;ghostChar=currentCard.h;drawGrid();showAnswer();}
+function reveal(){isRevealed=true;ghostChar=currentCard.h;drawGrid();showAnswer()}
+function showAnswer(){
+  const isWord=!currentDeck.isScript;
+  if(currentDeck.isDiacritic){document.getElementById("reveal-area").innerHTML=`<div style="text-align:center"><div class="answer-mark-row"><div class="answer-mark">${currentCard.mark}</div><div class="answer-mark-arrow">+</div><div class="answer-mark">${currentCard.base}</div><div class="answer-mark-arrow">=</div><div class="answer-with-base">${currentCard.h}</div></div><div class="answer-rom" style="margin-top:8px">${currentCard.h} · ${currentCard.vowelRom}</div><div class="answer-eng">${currentCard.e}</div></div><div><div class="grade-label">HOW DID YOU DO?</div><div class="grade-bar"><button class="btn-grade g-again" onclick="grade(0)">Again<span>[1]</span></button><button class="btn-grade g-hard" onclick="grade(1)">Hard<span>[2]</span></button><button class="btn-grade g-good" onclick="grade(2)">Good<span>[3]</span></button><button class="btn-grade g-easy" onclick="grade(3)">Easy<span>[4]</span></button></div></div>`;return;}
+  const exHtml=(!isWord&&currentCard.ex)?`<div class="answer-example">${currentCard.ex}</div>`:"";
+  document.getElementById("reveal-area").innerHTML=`<div style="text-align:center"><div class="answer-char${isWord?" word":""}">${currentCard.h}</div><div class="answer-rom">${currentCard.r}</div>${isWord?`<div class="answer-eng">${currentCard.e}</div>`:""}${exHtml}</div><div><div class="grade-label">HOW DID YOU DO?</div><div class="grade-bar"><button class="btn-grade g-again" onclick="grade(0)">Again<span>[1]</span></button><button class="btn-grade g-hard" onclick="grade(1)">Hard<span>[2]</span></button><button class="btn-grade g-good" onclick="grade(2)">Good<span>[3]</span></button><button class="btn-grade g-easy" onclick="grade(3)">Easy<span>[4]</span></button></div></div>`;
+}
+// FIX 3: grade saves snapshot, undoGrade restores it
+function grade(q){
+  lastGradeSnapshot={cardId:currentCard.id,srsState:{...SRS[currentCard.id]??initCard()},qIdx:qIdx,sessionGrades:[...sessionGrades]};
+  SRS[currentCard.id]=stepSRS(SRS[currentCard.id]??initCard(),q);
+  saveSRS(SRS);sessionGrades.push(q);qIdx++;loadCard();
+}
+function undoGrade(){
+  if(!lastGradeSnapshot)return;
+  const snap=lastGradeSnapshot;
+  SRS[snap.cardId]=snap.srsState;saveSRS(SRS);
+  qIdx=snap.qIdx;sessionGrades=snap.sessionGrades;lastGradeSnapshot=null;loadCard();
+}
+// FIX 4: guard against division by zero
+function showDone(){
+  if(sessionGrades.length===0){goHome();return;}
+  const c=[0,1,2,3].map(q=>sessionGrades.filter(g=>g===q).length),pct=Math.round(((c[2]+c[3])/sessionGrades.length)*100);
+  const[w,s]=pct>=80?["നന്നായി","well done"]:pct>=50?["ശരി","good effort"]:["വീണ്ടും","keep practicing"];
+  document.getElementById("done-word").textContent=w;document.getElementById("done-sub").textContent=s;
+  const cols=["var(--again)","var(--hard)","var(--good)","var(--easy)"],lbs=["again","hard","good","easy"];
+  document.getElementById("done-grades").innerHTML=c.map((n,i)=>`<div class="done-box"><div class="done-num" style="color:${cols[i]}">${n}</div><div class="done-lbl" style="color:${cols[i]}">${lbs[i]}</div></div>`).join("");
+  showScreen("done");
+}
+function buildRef(){["vowels","consonants"].forEach(t=>{const arr=t==="vowels"?VOWELS:CONSONANTS;document.getElementById(`ref-${t}`).innerHTML=arr.map(c=>`<div class="ref-card"><div class="ref-char">${c.h}</div><div class="ref-rom">${c.r}</div><div class="ref-eng">${c.e}</div></div>`).join("");})}
+function openRef(){document.getElementById("ref-overlay").classList.add("open")}
+function closeRef(){document.getElementById("ref-overlay").classList.remove("open")}
+function closeRefOverlay(e){if(e.target===document.getElementById("ref-overlay"))closeRef()}
+function confirmReset(){document.getElementById("confirm-overlay").classList.add("open")}
+function closeConfirm(){document.getElementById("confirm-overlay").classList.remove("open")}
+function closeConfirmOverlay(e){if(e.target===document.getElementById("confirm-overlay"))closeConfirm()}
+function doReset(){localStorage.removeItem(SRS_KEY);SRS={};closeConfirm();renderHome()}
+function showScreen(n){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));document.getElementById(`${n}-screen`).classList.add("active")}
+function goHome(){showScreen("home");renderHome()}
+document.addEventListener("keydown",e=>{
+  if(document.getElementById("review-screen").classList.contains("active")){if(e.key==="ArrowRight")flipNav(1);if(e.key==="ArrowLeft")flipNav(-1);if(e.key===" "){e.preventDefault();flipCard();}return;}
+  if(!document.getElementById("study-screen").classList.contains("active"))return;
+  if(e.key===" "&&!isRevealed){e.preventDefault();reveal();return}if(e.key==="?"&&!isRevealed){dontKnow();return}
+  if(e.key==="1"&&isRevealed)grade(0);if(e.key==="2"&&isRevealed)grade(1);if(e.key==="3"&&isRevealed)grade(2);if(e.key==="4"&&isRevealed)grade(3);
+});
+
+
+initCanvas(320,320);
+renderHome();drawGrid();
+document.getElementById("flip-card").addEventListener("click",function(e){if(document.getElementById("trace-wrap")&&document.getElementById("trace-wrap").style.display==="flex")return;flipCard();});
+
+</script>
+</body>
+</html>

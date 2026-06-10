@@ -152,7 +152,7 @@
   <div id="review-grid-phase"><div class="review-grid" id="review-grid"></div><div class="review-start-btn"><button class="btn-filled btn-study" onclick="startFlip()">Flip through →</button></div></div>
   <div id="review-flip-phase" style="display:none">
     <div class="flip-card" id="flip-card"><div class="flip-front-label" id="flip-front-label">TAP TO REVEAL</div><button class="btn-speak" id="btn-speak" title="Listen" onclick="event.stopPropagation();const c=reviewCards[flipIdx];document.getElementById('btn-speak').classList.add('active-speak');speak(c.d||c.r);">🔊</button><div class="flip-char" id="flip-char"></div><div class="flip-forms" id="flip-forms" style="display:none"></div><div class="flip-rom" id="flip-rom" style="display:none"></div><div class="flip-eng" id="flip-eng" style="display:none"></div><div id="trace-area"></div></div>
-    <div class="flip-nav"><button class="btn-flip-nav" onclick="backToGrid()">⊞ grid</button><button class="btn-flip-nav" onclick="flipNav(-1)">← prev</button><div class="flip-count" id="flip-count"></div><button class="btn-flip-nav" onclick="flipNav(1)">next →</button></div>
+    <div class="flip-nav"><button class="btn-flip-nav" onclick="backToGrid()">⊞ grid</button><button class="btn-flip-nav" onclick="flipNav(-1)">← prev</button><div class="flip-count" id="flip-count"></div><button class="btn-flip-nav" id="btn-flip-next" onclick="flipNav(1)">next →</button></div>
     <button class="btn-start-study" onclick="startStudyFromReview()">Start writing practice →</button>
   </div>
 </div>
@@ -529,7 +529,7 @@ function renderFlip(){
   document.getElementById("flip-char").textContent=c.h;document.getElementById("flip-char").style.display="block";
   document.getElementById("flip-forms").style.display="none";
   document.getElementById("flip-rom").style.display="none";document.getElementById("flip-eng").style.display="none";
-  document.getElementById("flip-count").textContent=`${flipIdx+1} / ${reviewCards.length}`;flipShown=false;
+  document.getElementById("flip-count").textContent=`${flipIdx+1} / ${reviewCards.length}`;document.getElementById("btn-flip-next").textContent=flipIdx===reviewCards.length-1?"finish ✓":"next →";flipShown=false;
   const ta=document.getElementById("trace-area");if(ta)ta.innerHTML="";
 }
 function flipCard(){
