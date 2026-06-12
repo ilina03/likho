@@ -21,9 +21,9 @@ Free, open source, no account needed. Works in any browser.
 | Telugu    | Telugu           | ✅ Live    |
 | Tamil     | Tamil            | ✅ Live    |
 | Urdu      | Nastaliq / Naskh | ✅ Live    |
-| Gujarati  | Gujarati         | 🔜 Planned |
-| Punjabi   | Gurmukhi         | 🔜 Planned |
-| Bengali   | Bengali          | 🔜 Planned |
+| Gujarati  | Gujarati         | ✅ Live    |
+| Punjabi   | Gurmukhi         | ✅ Live    |
+| Bengali   | Bengali          | ✅ Live    |
 
 ---
 
@@ -93,6 +93,12 @@ tamil/
   index.html            ← Tamil
 urdu/
   index.html            ← Urdu (Nastaliq/Naskh, RTL)
+gujarati/
+  index.html            ← Gujarati
+punjabi/
+  index.html            ← Punjabi (Gurmukhi)
+bengali/
+  index.html            ← Bengali
 ```
 
 Each language is a single self-contained HTML file. No build tools, no dependencies, no server. Drop in a folder and it works.
@@ -123,6 +129,6 @@ An iOS app is planned if there's enough interest. If you want to be notified whe
 
 GNU General Public License v3.0 — see [LICENSE](LICENSE) for details.
 
-© 2026 Ilina Jayal — designed and built by Ilina Jayal · [portfolio](https://ilina03.github.io/site/)
+© 2026 ilina03 — designed and built by ilina03 · [portfolio](https://ilina03.github.io/site/)
 
 You are free to use, modify, and distribute this software. If you distribute a modified version, you must also make the source code available under GPL-3.0.
